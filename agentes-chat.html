@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentes CorpoPleno — MasterAds + MasterSales 100k</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .agents-sidebar {
+            width: 280px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .agents-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .agents-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .agent-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+
+        .agent-item:hover {
+            background: #e8e8e8;
+        }
+
+        .agent-item.active {
+            background: #e3f2fd;
+            border-left-color: #667eea;
+            font-weight: 600;
+        }
+
+        .agent-name {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .agent-role {
+            display: block;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .chat-container {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .chat-header h2 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .chat-header .agent-status {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.agent .message-content {
+            background: #f0f0f0;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-attachments {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .attachment {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .message-footer {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 4px;
+            padding: 0 12px;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .delete-btn {
+            padding: 4px 8px;
+            background: rgba(255,0,0,0.1);
+            color: #d32f2f;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255,0,0,0.2);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #999;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.5; transform: translateY(0); }
+            30% { opacity: 1; transform: translateY(-10px); }
+        }
+
+        .input-area {
+            padding: 16px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-field {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            max-height: 100px;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            background: #f0f0f0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .send-btn {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .send-btn:hover {
+            background: #5568d3;
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .attachments-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 0;
+        }
+
+        .file-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .file-preview .remove {
+            cursor: pointer;
+            color: #d32f2f;
+            font-weight: bold;
+            margin-left: 4px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .char-count {
+            font-size: 12px;
+            color: #999;
+            text-align: right;
+            padding: 0 4px;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .agents-sidebar {
+                width: 100%;
+                max-height: 200px;
+            }
+
+            .agents-list {
+                display: flex;
+                overflow-x: auto;
+            }
+
+            .agent-item {
+                flex-shrink: 0;
+                min-width: 200px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar com agentes -->
+        <div class="agents-sidebar">
+            <div class="agents-header">🤖 AGENTES CORPOPLENO</div>
+            <div class="agents-list">
+                <div class="agent-item active" data-agent="master-ads">
+                    <span class="agent-name">🎯 MasterAds AI</span>
+                    <span class="agent-role">Marketing Profissional</span>
+                </div>
+                <div class="agent-item" data-agent="master-sales">
+                    <span class="agent-name">💰 MasterSales 100k</span>
+                    <span class="agent-role">Consultoria Comercial</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat principal -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2 id="agent-name">🎯 MasterAds AI</h2>
+                <div class="agent-status" id="agent-status">Pronto para responder</div>
+            </div>
+
+            <div class="messages" id="messages">
+                <div class="empty-state">
+                    <div class="empty-state-icon">💬</div>
+                    <div>Inicie uma conversa com os agentes CorpoPleno</div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div id="attachments-preview" class="attachments-preview"></div>
+                <div id="char-count" class="char-count">0/2000</div>
+                <div class="input-field">
+                    <textarea
+                        id="message-input"
+                        class="message-input"
+                        placeholder="Digite sua mensagem (máx 2000 caracteres)..."
+                        rows="3"
+                    ></textarea>
+                    <div class="action-buttons">
+                        <button class="icon-btn" id="attach-files-btn" title="Anexar arquivo">📎</button>
+                        <button class="icon-btn" id="attach-images-btn" title="Anexar imagem">🖼️</button>
+                        <button class="icon-btn send-btn" id="send-btn" title="Enviar">📤</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="file-input" class="file-input" multiple accept="*/*">
+    <input type="file" id="image-input" class="file-input" multiple accept="image/*">
+
+    <script>
+        class AgentChat {
+            constructor() {
+                this.currentAgent = 'master-ads';
+                this.messages = this.loadMessages();
+                this.files = [];
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.renderMessages();
+            }
+
+            setupEventListeners() {
+                // Seleção de agentes
+                document.querySelectorAll('.agent-item').forEach(item => {
+                    item.addEventListener('click', () => this.switchAgent(item.dataset.agent));
+                });
+
+                // Entrada de mensagem
+                document.getElementById('message-input').addEventListener('input', (e) => {
+                    const count = e.target.value.length;
+                    document.getElementById('char-count').textContent = `${count}/2000`;
+                });
+
+                // Envio de mensagem
+                document.getElementById('send-btn').addEventListener('click', () => this.sendMessage());
+                document.getElementById('message-input').addEventListener('keydown', (e) => {
+                    if (e.ctrlKey && e.key === 'Enter') this.sendMessage();
+                });
+
+                // Anexos
+                document.getElementById('attach-files-btn').addEventListener('click', () => {
+                    document.getElementById('file-input').click();
+                });
+                document.getElementById('attach-images-btn').addEventListener('click', () => {
+                    document.getElementById('image-input').click();
+                });
+
+                document.getElementById('file-input').addEventListener('change', (e) => {
+                    Array.from(e.target.files).forEach(f => {
+                        if (this.files.length < 20) this.files.push(f);
+                    });
+                    this.renderAttachments();
+                    e.target.value = '';
+                });
+
+                document.getElementById('image-input').addEventListener('change', (e) => {
+                    Array.from(e.target.files).forEach(f => {
+                        if (this.files.length < 20) this.files.push(f);
+                    });
+                    this.renderAttachments();
+                    e.target.value = '';
+                });
+            }
+
+            switchAgent(agent) {
+                this.currentAgent = agent;
+                document.querySelectorAll('.agent-item').forEach(item => item.classList.remove('active'));
+                document.querySelector(`[data-agent="${agent}"]`).classList.add('active');
+
+                const agentNames = {
+                    'master-ads': '🎯 MasterAds AI',
+                    'master-sales': '💰 MasterSales 100k'
+                };
+                document.getElementById('agent-name').textContent = agentNames[agent];
+
+                this.renderMessages();
+            }
+
+            renderAttachments() {
+                const preview = document.getElementById('attachments-preview');
+                preview.innerHTML = '';
+                this.files.forEach((file, idx) => {
+                    const el = document.createElement('div');
+                    el.className = 'file-preview';
+                    el.innerHTML = `
+                        ${file.type.startsWith('image/') ? '🖼️' : '📄'} ${file.name}
+                        <span class="remove" onclick="app.removeFile(${idx})">✕</span>
+                    `;
+                    preview.appendChild(el);
+                });
+            }
+
+            removeFile(idx) {
+                this.files.splice(idx, 1);
+                this.renderAttachments();
+            }
+
+            async sendMessage() {
+                const input = document.getElementById('message-input');
+                const text = input.value.trim();
+
+                if (!text && this.files.length === 0) return;
+
+                const message = {
+                    id: Date.now(),
+                    agent: this.currentAgent,
+                    type: 'user',
+                    text,
+                    files: this.files.map(f => ({ name: f.name, type: f.type, size: f.size })),
+                    timestamp: new Date().toLocaleTimeString('pt-BR')
+                };
+
+                this.messages.push(message);
+                input.value = '';
+                this.files = [];
+                this.renderAttachments();
+                document.getElementById('char-count').textContent = '0/2000';
+                this.renderMessages();
+
+                // Simular resposta do agente
+                await this.simulateAgentResponse();
+            }
+
+            async simulateAgentResponse() {
+                this.renderMessages();
+                const messagesDiv = document.getElementById('messages');
+                const typingDiv = document.createElement('div');
+                typingDiv.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+                messagesDiv.appendChild(typingDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+                // Simular delay de resposta (em produção, conectar ao endpoint real do Cordex)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                const agentResponses = {
+                    'master-ads': 'Entendi! Vou analisar sua solicitação com foco em estratégia de marketing e copywriting para CorpoPleno. Qual dos cinco livros gostaria que eu começasse? 📚',
+                    'master-sales': 'Perfeito! Vou aplicar técnicas de vendas de alto nível (R$ 100k+) para otimizar sua conversão. Qual aspecto comercial quer que eu trabalhe primeiro? 💼'
+                };
+
+                const response = {
+                    id: Date.now(),
+                    agent: this.currentAgent,
+                    type: 'agent',
+                    text: agentResponses[this.currentAgent],
+                    timestamp: new Date().toLocaleTimeString('pt-BR')
+                };
+
+                this.messages.push(response);
+                this.saveMessages();
+                typingDiv.remove();
+                this.renderMessages();
+            }
+
+            renderMessages() {
+                const messagesDiv = document.getElementById('messages');
+                const filtered = this.messages.filter(m => m.agent === this.currentAgent);
+
+                if (filtered.length === 0) {
+                    messagesDiv.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💬</div>
+                            <div>Nenhuma mensagem ainda</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                messagesDiv.innerHTML = filtered.map(m => `
+                    <div class="message ${m.type}">
+                        <div>
+                            <div class="message-content">
+                                ${m.text}
+                                ${m.files && m.files.length > 0 ? `
+                                    <div class="message-attachments">
+                                        ${m.files.map(f => `<div class="attachment">${f.type.startsWith('image/') ? '🖼️' : '📄'} ${f.name}</div>`).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="message-footer">${m.timestamp}</div>
+                            ${m.type === 'user' ? `
+                                <div class="message-actions">
+                                    <button class="delete-btn" onclick="app.deleteMessage(${m.id})">Excluir</button>
+                                </div>
+                            ` : `
+                                <div class="message-actions">
+                                    <button class="delete-btn" onclick="app.deleteMessage(${m.id})">Deletar</button>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `).join('');
+
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+
+            deleteMessage(id) {
+                this.messages = this.messages.filter(m => m.id !== id);
+                this.saveMessages();
+                this.renderMessages();
+            }
+
+            saveMessages() {
+                localStorage.setItem('agentChat', JSON.stringify(this.messages));
+            }
+
+            loadMessages() {
+                return JSON.parse(localStorage.getItem('agentChat') || '[]');
+            }
+        }
+
+        const app = new AgentChat();
+    </script>
+</body>
+</html>
