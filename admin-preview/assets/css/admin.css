@@ -1,0 +1,244 @@
+/* =========================================================================
+   CorpoPleno — admin-preview — estilos do painel de demonstração local
+   Reaproveita tokens de ../../assets/css/style.css e adiciona apenas o
+   necessário para o painel (funil, gráficos, planilha).
+   ========================================================================= */
+
+.admin-banner {
+  background: repeating-linear-gradient(
+    135deg,
+    #fef3c7,
+    #fef3c7 12px,
+    #fde68a 12px,
+    #fde68a 24px
+  );
+  border-bottom: 2px solid #f59e0b;
+  color: #78350f;
+  font-weight: 800;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+
+.admin-header {
+  background: linear-gradient(120deg, var(--cp-purple), var(--cp-pink));
+  color: #fff;
+  padding: 28px 0;
+}
+
+.admin-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.admin-header p {
+  margin: 4px 0 0;
+  opacity: 0.9;
+  font-size: 0.92rem;
+}
+
+.admin-header a.btn {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.admin-section {
+  padding: 36px 0;
+}
+
+.admin-section h2 {
+  font-size: 1.25rem;
+  margin: 0 0 4px;
+}
+
+.admin-section .admin-section__desc {
+  color: var(--cp-text-soft);
+  margin: 0 0 22px;
+  font-size: 0.92rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.admin-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  padding: 20px;
+  box-shadow: var(--cp-shadow-sm);
+}
+
+.admin-card h3 {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  color: var(--cp-text-soft);
+  font-weight: 700;
+}
+
+.admin-card .admin-kpi {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.admin-card .admin-kpi-tag {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #c2410c;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.chart-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  padding: 20px;
+  box-shadow: var(--cp-shadow-sm);
+}
+
+.chart-card h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.chart-holder {
+  width: 100%;
+  min-height: 220px;
+}
+
+.funnel-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  padding: 24px;
+  box-shadow: var(--cp-shadow-sm);
+}
+
+/* Tabela */
+
+.table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.table-toolbar input[type="search"],
+.table-toolbar select {
+  padding: 9px 12px;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-sm);
+  font-size: 0.9rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+}
+
+.table-toolbar input[type="search"] {
+  min-width: 220px;
+  flex: 1;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  box-shadow: var(--cp-shadow-sm);
+}
+
+table.cp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+table.cp-table th,
+table.cp-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--cp-border);
+  white-space: nowrap;
+}
+
+table.cp-table thead th {
+  cursor: pointer;
+  user-select: none;
+  background: var(--cp-surface-soft);
+  font-weight: 700;
+  color: var(--cp-text-soft);
+  position: sticky;
+  top: 0;
+}
+
+table.cp-table thead th[aria-sort="ascending"]::after {
+  content: " ▲";
+}
+
+table.cp-table thead th[aria-sort="descending"]::after {
+  content: " ▼";
+}
+
+.cp-table-empty {
+  text-align: center;
+  color: var(--cp-text-soft);
+  padding: 24px !important;
+}
+
+.cp-status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.cp-status-pago {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.cp-status-pendente {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.cp-status-reembolsado {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--cp-text-soft);
+}
+
+@media (max-width: 900px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+}

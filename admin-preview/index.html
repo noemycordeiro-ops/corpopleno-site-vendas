@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel de Funil (Demonstração Local) — CorpoPleno</title>
+  <meta name="description" content="Painel de demonstração local do funil CorpoPleno. Dados fictícios, não representa vendas reais." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+</head>
+<body>
+  <div class="admin-banner">
+    🚧 DADOS DEMONSTRATIVOS — NÃO SÃO VENDAS REAIS · ÁREA SOMENTE PARA DEMONSTRAÇÃO LOCAL 🚧
+  </div>
+
+  <header class="admin-header">
+    <div class="container admin-header__inner">
+      <div>
+        <h1>🟣 Painel de Funil CorpoPleno — Demonstração Local</h1>
+        <p>admin-preview/ · não aparece no menu público · todos os números abaixo são fictícios</p>
+      </div>
+      <a class="btn" href="../index.html">← Voltar ao site público</a>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+    <section class="admin-section">
+      <div class="container">
+        <div class="notice notice-warning" style="margin-bottom: 28px;">
+          <span aria-hidden="true">⚠️</span>
+          <span>
+            Esta área é apenas uma demonstração local do painel de funil. Nenhum dado aqui vem de
+            vendas, visitas ou reembolsos reais. Antes de qualquer uso em produção, esta área deve
+            ser protegida por autenticação real no backend (Portão A / infraestrutura correspondente).
+          </span>
+        </div>
+
+        <h2>📊 Visão geral do funil</h2>
+        <p class="admin-section__desc">Visitante → descoberta → interesse → checkout → venda (dados demonstrativos).</p>
+
+        <div class="admin-grid" style="margin-bottom: 24px;">
+          <div class="admin-card">
+            <h3>👀 Visitantes</h3>
+            <p class="admin-kpi" id="kpi-visitantes">—</p>
+            <span class="admin-kpi-tag">demonstrativo</span>
+          </div>
+          <div class="admin-card">
+            <h3>✨ Interessados</h3>
+            <p class="admin-kpi" id="kpi-interessados">—</p>
+            <span class="admin-kpi-tag">demonstrativo</span>
+          </div>
+          <div class="admin-card">
+            <h3>🛒 Checkout iniciado</h3>
+            <p class="admin-kpi" id="kpi-checkout">—</p>
+            <span class="admin-kpi-tag">demonstrativo</span>
+          </div>
+          <div class="admin-card">
+            <h3>✅ Vendas</h3>
+            <p class="admin-kpi" id="kpi-vendas">—</p>
+            <span class="admin-kpi-tag">demonstrativo</span>
+          </div>
+          <div class="admin-card">
+            <h3>↩️ Reembolsos</h3>
+            <p class="admin-kpi" id="kpi-reembolsos">—</p>
+            <span class="admin-kpi-tag">demonstrativo</span>
+          </div>
+          <div class="admin-card">
+            <h3>📈 Conversão visitante → venda</h3>
+            <p class="admin-kpi" id="kpi-conversao">—</p>
+            <span class="admin-kpi-tag">demonstrativo</span>
+          </div>
+        </div>
+
+        <div class="funnel-card">
+          <div class="chart-holder" id="chart-funil" aria-label="Funil demonstrativo"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-section section-alt">
+      <div class="container">
+        <h2>📉 Gráficos (demonstrativos)</h2>
+        <p class="admin-section__desc">Gerados em SVG leve, sem dependência de bibliotecas externas ou de internet.</p>
+
+        <div class="admin-grid">
+          <div class="chart-card">
+            <h3>Visitas por semana</h3>
+            <div class="chart-holder" id="chart-visitas"></div>
+          </div>
+          <div class="chart-card">
+            <h3>Vendas por semana</h3>
+            <div class="chart-holder" id="chart-vendas"></div>
+          </div>
+          <div class="chart-card">
+            <h3>Taxa de conversão (%)</h3>
+            <div class="chart-holder" id="chart-conversao"></div>
+          </div>
+          <div class="chart-card">
+            <h3>Vendas por categoria de produto</h3>
+            <div class="chart-holder" id="chart-produtos"></div>
+          </div>
+          <div class="chart-card">
+            <h3>Reembolsos por semana</h3>
+            <div class="chart-holder" id="chart-reembolsos"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <div class="container">
+        <h2>🧾 Planilha demonstrativa</h2>
+        <p class="admin-section__desc">
+          Ordene clicando nos cabeçalhos, pesquise, filtre por categoria/status e exporte em CSV
+          (compatível com Excel e LibreOffice Calc).
+        </p>
+
+        <div class="table-toolbar">
+          <label class="sr-only" for="cp-table-search">Pesquisar produto ou categoria</label>
+          <input type="search" id="cp-table-search" placeholder="🔎 Pesquisar produto ou categoria..." />
+
+          <label class="sr-only" for="cp-table-categoria">Filtrar por categoria</label>
+          <select id="cp-table-categoria">
+            <option value="all">Todas as categorias</option>
+          </select>
+
+          <label class="sr-only" for="cp-table-status">Filtrar por status</label>
+          <select id="cp-table-status">
+            <option value="all">Todos os status</option>
+          </select>
+
+          <button type="button" class="btn btn-primary" id="cp-table-export">⬇️ Exportar CSV</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="cp-table">
+            <thead>
+              <tr>
+                <th data-sort-key="produto" aria-sort="none" tabindex="0">Produto</th>
+                <th data-sort-key="data" aria-sort="none" tabindex="0">Data</th>
+                <th data-sort-key="categoria" aria-sort="none" tabindex="0">Categoria</th>
+                <th data-sort-key="quantidade" aria-sort="none" tabindex="0">Quantidade</th>
+                <th data-sort-key="preco" aria-sort="none" tabindex="0">Preço (R$)</th>
+                <th data-sort-key="receita" aria-sort="none" tabindex="0">Receita (R$)</th>
+                <th data-sort-key="reembolso" aria-sort="none" tabindex="0">Reembolso (R$)</th>
+                <th data-sort-key="status" aria-sort="none" tabindex="0">Status</th>
+              </tr>
+            </thead>
+            <tbody id="cp-table-body"></tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <span id="cp-table-count">0 registro(s) demonstrativo(s)</span>
+          <span>DADOS DEMONSTRATIVOS — NÃO SÃO VENDAS REAIS</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>CorpoPleno — admin-preview (demonstração local) · sem exposição pública</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/dados-demo.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/tabela.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var d = window.CP_DEMO;
+
+      document.getElementById("kpi-visitantes").textContent = d.FUNIL_DEMO.visitantes.toLocaleString("pt-BR");
+      document.getElementById("kpi-interessados").textContent = d.FUNIL_DEMO.interessados.toLocaleString("pt-BR");
+      document.getElementById("kpi-checkout").textContent = d.FUNIL_DEMO.checkout.toLocaleString("pt-BR");
+      document.getElementById("kpi-vendas").textContent = d.FUNIL_DEMO.vendas.toLocaleString("pt-BR");
+      document.getElementById("kpi-reembolsos").textContent = d.FUNIL_DEMO.reembolsos.toLocaleString("pt-BR");
+
+      var conversao = d.FUNIL_DEMO.visitantes > 0
+        ? ((d.FUNIL_DEMO.vendas / d.FUNIL_DEMO.visitantes) * 100).toFixed(1)
+        : "0.0";
+      document.getElementById("kpi-conversao").textContent = conversao + "%";
+
+      window.CP_CHARTS.funnelChart(
+        document.getElementById("chart-funil"),
+        [
+          { label: "Visitantes", value: d.FUNIL_DEMO.visitantes },
+          { label: "Interessados", value: d.FUNIL_DEMO.interessados },
+          { label: "Checkout iniciado", value: d.FUNIL_DEMO.checkout },
+          { label: "Vendas", value: d.FUNIL_DEMO.vendas },
+          { label: "Reembolsos", value: d.FUNIL_DEMO.reembolsos },
+        ],
+        { ariaLabel: "Funil demonstrativo de visitantes até vendas" }
+      );
+
+      window.CP_CHARTS.lineChart(document.getElementById("chart-visitas"), d.VISITAS_DEMO, {
+        color: "#3b82f6",
+        ariaLabel: "Visitas por semana, demonstrativo",
+      });
+
+      window.CP_CHARTS.barChart(document.getElementById("chart-vendas"), d.VENDAS_POR_SEMANA_DEMO, {
+        color: "#22c55e",
+        ariaLabel: "Vendas por semana, demonstrativo",
+      });
+
+      window.CP_CHARTS.lineChart(document.getElementById("chart-conversao"), d.CONVERSAO_DEMO, {
+        color: "#8b5cf6",
+        suffix: "%",
+        ariaLabel: "Taxa de conversão, demonstrativo",
+      });
+
+      window.CP_CHARTS.barChart(document.getElementById("chart-produtos"), d.PRODUTOS_CATEGORIA_DEMO, {
+        color: "#ec4899",
+        labelKey: "categoria",
+        ariaLabel: "Vendas por categoria de produto, demonstrativo",
+      });
+
+      window.CP_CHARTS.barChart(document.getElementById("chart-reembolsos"), d.REEMBOLSOS_POR_SEMANA_DEMO, {
+        color: "#f97316",
+        ariaLabel: "Reembolsos por semana, demonstrativo",
+      });
+    });
+  </script>
+</body>
+</html>

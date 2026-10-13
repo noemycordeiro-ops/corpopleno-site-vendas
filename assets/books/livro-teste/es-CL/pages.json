@@ -1,0 +1,42 @@
+[
+  {
+    "page": 1,
+    "blocks": [
+      { "type": "heading", "text": "Bienvenido al lector CorpoPleno" },
+      { "type": "paragraph", "text": "Este es un libro de prueba interno. Existe solo para validar la experiencia completa del lector: navegación entre páginas, cambio de idioma, ajuste de pantalla y tamaño de texto, y protección de contenido." },
+      { "type": "callout", "text": "Ningún contenido real de CorpoPleno se está publicando aquí — este libro nunca debe venderse a un cliente real." }
+    ]
+  },
+  {
+    "page": 2,
+    "blocks": [
+      { "type": "heading", "text": "Cómo funciona la lectura" },
+      { "type": "paragraph", "text": "Usa las flechas en la parte inferior del lector para avanzar y retroceder de página. En el celular, toca las flechas; en el computador, también puedes usar las flechas del teclado." },
+      { "type": "image", "src": "assets/img/marca/logo-corpopleno-header.png", "alt": "Logotipo de CorpoPleno en tonos morados y rosados", "caption": "Identidad visual CorpoPleno, usada aquí como ejemplo de imagen integrada a la página." }
+    ]
+  },
+  {
+    "page": 3,
+    "blocks": [
+      { "type": "heading", "text": "Ajustar la pantalla" },
+      { "type": "paragraph", "text": "El lector se adapta automáticamente al tamaño de tu pantalla. Si prefieres, usa el ícono \"Ajustar lectura\" para elegir manualmente entre Computador/TV, Tablet o Celular, y también para aumentar o disminuir el texto." },
+      { "type": "icon", "glyph": "🖥️", "label": "Modo Computador / TV" }
+    ]
+  },
+  {
+    "page": 4,
+    "blocks": [
+      { "type": "heading", "text": "Tu lectura queda guardada" },
+      { "type": "paragraph", "text": "Cada vez que cambias de página, el progreso se guarda automáticamente. Al reabrir este libro, volverás exactamente al punto donde quedaste." },
+      { "type": "callout", "text": "Por ahora, el progreso se guarda solo en este navegador — cuando exista la cuenta real del cliente, te acompañará en cualquier dispositivo." }
+    ]
+  },
+  {
+    "page": 5,
+    "blocks": [
+      { "type": "heading", "text": "Fin del libro de prueba" },
+      { "type": "paragraph", "text": "Llegaste a la última página de este libro de prueba. En un libro real, aquí podrían aparecer referencias, agradecimientos o una invitación al próximo título." },
+      { "type": "reference", "text": "CorpoPleno — Biblioteca Digital (material interno de validación, 2026)." }
+    ]
+  }
+]

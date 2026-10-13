@@ -1,0 +1,42 @@
+[
+  {
+    "page": 1,
+    "blocks": [
+      { "type": "heading", "text": "Welcome to the CorpoPleno reader" },
+      { "type": "paragraph", "text": "This is an internal test book. It exists only to validate the full reader experience: page navigation, language switching, display and text size adjustment, and content protection." },
+      { "type": "callout", "text": "No real CorpoPleno content is being published here — this book must never be sold to a real customer." }
+    ]
+  },
+  {
+    "page": 2,
+    "blocks": [
+      { "type": "heading", "text": "How reading works" },
+      { "type": "paragraph", "text": "Use the arrows at the bottom of the reader to move forward and back. On mobile, tap the arrows; on a computer, you can also use the keyboard arrows." },
+      { "type": "image", "src": "assets/img/marca/logo-corpopleno-header.png", "alt": "CorpoPleno logo in purple and pink tones", "caption": "CorpoPleno visual identity, used here as an example of an image embedded in a page." }
+    ]
+  },
+  {
+    "page": 3,
+    "blocks": [
+      { "type": "heading", "text": "Adjusting the display" },
+      { "type": "paragraph", "text": "The reader automatically adapts to your screen size. If you prefer, use the \"Adjust reading\" icon to manually choose Computer/TV, Tablet, or Phone, and to increase or decrease the text size." },
+      { "type": "icon", "glyph": "🖥️", "label": "Computer / TV mode" }
+    ]
+  },
+  {
+    "page": 4,
+    "blocks": [
+      { "type": "heading", "text": "Your reading is saved" },
+      { "type": "paragraph", "text": "Every time you turn the page, your progress is saved automatically. When you reopen this book, you'll return exactly where you left off." },
+      { "type": "callout", "text": "Right now, progress is saved only in this browser — once real customer accounts exist, it will follow you across devices." }
+    ]
+  },
+  {
+    "page": 5,
+    "blocks": [
+      { "type": "heading", "text": "End of the test book" },
+      { "type": "paragraph", "text": "You've reached the last page of this test book. In a real book, this is where references, acknowledgments, or an invitation to the next title could appear." },
+      { "type": "reference", "text": "CorpoPleno — Digital Library (internal validation material, 2026)." }
+    ]
+  }
+]

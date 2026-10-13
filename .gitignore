@@ -1,0 +1,22 @@
+# Checkpoints & Backups
+/checkpoints/
+*.backup
+*.bak
+
+# IDE
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs & Runtime
+*.log
+node_modules/
+
+# Confidential
+.env
+.env.local
+.env*.local
+secrets/

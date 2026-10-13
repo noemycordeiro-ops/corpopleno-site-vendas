@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PREVIEW INTERNO -- Livro — CorpoPleno</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
+  <link rel="stylesheet" href="assets/css/books.css?v=20261002a" />
+</head>
+<body data-partial-i18n="true">
+  <!--
+    FIXTURE DE PREVIEW INTERNO -- Fase CorpoPleno Livros 011.1.
+    Idêntico a livro.html, EXCETO por um pequeno script no final que só
+    FORÇA A VISIBILIDADE INICIAL do painel de checkout (nunca simula
+    clique real, nunca simula login, nunca chama POST /checkout). Todo o
+    resto (capa, título, preço, CSS, JS de checkout) é o código real,
+    nunca um fixture de conteúdo. Arquivo nunca linkado por nenhuma
+    página pública, nunca parte do pacote de publicação.
+  -->
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo principal</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <picture>
+          <source srcset="assets/img/marca/logo-corpopleno-header.webp" type="image/webp" />
+          <img class="brand__logo" src="assets/img/marca/logo-corpopleno-header.png" alt="CorpoPleno" width="900" height="201" />
+        </picture>
+        <span class="brand__tagline">Inteligente, resultado real</span>
+      </a>
+      <nav class="main-nav" id="cp-main-nav" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="cursos.html">Cursos</a>
+        <a href="livros.html" aria-current="page">Livros</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="atendimento.html">Atendimento</a>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="btn-minha-area" id="cp-minha-area">Entrar</button>
+        <div class="lang-select-wrap">
+          <label class="sr-only" for="cp-lang-select">Selecionar idioma</label>
+          <select id="cp-lang-select" class="lang-select">
+            <option value="pt-BR">Português — PT-BR</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+    <div class="container" style="padding-top: 24px;">
+      <a class="book-detail__back" href="livros.html">← Voltar para Livros</a>
+    </div>
+
+    <div class="container" id="cp-partial-translation-notice-wrap">
+      <div class="notice notice-info" id="cp-partial-translation-notice" hidden></div>
+    </div>
+
+    <section class="section" id="cp-book-detail-found" hidden>
+      <div class="container book-detail">
+        <div class="book-detail__cover-wrap" id="cp-book-cover-slot"></div>
+        <div class="book-detail__info">
+          <h1 id="cp-book-title"></h1>
+          <p class="book-detail__subtitle" id="cp-book-subtitle"></p>
+          <p class="book-detail__description" id="cp-book-description"></p>
+
+          <dl class="book-detail__facts">
+            <div>
+              <dt>Idioma desta edição</dt>
+              <dd id="cp-book-language"></dd>
+            </div>
+            <div>
+              <dt>Páginas</dt>
+              <dd id="cp-book-pages"></dd>
+            </div>
+            <div>
+              <dt>Preço</dt>
+              <dd id="cp-book-price"></dd>
+            </div>
+          </dl>
+
+          <div class="book-detail__actions" id="comprar">
+            <button type="button" class="btn btn-primary btn-block" id="cp-book-buy">Comprar</button>
+            <p class="notice notice-info" id="cp-book-buy-status" hidden></p>
+
+            <div class="checkout-panel" id="cp-checkout-panel" hidden>
+              <h2 class="checkout-panel__title">Finalizar compra</h2>
+
+              <fieldset class="checkout-panel__methods">
+                <legend>Forma de pagamento</legend>
+                <label class="cp-radio">
+                  <input type="radio" name="cp-checkout-method" value="PIX" checked />
+                  <span>PIX</span>
+                </label>
+                <label class="cp-radio">
+                  <input type="radio" name="cp-checkout-method" value="CREDIT_CARD" />
+                  <span>Cartão de crédito</span>
+                </label>
+              </fieldset>
+
+              <ul class="checkout-panel__notes">
+                <li>Pagamento único, sem assinatura ou cobrança recorrente.</li>
+                <li>Acesso digital imediato após a confirmação do pagamento.</li>
+                <li>Você tem direito de arrependimento conforme o Código de Defesa do Consumidor — veja os Termos de Uso.</li>
+              </ul>
+
+              <label class="cp-checkbox">
+                <input type="checkbox" id="cp-checkout-terms" required />
+                <span>
+                  <span>Li e aceito os</span>
+                  <a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a>
+                  <span>e a</span>
+                  <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.
+                </span>
+              </label>
+
+              <button type="button" class="btn btn-primary btn-block" id="cp-checkout-confirm">Confirmar compra</button>
+              <button type="button" class="btn btn-secondary btn-block" id="cp-checkout-cancel">Cancelar</button>
+
+              <p class="notice notice-warning" id="cp-checkout-error" hidden></p>
+
+              <div class="checkout-panel__result" id="cp-checkout-result" hidden>
+                <div id="cp-checkout-pix" hidden>
+                  <h3>Pague com PIX</h3>
+                  <p>Escaneie o QR Code ou copie o código abaixo no app do seu banco.</p>
+                  <img id="cp-checkout-pix-qrcode" alt="" class="checkout-panel__qrcode" />
+                  <textarea id="cp-checkout-pix-payload" class="checkout-panel__payload" readonly rows="3"></textarea>
+                  <button type="button" class="btn btn-secondary" id="cp-checkout-pix-copy">Copiar código</button>
+                  <p class="notice notice-info" id="cp-checkout-pix-waiting">Aguardando pagamento...</p>
+                </div>
+                <div id="cp-checkout-card" hidden>
+                  <h3>Pagamento com cartão</h3>
+                  <p>Você será redirecionado para concluir o pagamento com segurança.</p>
+                  <a class="btn btn-primary btn-block" id="cp-checkout-card-link" target="_blank" rel="noopener">Ir para pagamento seguro</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="book-detail__note">Leitura 100% online, disponível na sua conta após a compra.</p>
+          <p class="book-detail__note">Acesse pela sua conta CorpoPleno em Meus Livros.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cp-book-detail-not-found" hidden>
+      <div class="container" style="text-align: center;">
+        <p class="notice notice-warning">Livro não encontrado.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>PREVIEW INTERNO -- nunca uma página pública real.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n.js?v=20260926a"></script>
+  <script src="assets/js/markets.js?v=20260925c"></script>
+  <script src="assets/js/funnel.js?v=20260925c"></script>
+  <script src="assets/js/api-config.js?v=20261003a"></script>
+  <script src="assets/js/main.js?v=20260925c"></script>
+  <script src="assets/js/books-data.js?v=20261002a"></script>
+  <script src="assets/js/book-cover.js?v=20261003a"></script>
+  <script src="assets/js/book-detail.js?v=20261002a"></script>
+  <script>
+    // FIXTURE DE PREVIEW (Fase 011.1) -- só torna o painel de checkout
+    // JÁ ABERTO visível para inspeção visual, sem simular login nem
+    // chamar o backend. ?id= é lido normalmente por book-detail.js
+    // (init() real, capa/título/preço reais vindos do metadata.json real).
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      if (!params.get("id")) {
+        window.history.replaceState(null, "", "?id=amor-que-aprendeu-a-ficar");
+      }
+      function forcarPainelAberto() {
+        var buy = document.getElementById("cp-book-buy");
+        var panel = document.getElementById("cp-checkout-panel");
+        if (buy) buy.hidden = true;
+        if (panel) panel.hidden = false;
+        // "resultado" (QR/cartão) só aparece se ?preview=pix ou ?preview=card.
+        var preview = params.get("preview");
+        if (preview === "pix") {
+          document.querySelector(".checkout-panel__methods").hidden = true;
+          document.querySelector(".checkout-panel__notes").hidden = true;
+          document.querySelector("#cp-checkout-panel .cp-checkbox").hidden = true;
+          document.getElementById("cp-checkout-confirm").hidden = true;
+          document.getElementById("cp-checkout-cancel").hidden = true;
+          document.getElementById("cp-checkout-result").hidden = false;
+          document.getElementById("cp-checkout-pix").hidden = false;
+          // 1x1 PNG cinza só para ocupar o espaço do QR Code na captura visual (nunca um QR Code real).
+          document.getElementById("cp-checkout-pix-qrcode").src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAC57g4qAAAADElEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
+          document.getElementById("cp-checkout-pix-payload").value = "00020126580014BR.GOV.BCB.PIX0136EXEMPLO-FICTICIO-NUNCA-REAL-520400005303986540529.905802BR5913CorpoPleno6009SAO PAULO62070503***6304ABCD";
+        } else if (preview === "card") {
+          document.querySelector(".checkout-panel__methods").hidden = true;
+          document.querySelector(".checkout-panel__notes").hidden = true;
+          document.querySelector("#cp-checkout-panel .cp-checkbox").hidden = true;
+          document.getElementById("cp-checkout-confirm").hidden = true;
+          document.getElementById("cp-checkout-cancel").hidden = true;
+          document.getElementById("cp-checkout-result").hidden = false;
+          document.getElementById("cp-checkout-card").hidden = false;
+          document.getElementById("cp-checkout-card-link").href = "#";
+        }
+      }
+      // Os elementos forçados aqui (#cp-checkout-panel, #cp-checkout-pix,
+      // #cp-checkout-card) já existem estaticamente no HTML acima -- não
+      // dependem do fetch assíncrono de metadata.json feito por
+      // book-detail.js (capa/título/preço reais preenchem depois, quando
+      // chegarem, exatamente como em produção). Por isso é seguro chamar
+      // de forma síncrona agora, sem esperar "load" nem usar setTimeout --
+      // isso evita uma corrida com ferramentas de screenshot automatizado
+      // que capturam a página logo após "load", antes de qualquer timer.
+      forcarPainelAberto();
+      window.addEventListener("load", forcarPainelAberto);
+    })();
+  </script>
+</body>
+</html>

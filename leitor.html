@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leitor — CorpoPleno</title>
+  <meta name="description" content="Leitor digital CorpoPleno." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
+  <link rel="stylesheet" href="assets/css/books.css?v=20261002a" />
+</head>
+<body data-partial-i18n="true" class="reader-body">
+
+  <header class="reader-topbar">
+    <a class="reader-topbar__brand" href="index.html" data-i18n="reader.header_title">CorpoPleno | Biblioteca</a>
+    <div class="reader-topbar__actions">
+      <button type="button" class="reader-icon-btn" id="cp-reader-adjust-btn" data-i18n-aria-label="reader.adjust.button_label" aria-label="Ajustar leitura" aria-haspopup="true" aria-expanded="false" aria-controls="cp-reader-adjust-panel">
+        <span aria-hidden="true">🖥️</span>
+      </button>
+      <button type="button" class="reader-icon-btn" id="cp-reader-fullscreen-btn" aria-label="Expandir leitura" data-i18n-aria-label="reader.fullscreen.enter">
+        <span aria-hidden="true">⛶</span>
+      </button>
+      <!-- Fase CorpoPleno Livros 012 -- só aparece quando o livro carregado
+           tem páginas de receita (reader.js revela via hidden=false). -->
+      <button type="button" class="reader-icon-btn" id="cp-reader-search-btn" aria-label="Buscar receitas" data-i18n-aria-label="reader.recipe.search.button" aria-haspopup="true" aria-expanded="false" aria-controls="cp-reader-search-panel" hidden>
+        <span aria-hidden="true">🔎</span>
+      </button>
+      <button type="button" class="reader-icon-btn" id="cp-reader-favorites-btn" aria-label="Receitas favoritas" data-i18n-aria-label="reader.recipe.favorites.button" aria-haspopup="true" aria-expanded="false" aria-controls="cp-reader-favorites-panel" hidden>
+        <span aria-hidden="true">⭐</span>
+      </button>
+      <label class="sr-only" for="cp-reader-lang-select" data-i18n="lang_label">Selecionar idioma</label>
+      <select id="cp-reader-lang-select" class="lang-select reader-lang-select">
+        <option value="pt-BR">Português — Brasil</option>
+        <option value="pt-PT">Português — Portugal</option>
+        <option value="en-US">English — United States</option>
+        <option value="ko-KR">한국어 — 대한민국</option>
+        <option value="es-CL">Español — Chile</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Fase CorpoPleno Livros 012 -- painéis de busca/favoritos, só usados
+       pelo Livro de Receitas (reader-recipes.js). Nunca chamada de rede;
+       índice construído a partir do `meta` das páginas já carregadas. -->
+  <div class="reader-adjust-panel" id="cp-reader-search-panel" hidden>
+    <h2 data-i18n="reader.recipe.search.title">Buscar receitas</h2>
+    <label class="sr-only" for="cp-reader-search-input" data-i18n="reader.recipe.search.label">Digite o nome de uma receita</label>
+    <input type="search" id="cp-reader-search-input" data-i18n-placeholder="reader.recipe.search.placeholder" placeholder="Digite o nome de uma receita" />
+    <ul class="reader-search-results" id="cp-reader-search-results"></ul>
+  </div>
+  <div class="reader-adjust-panel" id="cp-reader-favorites-panel" hidden>
+    <h2 data-i18n="reader.recipe.favorites.title">Receitas favoritas</h2>
+    <p class="reader-search-empty" id="cp-reader-favorites-empty" data-i18n="reader.recipe.favorites.empty" hidden>Nenhuma receita favoritada ainda.</p>
+    <ul class="reader-search-results" id="cp-reader-favorites-results"></ul>
+  </div>
+
+  <!-- Painel "Ajustar leitura" — nunca usa termos técnicos (viewport/breakpoint). -->
+  <div class="reader-adjust-panel" id="cp-reader-adjust-panel" hidden>
+    <h2 data-i18n="reader.adjust.panel_title">Ajustar leitura</h2>
+    <div class="reader-adjust-panel__group" role="group" aria-label="Modo de tela">
+      <button type="button" class="reader-adjust-option" data-device-mode="AUTO" data-i18n="reader.adjust.auto">Ajuste automático</button>
+      <button type="button" class="reader-adjust-option" data-device-mode="DESKTOP_TV" data-i18n="reader.adjust.desktop_tv">Computador / TV</button>
+      <button type="button" class="reader-adjust-option" data-device-mode="TABLET" data-i18n="reader.adjust.tablet">Tablet</button>
+      <button type="button" class="reader-adjust-option" data-device-mode="MOBILE" data-i18n="reader.adjust.mobile">Celular</button>
+    </div>
+    <!-- Fase CorpoPleno Livros 013 -- "duas páginas lado a lado" (pedido
+         de Noemi, simular livro físico aberto). AUTO decide sozinho pela
+         largura real da tela (nunca abaixo de 960px, ver books.css); a
+         pessoa pode forçar DOUBLE/SINGLE, mas a tela estreita sempre
+         prevalece (fallback automático documentado em books.css). -->
+    <div class="reader-adjust-panel__group" role="group" data-i18n-aria-label="reader.layout.group_label" aria-label="Disposição das páginas">
+      <button type="button" class="reader-adjust-option reader-layout-option" data-page-layout="AUTO" data-i18n="reader.layout.auto">Automático</button>
+      <button type="button" class="reader-adjust-option reader-layout-option" data-page-layout="DOUBLE" data-i18n="reader.layout.double">Duas páginas</button>
+      <button type="button" class="reader-adjust-option reader-layout-option" data-page-layout="SINGLE" data-i18n="reader.layout.single">Uma página</button>
+    </div>
+    <div class="reader-adjust-panel__group reader-adjust-panel__font" role="group" aria-label="Tamanho do texto">
+      <span data-i18n="reader.adjust.font_label">Tamanho do texto</span>
+      <div class="reader-font-controls">
+        <button type="button" id="cp-reader-font-smaller" aria-label="Texto menor" data-i18n-aria-label="reader.adjust.font_smaller">A-</button>
+        <button type="button" id="cp-reader-font-reset" aria-label="Padrão" data-i18n-aria-label="reader.adjust.font_normal">A</button>
+        <button type="button" id="cp-reader-font-larger" aria-label="Texto maior" data-i18n-aria-label="reader.adjust.font_larger">A+</button>
+      </div>
+    </div>
+  </div>
+
+  <main id="conteudo-principal" class="reader-main">
+    <!-- Estado: acesso negado (padrão até prova real de entitlement) -->
+    <section class="reader-access-denied" id="cp-reader-access-denied" hidden>
+      <h1 data-i18n="reader.access_denied.title">Acesso não disponível</h1>
+      <p data-i18n="reader.access_denied.message">Você precisa estar logada(o) e ter adquirido este livro para ler online.</p>
+      <a class="btn btn-primary" href="login.html" data-i18n="reader.access_denied.cta">Entrar na minha conta</a>
+    </section>
+
+    <!-- Estado: livro não encontrado -->
+    <section class="reader-access-denied" id="cp-reader-not-found" hidden>
+      <h1 data-i18n="book.detail.not_found">Livro não encontrado.</h1>
+      <a class="btn btn-secondary" href="livros.html" data-i18n="book.detail.back_to_catalog">← Voltar para Livros</a>
+    </section>
+
+    <!-- Estado: leitor liberado -->
+    <div class="reader-shell" id="cp-reader-shell" hidden>
+      <div class="reader-qa-banner allow-select" id="cp-reader-qa-banner" hidden>
+        🧪 Pré-visualização interna — nunca uma prova de compra real.
+      </div>
+
+      <div class="reader-book-strip">
+        <div class="reader-book-strip__cover-slot" id="cp-reader-cover-slot"></div>
+        <div class="reader-book-strip__title" id="cp-reader-title"></div>
+      </div>
+
+      <!-- Fase CorpoPleno Livros 013 -- #cp-reader-page-content continua a
+           página PRIMÁRIA/esquerda, mesmo id/contrato de sempre (nenhum
+           consumidor existente -- reader-recipes.js, o evento
+           "cp-reader-page-rendered", window.CP_READER -- precisou mudar).
+           #cp-reader-page-content-right só existe/aparece no modo "duas
+           páginas" (reader.js controla hidden; books.css só vira grid de
+           2 colunas a partir de 960px de largura real). -->
+      <div class="reader-pages-wrap" id="cp-reader-pages-wrap">
+        <article class="reader-page" id="cp-reader-page-content" aria-live="polite"></article>
+        <article class="reader-page" id="cp-reader-page-content-right" aria-live="polite" hidden></article>
+      </div>
+
+      <!-- Fase CorpoPleno Livros 012 -- só visível em página de receita. -->
+      <button type="button" class="reader-favorite-toggle allow-select" id="cp-reader-favorite-toggle" aria-pressed="false" hidden>
+        <span aria-hidden="true">☆</span>
+        <span data-i18n="reader.recipe.favorite.add">Favoritar esta receita</span>
+      </button>
+
+      <nav class="reader-pagination" aria-label="Navegação de páginas">
+        <button type="button" class="reader-pagination__btn" id="cp-reader-prev" data-i18n-aria-label="reader.nav.previous" aria-label="Página anterior">←</button>
+        <span class="reader-pagination__status" id="cp-reader-page-status"></span>
+        <button type="button" class="reader-pagination__btn" id="cp-reader-next" data-i18n-aria-label="reader.nav.next" aria-label="Próxima página">→</button>
+      </nav>
+
+      <div class="reader-shell__footer-actions allow-select">
+        <button type="button" class="btn btn-secondary" id="cp-reader-restart" data-i18n="reader.restart.button">Voltar para o início</button>
+        <a class="btn btn-secondary" href="meus-livros.html" data-i18n="reader.nav.back_to_my_books">Voltar para Meus Livros</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/i18n.js?v=20260926a"></script>
+  <script src="assets/js/api-config.js?v=20261003a"></script>
+  <script src="assets/js/meta-tracking.js?v=20261007a"></script>
+  <script src="assets/js/main.js?v=20260925c"></script>
+  <script src="assets/js/books-data.js?v=20261002a"></script>
+  <script src="assets/js/book-cover.js?v=20261003a"></script>
+  <script src="assets/js/reader.js?v=20261002a"></script>
+  <script src="assets/js/recipe-search-synonyms.js?v=20261005a"></script>
+  <script src="assets/js/reader-recipes.js?v=20261005a"></script>
+</body>
+</html>

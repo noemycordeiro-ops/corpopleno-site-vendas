@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CorpoPleno — Inteligente, resultado real</title>
+  <meta name="description" content="CorpoPleno reúne produtos, cursos e materiais organizados com metodologia, tecnologia e revisão de conteúdo. Inteligente, resultado real." />
+  <!-- canonical intencionalmente omitido: corpoplenoresultadoreal.com.br já hospeda outro
+       site (Atomicat/legado) e não deve ser usado aqui. Definir a URL definitiva no deploy. -->
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CorpoPleno" />
+  <meta property="og:title" content="CorpoPleno — Inteligente, resultado real" />
+  <meta property="og:description" content="Produtos, cursos e materiais organizados com metodologia, tecnologia e revisão de conteúdo." />
+  <!-- og:url intencionalmente omitido pelo mesmo motivo do canonical acima. -->
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
+</head>
+<body>
+  <a class="skip-link" href="#conteudo-principal" data-i18n="skip_link">Pular para o conteúdo principal</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <picture>
+          <source srcset="assets/img/marca/logo-corpopleno-header.webp" type="image/webp" />
+          <img class="brand__logo" src="assets/img/marca/logo-corpopleno-header.png" alt="CorpoPleno" width="900" height="201" />
+        </picture>
+        <span class="brand__tagline" data-i18n="brand.slogan">Inteligente, resultado real</span>
+      </a>
+
+      <nav class="main-nav" id="cp-main-nav" aria-label="Navegação principal" data-i18n-aria-label="nav.aria_label">
+        <a href="index.html" aria-current="page" data-i18n="nav.home">Início</a>
+        <a href="produtos.html" data-i18n="nav.products">Produtos</a>
+        <a href="cursos.html" data-i18n="nav.courses">Cursos</a>
+        <a href="livros.html" data-i18n="nav.books">Livros</a>
+        <a href="sobre.html" data-i18n="nav.about">Sobre</a>
+        <a href="atendimento.html" data-i18n="nav.support">Atendimento</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="btn-minha-area" id="cp-minha-area" data-i18n="nav.login">Entrar</button>
+        <div class="lang-select-wrap">
+          <label class="sr-only" for="cp-lang-select" data-i18n="lang_label">Selecionar idioma</label>
+          <select id="cp-lang-select" class="lang-select">
+            <option value="pt-BR">Português — PT-BR</option>
+            <option value="pt-PT">Português — PT-PT</option>
+            <option value="en-US">English — EN-US</option>
+            <option value="ko-KR">한국어 — KO-KR</option>
+            <option value="es-CL">Español — ES-CL</option>
+          </select>
+        </div>
+        <button type="button" class="nav-toggle" id="cp-nav-toggle" aria-expanded="false" aria-controls="cp-main-nav" aria-label="Abrir menu" data-i18n-aria-label="nav_toggle.open_label">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+
+    <section class="hero">
+      <div class="container hero__inner hero__inner--centered">
+        <div class="hero__text">
+          <span class="hero__eyebrow" data-i18n="home.hero.eyebrow">CorpoPleno</span>
+          <h1 data-i18n="home.hero.title">Uma base clara para uma <span class="hero__highlight">vida mais plena</span></h1>
+          <p class="hero__slogan" data-i18n="home.hero.slogan">Inteligente, resultado real</p>
+          <p class="lead" data-i18n="home.hero.lead">
+            Reunimos produtos, cursos e materiais organizados com metodologia, tecnologia e revisão de
+            conteúdo — para você avançar com clareza, no seu ritmo.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn-primary" href="produtos.html" data-i18n="home.hero.cta_primary">Explorar produtos</a>
+            <a class="btn btn-secondary" href="sobre.html" data-i18n="home.hero.cta_secondary">Conhecer a CorpoPleno</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="personagens">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="characters.eyebrow">Nossa turma</span>
+          <h2 data-i18n="characters.title">Personagens CorpoPleno</h2>
+        </div>
+        <div class="grid grid-4 characters-grid">
+          <article class="card character-card">
+            <picture>
+              <source srcset="assets/img/personagens/ester-home.webp" type="image/webp" />
+              <img class="character-card__photo" src="assets/img/personagens/ester-home.png" alt="" data-i18n-alt="characters.ester.name" />
+            </picture>
+            <h3 data-i18n="characters.ester.name">Ester</h3>
+            <p data-i18n="characters.ester.desc">Guia a jornada CorpoPleno com atenção e bom humor.</p>
+          </article>
+          <article class="card character-card">
+            <picture>
+              <source srcset="assets/img/personagens/mimi.webp" type="image/webp" />
+              <img class="character-card__photo" src="assets/img/personagens/mimi.png" alt="" data-i18n-alt="characters.mimi.name" />
+            </picture>
+            <h3 data-i18n="characters.mimi.name">Mimi</h3>
+            <p data-i18n="characters.mimi.desc">Curiosa e observadora, sempre atenta aos detalhes.</p>
+          </article>
+          <article class="card character-card">
+            <picture>
+              <source srcset="assets/img/personagens/ping.webp" type="image/webp" />
+              <img class="character-card__photo" src="assets/img/personagens/ping.png" alt="" data-i18n-alt="characters.ping.name" />
+            </picture>
+            <h3 data-i18n="characters.ping.name">Ping</h3>
+            <p data-i18n="characters.ping.desc">Companheiro leal, com energia para o dia a dia.</p>
+          </article>
+          <article class="card character-card">
+            <picture>
+              <source srcset="assets/img/personagens/pipo.webp" type="image/webp" />
+              <img class="character-card__photo" src="assets/img/personagens/pipo.png" alt="" data-i18n-alt="characters.pipo.name" />
+            </picture>
+            <h3 data-i18n="characters.pipo.name">Pipo</h3>
+            <p data-i18n="characters.pipo.desc">Alegre e comunicativo, traz leveza para a conversa.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="conheca">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="home.intro.eyebrow">Conheça a CorpoPleno</span>
+          <h2 data-i18n="home.intro.title">O que é a CorpoPleno</h2>
+          <p data-i18n="home.intro.body">
+            A CorpoPleno organiza conhecimento e ferramentas com propósito, metodologia própria e
+            compromisso contínuo com qualidade — unindo educação, tecnologia e cuidado.
+          </p>
+        </div>
+        <div class="grid grid-4">
+          <div class="card">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/proposito.png" alt="" /></div>
+            <h3 data-i18n="home.intro.point1.title">Propósito claro</h3>
+            <p data-i18n="home.intro.point1.desc">Ajudar pessoas a organizarem saúde, estudo e rotina com informação confiável.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/metodologia.png" alt="" /></div>
+            <h3 data-i18n="home.intro.point2.title">Metodologia própria</h3>
+            <p data-i18n="home.intro.point2.desc">Conteúdos estruturados em etapas, com revisão antes da publicação.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/agentes-ia.png" alt="" /></div>
+            <h3 data-i18n="home.intro.point3.title">Tecnologia a serviço das pessoas</h3>
+            <p data-i18n="home.intro.point3.desc">Ferramentas simples e diretas, sem complicar o que pode ser fácil.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/organizacao-revisao.png" alt="" /></div>
+            <h3 data-i18n="home.intro.point4.title">Organização e revisão contínua</h3>
+            <p data-i18n="home.intro.point4.desc">Cada material passa por revisão de conteúdo antes de chegar até você.</p>
+          </div>
+        </div>
+        <p class="text-center" style="margin-top: 28px;">
+          <a href="sobre.html" data-i18n="home.intro.cta">Ler mais sobre a CorpoPleno</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="explore">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="home.explore.eyebrow">Explore</span>
+          <h2 data-i18n="home.explore.title">Explore a CorpoPleno</h2>
+          <p data-i18n="home.explore.lead">Escolha por onde começar.</p>
+        </div>
+        <div class="grid grid-4">
+          <a class="card explore-card" href="produtos.html" style="text-decoration: none; color: inherit;">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/produtos.png" alt="" /></div>
+            <h3 data-i18n="home.explore.produtos.title">Produtos</h3>
+            <p data-i18n="home.explore.produtos.desc">Materiais, autocuidado e soluções organizadas por categoria.</p>
+            <span class="card__footer explore-card__cta" data-i18n="home.explore.produtos.cta">Conheça os produtos CorpoPleno →</span>
+          </a>
+          <a class="card explore-card" href="cursos.html" style="text-decoration: none; color: inherit;">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/cursos.png" alt="" /></div>
+            <h3 data-i18n="home.explore.cursos.title">Cursos</h3>
+            <p data-i18n="home.explore.cursos.desc">Formação estruturada, do idioma ao curso técnico.</p>
+            <span class="card__footer explore-card__cta" data-i18n="home.explore.cursos.cta">Conheça os cursos CorpoPleno →</span>
+          </a>
+          <a class="card explore-card" href="produtos.html" style="text-decoration: none; color: inherit;">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/quizzes.png" alt="" /></div>
+            <h3 data-i18n="home.explore.miniapps.title">Mini Apps</h3>
+            <p data-i18n="home.explore.miniapps.desc">Ferramentas interativas para o seu dia a dia.</p>
+            <span class="card__footer explore-card__cta" data-i18n="home.explore.miniapps.cta">Explorar Mini Apps →</span>
+          </a>
+          <a class="card explore-card" href="atendimento.html" style="text-decoration: none; color: inherit;">
+            <div class="card__icon card__icon--photo" aria-hidden="true"><img class="card__icon-img" src="assets/img/icones-recebidos/whatsapp.png" alt="" /></div>
+            <h3 data-i18n="home.explore.atendimento.title">Atendimento</h3>
+            <p data-i18n="home.explore.atendimento.desc">Precisa de ajuda? Encontre o canal ideal para sua solicitação.</p>
+            <span class="card__footer explore-card__cta" data-i18n="home.explore.atendimento.cta">Falar com o atendimento →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="home.faq.eyebrow">Dúvidas</span>
+          <h2 data-i18n="home.faq.title">Perguntas frequentes</h2>
+        </div>
+        <div class="faq">
+          <details class="faq-item">
+            <summary data-i18n="home.faq.q1">Como recebo meus produtos após a compra?</summary>
+            <p data-i18n="home.faq.a1">
+              Assim que a compra for confirmada, você recebe as instruções de acesso por e-mail. Hoje
+              nenhum produto está publicado — isso será ativado assim que o catálogo for liberado.
+            </p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="home.faq.q2">Como funciona o atendimento?</summary>
+            <p data-i18n="home.faq.a2">
+              Escolha o assunto na página de Atendimento e continue por e-mail — a CorpoPleno responde a
+              partir daí.
+            </p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="home.faq.q3">Como funciona cancelamento ou reembolso?</summary>
+            <p data-i18n="home.faq.a3">
+              Abra a solicitação na página de Atendimento; verificações adicionais podem ser necessárias
+              antes da confirmação.
+            </p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="home.faq.q4">Como acesso minha área?</summary>
+            <p data-i18n="home.faq.a4">
+              Use o botão "Minha área" no topo do site. O login real será conectado em breve.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 data-i18n="footer.about.title">CorpoPleno</h4>
+          <p data-i18n="footer.about.body">
+            Educação, tecnologia e cuidado organizados com responsabilidade. Construindo uma base
+            pública clara e honesta.
+          </p>
+          <p class="footer-company-id" data-i18n="footer.about.cnpj">CNPJ: 68.987.084/0001-32</p>
+          <p class="footer-company-id" data-i18n="footer.about.location">São Paulo, Brasil</p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.links.title">Navegação</h4>
+          <ul>
+            <li><a href="index.html" data-i18n="nav.home">Início</a></li>
+            <li><a href="produtos.html" data-i18n="nav.products">Produtos</a></li>
+            <li><a href="cursos.html" data-i18n="nav.courses">Cursos</a></li>
+            <li><a href="livros.html" data-i18n="nav.books">Livros</a></li>
+            <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
+            <li><a href="atendimento.html" data-i18n="nav.support">Atendimento</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.legal.title">Legal</h4>
+          <ul>
+            <li><a href="termos.html" data-i18n="nav.terms">Termos de Uso</a></li>
+            <li><a href="privacidade.html" data-i18n="nav.privacy">Política de Privacidade</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.contact.title">Contato</h4>
+          <ul>
+            <li><span data-i18n="footer.contact.email_label">E-mail</span>: <a href="mailto:corpoplenoresultadoreal@gmail.com">corpoplenoresultadoreal@gmail.com</a></li>
+            <li><span data-i18n="footer.contact.whatsapp_label">WhatsApp</span>: <span data-whatsapp-status data-i18n="footer.contact.pending">Canal em configuração</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-i18n="footer.copyright">© 2026 CorpoPleno. Todos os direitos reservados.</span>
+        <span id="cp-year" hidden></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="whatsapp-float" id="cp-whatsapp-float" data-i18n-aria-label="whatsapp.float_label" aria-label="Falar pelo WhatsApp com a CorpoPleno" title="WhatsApp CorpoPleno">
+    <img src="assets/img/icones-recebidos/whatsapp.png" alt="" aria-hidden="true" />
+  </button>
+
+  <script src="assets/js/i18n.js?v=20260926a"></script>
+  <script src="assets/js/markets.js?v=20260925c"></script>
+  <script src="assets/js/funnel.js?v=20260925c"></script>
+  <script src="assets/js/api-config.js?v=20261003a"></script>
+  <script src="assets/js/meta-tracking.js?v=20261007a"></script>
+  <script src="assets/js/main.js?v=20260925c"></script>
+</body>
+</html>

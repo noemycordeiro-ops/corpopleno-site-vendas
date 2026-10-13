@@ -1,0 +1,100 @@
+{
+  "_comment": "Fase CorpoPleno Livros 008 (2026-10-04) -- preço de lançamento aprovado por Noemi (R$ 29,90). FONTE DE VERDADE COMERCIAL para o checkout é a Oferta no Cordex (server/oferta_checkout.js, funil_vendas_data/ofertas.json -- lida por GET /api/books/:bookId/checkout-info e usada de verdade por POST /api/books/:bookId/checkout); este campo 'price' aqui é só para EXIBIÇÃO ao cliente no site (livro.html/books-render.js) -- os dois ficam deliberadamente em repositórios/deployments separados (nunca fundidos, regra de arquitetura), por isso o mesmo número aprovado é espelhado nos dois, nunca derivado automaticamente de um para o outro. priceVersion='launch-2026-10' é o snapshot usado em customers.contracts.price_version no momento da compra.",
+  "book_id": "amor-que-aprendeu-a-ficar",
+  "price": {
+    "amount": 29.90,
+    "currency": "BRL",
+    "priceVersion": "launch-2026-10",
+    "display": {
+      "pt-BR": "R$ 29,90",
+      "pt-PT": "R$ 29,90",
+      "en-US": "R$ 29.90",
+      "ko-KR": "R$ 29.90",
+      "es-CL": "R$ 29,90"
+    }
+  },
+  "pageCount": 25,
+  "cover": {
+    "mode": "localized-image",
+    "locales": {
+      "pt-BR": {
+        "status": "READY",
+        "image": "assets/img/livros/amor-que-aprendeu-a-ficar/cover-pt-BR.png",
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "O Amor que Aprendeu a Ficar",
+          "subtitle": null,
+          "volume": "Volume 1",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "pt-PT": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "O Amor que Aprendeu a Ficar",
+          "subtitle": null,
+          "volume": "Volume 1",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "en-US": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "The Love That Learned to Stay",
+          "subtitle": null,
+          "volume": "Volume 1",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "ko-KR": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "머무는 법을 배운 사랑",
+          "titleCompact": "머무는 법을 배운 사랑",
+          "subtitle": null,
+          "volume": "1권",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "es-CL": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "El Amor que Aprendió a Quedarse",
+          "subtitle": null,
+          "volume": "Volumen 1",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      }
+    }
+  },
+  "locales": {
+    "pt-BR": {
+      "title": "O Amor que Aprendeu a Ficar",
+      "subtitle": "Natasha e Pierry na construção de um lar",
+      "description": null
+    }
+  }
+}

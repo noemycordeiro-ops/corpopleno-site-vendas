@@ -1,0 +1,1401 @@
+/* =========================================================================
+   CorpoPleno — Design System (site público)
+   Modo claro, paleta arco-íris equilibrada, cantos arredondados,
+   sombras suaves, bastante espaço visual, responsivo.
+   ========================================================================= */
+
+:root {
+  /* Paleta conceitual (uso funcional, não decorativo aleatório) */
+  --cp-pink: #ec4899;          /* ofertas */
+  --cp-pink-light: #fdf2f8;    /* fundos */
+  --cp-orange: #f97316;        /* promoções */
+  --cp-yellow: #eab308;        /* atenção */
+  --cp-green: #22c55e;         /* saúde */
+  --cp-turquoise: #14b8a6;     /* tecnologia / IA */
+  --cp-blue: #3b82f6;          /* confiança / cursos */
+  --cp-purple: #8b5cf6;        /* master */
+
+  /* Neutros — modo claro */
+  --cp-bg: #fffdfb;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #faf7f5;
+  --cp-text: #241c2c;
+  --cp-text-soft: #5c5468;
+  --cp-border: #ece6f0;
+
+  --cp-radius-sm: 10px;
+  --cp-radius-md: 16px;
+  --cp-radius-lg: 24px;
+  --cp-radius-xl: 32px;
+
+  --cp-shadow-sm: 0 2px 8px rgba(60, 30, 80, 0.06);
+  --cp-shadow-md: 0 8px 24px rgba(60, 30, 80, 0.10);
+  --cp-shadow-lg: 0 16px 40px rgba(60, 30, 80, 0.14);
+  --cp-shadow-glow: 0 24px 60px rgba(139, 92, 246, 0.16), 0 10px 28px rgba(236, 72, 153, 0.12);
+
+  /* Gradiente-assinatura CorpoPleno (usado com moderação em CTA principal
+     e realces — não no corpo do texto) */
+  --cp-gradient-cta: linear-gradient(135deg, var(--cp-pink), var(--cp-purple));
+
+  --cp-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+  --cp-container: 1180px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cp-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .cp-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Garante que o atributo HTML `hidden` sempre esconda o elemento, mesmo
+   quando a classe do elemento já define `display` (ex.: .notice, .filter-bar
+   usam display:flex, que teria especificidade maior que o estilo nativo do
+   `hidden` e o deixaria visível por engano). */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* CP-WEB-001 (2026-09-25): quem realmente controla a rolagem da viewport
+     é o <html>, não o <body> — o overflow-x:hidden isolado no body (only)
+     não bastou para conter a gaveta off-canvas do menu mobile, comprovado
+     por teste real (scrollWidth > clientWidth mesmo com o body já
+     restrito). */
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: var(--cp-font);
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* CP-WEB-001 (2026-09-25): o menu off-canvas mobile (.main-nav, fora da
+     tela via translateX(100%)) fica fora da largura visível, mas ainda
+     ocupa espaço real no documento — sem isto, o navegador permite rolar
+     horizontalmente até revelar o menu "fechado". Nunca corta conteúdo
+     visível, só impede esse scroll horizontal indevido. */
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--cp-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Foco visível para acessibilidade */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--cp-turquoise);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: var(--cp-container);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--cp-purple);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 0 0 10px 0;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* =========================================================================
+   Header / navegação
+   ========================================================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 253, 251, 0.86);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--cp-border);
+  box-shadow: 0 1px 0 rgba(60, 30, 80, 0.02), 0 6px 20px rgba(60, 30, 80, 0.04);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--cp-text);
+}
+
+/* IMPLEMENTAÇÃO CP-WEB-001 (2026-09-25) — logo oficial recortado (símbolo +
+   "CorpoPleno"), sem o slogan cravado em pixel: o slogan agora é o
+   .brand__tagline ao lado, texto real traduzível pelos 5 idiomas — nunca
+   preso em português dentro da imagem. */
+.brand__logo {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.brand__tagline {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cp-text-soft);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .brand__tagline {
+    display: none;
+  }
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.main-nav a {
+  color: var(--cp-text-soft);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.main-nav a[aria-current="page"] {
+  color: var(--cp-purple);
+}
+
+.main-nav a:hover {
+  color: var(--cp-purple);
+  text-decoration: none;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-sm);
+  padding: 8px 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Seletor de idioma */
+.lang-select-wrap {
+  position: relative;
+}
+
+.lang-select {
+  appearance: none;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-sm);
+  padding: 8px 30px 8px 12px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  color: var(--cp-text);
+}
+
+.lang-select-wrap::after {
+  content: "▾";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--cp-text-soft);
+  font-size: 0.75rem;
+}
+
+/* =========================================================================
+   Botões
+   ========================================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--cp-gradient-cta);
+  color: #fff;
+  box-shadow: var(--cp-shadow-md);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--cp-shadow-glow);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  border-color: var(--cp-border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--cp-purple);
+  color: var(--cp-purple);
+  background: var(--cp-pink-light);
+}
+
+.btn-disabled,
+.btn[aria-disabled="true"] {
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-soft);
+  border-color: var(--cp-border);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-disabled:hover,
+.btn[aria-disabled="true"]:hover {
+  transform: none;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* =========================================================================
+   Hero
+   ========================================================================= */
+
+.hero {
+  padding: 72px 0 64px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(
+      circle at 15% 20%,
+      rgba(236, 72, 153, 0.14),
+      transparent 42%
+    ),
+    radial-gradient(circle at 85% 0%, rgba(20, 184, 166, 0.16), transparent 48%),
+    radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.12), transparent 52%),
+    radial-gradient(circle at 100% 60%, rgba(234, 179, 8, 0.10), transparent 40%),
+    var(--cp-pink-light);
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* Variante sem foto (Home, 2026-09-25) — quando o Hero não tem
+   .hero__art, o texto ocupa a largura toda e fica centralizado, em vez
+   de sobrar um espaço vazio à direita. Não afeta .hero__inner em outras
+   páginas (ex.: Sobre, que ainda usa foto ao lado do texto). */
+.hero__inner--centered {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+}
+
+.hero__inner--centered .hero__text {
+  max-width: 640px;
+}
+
+.hero__inner--centered .hero__cta {
+  justify-content: center;
+}
+
+.hero__inner--centered p.lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cp-purple);
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+  line-height: 1.12;
+  margin: 0 0 10px;
+}
+
+/* Destaque colorido inspirado no logo, só no trecho estratégico do
+   título — nunca no texto inteiro, para preservar hierarquia e leitura. */
+.hero__highlight {
+  background: linear-gradient(90deg, var(--cp-pink), var(--cp-orange), var(--cp-turquoise), var(--cp-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__slogan {
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  background: linear-gradient(
+    90deg,
+    var(--cp-pink),
+    var(--cp-orange),
+    var(--cp-turquoise),
+    var(--cp-blue),
+    var(--cp-purple)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0 0 18px;
+}
+
+.hero p.lead {
+  font-size: 1.08rem;
+  color: var(--cp-text-soft);
+  max-width: 52ch;
+  margin: 0 0 28px;
+}
+
+.hero__cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.hero__art {
+  position: relative;
+  z-index: 1;
+}
+
+/* CP-WEB-001 (refinamento) — <picture> em volta da foto principal da Ester
+   é inline por padrão; sem isto sobrava um respiro fantasma abaixo dela. */
+.hero__art > picture {
+  display: block;
+}
+
+.hero__art-glow {
+  position: absolute;
+  inset: -10% -14%;
+  z-index: 0;
+  background: radial-gradient(circle at 25% 20%, rgba(236, 72, 153, 0.4), transparent 55%),
+    radial-gradient(circle at 85% 30%, rgba(234, 179, 8, 0.32), transparent 50%),
+    radial-gradient(circle at 30% 90%, rgba(20, 184, 166, 0.32), transparent 55%),
+    radial-gradient(circle at 90% 90%, rgba(139, 92, 246, 0.3), transparent 55%);
+  filter: blur(34px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero__art-photo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--cp-radius-xl);
+  border: 4px solid #fff;
+  box-shadow: var(--cp-shadow-glow);
+}
+
+.hero__art-badge {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  box-shadow: var(--cp-shadow-md);
+  white-space: nowrap;
+}
+
+.hero__art-badge--top {
+  top: -14px;
+  right: 18px;
+}
+
+.hero__art-badge--bottom {
+  bottom: -14px;
+  left: 18px;
+}
+
+/* IMPLEMENTAÇÃO CP-WEB-001 (2026-09-25) — Teco e Zazu aparecem no Hero como
+   "adesivos" circulares ao lado da Ester (moldura branca + sombra), nunca
+   coladas na mesma cena/fundo dela — assim não competem com o rosto dela
+   nem tentam simular uma única fotografia, e cada personagem continua
+   claramente separado (um elemento = uma função). Tico aparece só na seção
+   Personagens, para não repetir os 3 mascotes no Hero. */
+.hero__sticker {
+  position: absolute;
+  z-index: 2;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: var(--cp-shadow-lg);
+}
+
+.hero__sticker--teco {
+  bottom: -18px;
+  right: 22px;
+}
+
+.hero__sticker--zazu {
+  top: -20px;
+  left: -16px;
+  width: 84px;
+  height: 84px;
+}
+
+@media (max-width: 640px) {
+  .hero__sticker {
+    width: 68px;
+    height: 68px;
+  }
+  .hero__sticker--zazu {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* =========================================================================
+   Seções gerais
+   ========================================================================= */
+
+.section {
+  padding: 56px 0;
+}
+
+.section-alt {
+  background: var(--cp-surface-soft);
+}
+
+.section__head {
+  max-width: 640px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.section__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cp-purple);
+  margin-bottom: 8px;
+}
+
+.section__head h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  margin: 0 0 10px;
+}
+
+.section__head p {
+  color: var(--cp-text-soft);
+  margin: 0;
+}
+
+/* Grids de cartões */
+
+.grid {
+  display: grid;
+  gap: 22px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  padding: 26px;
+  box-shadow: var(--cp-shadow-sm);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Cards que também funcionam como <button> (ex.: menu de atendimento com
+   divulgação progressiva) — mantém a aparência de .card, só reseta o que o
+   navegador aplicaria por padrão a um <button>. */
+button.card {
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--cp-shadow-lg);
+  border-color: rgba(139, 92, 246, 0.28);
+}
+
+/* Ícone do card: "esfera glossy" com brilho e profundidade — funciona hoje
+   com emoji (font-size herdado) e amanhã com <img class="card__icon-img">
+   (ícone 3D real) sem precisar mudar o HTML dos outros cards. */
+.card__icon {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  color: #fff;
+  margin-bottom: 4px;
+  box-shadow: inset 0 -6px 10px rgba(0, 0, 0, 0.12), inset 0 3px 6px rgba(255, 255, 255, 0.35),
+    0 6px 14px rgba(60, 30, 80, 0.16);
+  transition: transform 0.22s ease;
+}
+
+.card:hover .card__icon {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+/* Brilho glossy no topo do ícone, como um destaque de luz em superfície
+   arredondada (efeito 3D leve, só CSS). */
+.card__icon::after {
+  content: "";
+  position: absolute;
+  inset: 4px 4px auto 4px;
+  height: 40%;
+  border-radius: 999px 999px 40% 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.card__icon-img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.18));
+}
+
+/* Variante para ícones-foto reais (renders 3D fornecidos pela proprietária,
+   já com fundo e brilho próprios) — em vez de encaixar a imagem dentro da
+   esfera degradê (feita para emoji), o ícone vira o protagonista: sem cor
+   de fundo nem brilho sobreposto, só a imagem com cantos arredondados e
+   uma sombra leve. */
+.card__icon--photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: none;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.card__icon--photo::after {
+  content: none;
+}
+
+.card__icon--photo .card__icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  filter: none;
+  box-shadow: var(--cp-shadow-sm);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.12rem;
+}
+
+.card p {
+  margin: 0;
+  color: var(--cp-text-soft);
+  font-size: 0.95rem;
+}
+
+.card__footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* Entradas grandes "Explore a CorpoPleno" — mesma base de .card, com
+   ícone maior e destaque no texto de ação. */
+.explore-card {
+  text-align: center;
+  align-items: center;
+  padding: 36px 30px;
+}
+
+.explore-card .card__icon--photo {
+  width: 84px;
+  height: 84px;
+  border-radius: 26px;
+  margin-bottom: 6px;
+}
+
+.explore-card h3 {
+  font-size: 1.3rem;
+}
+
+.explore-card__cta {
+  font-weight: 700;
+  color: var(--cp-purple);
+}
+
+.explore-card:hover .explore-card__cta {
+  text-decoration: underline;
+}
+
+/* IMPLEMENTAÇÃO CP-WEB-001 (2026-09-25) — seção "Personagens CorpoPleno":
+   cada personagem com uma foto/render oficial, nome e descrição curta —
+   sem seta/botão (nenhuma função real associada ainda), sem repetir a
+   Ester do Hero em outro contexto visual (mesma imagem, uso diferente). */
+.character-card {
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+  align-items: center;
+  gap: 6px;
+}
+
+/* CP-WEB-001 (refinamento) — <picture> é inline por padrão; sem isto o
+   card ganharia um respiro extra embaixo da foto (espaço fantasma de
+   elemento inline). */
+.character-card picture {
+  display: block;
+  width: 100%;
+  background: var(--cp-surface-soft);
+}
+
+.character-card__photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  display: block;
+}
+
+.character-card h3 {
+  margin-top: 14px;
+}
+
+.character-card p {
+  padding: 0 20px 22px;
+}
+
+/* Cores funcionais de ícone/tag por categoria */
+.tone-pink { background: var(--cp-pink); }
+.tone-orange { background: var(--cp-orange); }
+.tone-yellow { background: var(--cp-yellow); }
+.tone-green { background: var(--cp-green); }
+.tone-turquoise { background: var(--cp-turquoise); }
+.tone-blue { background: var(--cp-blue); }
+.tone-purple { background: var(--cp-purple); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.badge-preparo {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+.badge-disponivel {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-info {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+/* =========================================================================
+   FAQ (acordeão)
+   ========================================================================= */
+
+.faq {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  overflow: hidden;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  color: var(--cp-purple);
+  flex-shrink: 0;
+}
+
+.faq-item[open] summary::after {
+  content: "–";
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 0 22px 20px;
+  color: var(--cp-text-soft);
+}
+
+/* =========================================================================
+   CTA final
+   ========================================================================= */
+
+.cta-final {
+  background: linear-gradient(120deg, var(--cp-purple), var(--cp-pink));
+  border-radius: var(--cp-radius-lg);
+  padding: 48px 36px;
+  text-align: center;
+  color: #fff;
+}
+
+.cta-final h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.cta-final p {
+  margin: 0 0 24px;
+  opacity: 0.92;
+}
+
+.cta-final .btn-primary {
+  background: #fff;
+  color: var(--cp-purple);
+}
+
+/* =========================================================================
+   Placeholder notice
+   ========================================================================= */
+
+.notice {
+  border-radius: var(--cp-radius-sm);
+  padding: 14px 18px;
+  font-size: 0.92rem;
+  border: 1px solid;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.notice-warning {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.notice-info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+
+/* Estado vazio elegante de Produtos/Cursos (assets/js/catalog-visibility.js)
+   — aparece só quando nenhuma categoria daquela página tem item publicado. */
+.catalog-empty-state {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--cp-text-soft);
+  font-size: 1.05rem;
+  background: var(--cp-surface-soft);
+  border-radius: var(--cp-radius-lg);
+}
+
+/* =========================================================================
+   Campo de mensagem do Atendimento — o texto ainda não é enviado a nenhum
+   servidor (nenhum backend real conectado); ver atendimento.html.
+   ========================================================================= */
+
+.cp-field {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--cp-radius-sm);
+  border: 1px solid var(--cp-border);
+  font: inherit;
+  color: var(--cp-text);
+  background: var(--cp-surface);
+}
+
+textarea.cp-field {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* Cartão único de contato do Atendimento — elegante, central, sem
+   poluição visual: título, subtítulo, descrição curta, campo de texto e
+   um botão de ação. */
+.contact-card {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 36px;
+  gap: 16px;
+}
+
+.contact-card h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.contact-card__subtitle {
+  margin: 0;
+  font-weight: 700;
+  color: var(--cp-purple);
+}
+
+.contact-card .cp-field {
+  margin-top: 4px;
+}
+
+.contact-card .btn {
+  margin-top: 4px;
+}
+
+/* Login / Cadastro (login.html, cadastro.html) — reaproveita o mesmo
+   cartão central do Atendimento, só com rótulos visíveis por campo. */
+.auth-field-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: -8px;
+}
+
+.cp-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--cp-text-soft);
+  cursor: pointer;
+}
+
+.cp-checkbox input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.auth-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+/* =========================================================================
+   Footer
+   ========================================================================= */
+
+.site-footer {
+  background: var(--cp-text);
+  color: #e9e4ee;
+  padding: 48px 0 24px;
+  margin-top: 40px;
+}
+
+.site-footer a {
+  color: #d8cfe6;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.footer-col h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #b8a9cc;
+  margin: 0 0 14px;
+}
+
+/* Identificação empresarial discreta, logo abaixo do texto institucional
+   da primeira coluna do rodapé — não repetida em nenhum outro lugar do
+   layout além da seção "Identificação da empresa" das páginas legais. */
+.footer-col .footer-company-id {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  color: #b8a9cc;
+  line-height: 1.5;
+}
+
+.footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.92rem;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: #b8a9cc;
+}
+
+/* =========================================================================
+   Página interna (legal / sobre / atendimento)
+   ========================================================================= */
+
+.page-hero {
+  padding: 44px 0 8px;
+  text-align: center;
+}
+
+.page-hero h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+}
+
+.page-hero p {
+  color: var(--cp-text-soft);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.prose {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.prose h2 {
+  margin-top: 40px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Ícone 3D pequeno ao lado do título de cada conceito (Sobre) — mesma
+   ideia do .card__icon--photo, só que inline com o texto do h2. */
+.prose-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: var(--cp-shadow-sm);
+  flex-shrink: 0;
+}
+
+.prose p,
+.prose li {
+  color: var(--cp-text-soft);
+}
+
+/* Seção "Identificação da empresa" (termos.html/privacidade.html) — lista
+   de definição simples, dt/dd alternando nas duas colunas do grid. */
+.company-id {
+  margin: 16px 0 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 16px;
+  font-size: 0.95rem;
+}
+
+.company-id dt {
+  font-weight: 700;
+  color: var(--cp-text);
+}
+
+.company-id dd {
+  margin: 0;
+  color: var(--cp-text-soft);
+}
+
+@media (max-width: 560px) {
+  .company-id {
+    grid-template-columns: 1fr;
+    gap: 2px 0;
+  }
+
+  .company-id dt {
+    margin-top: 10px;
+  }
+}
+
+.legal-updated {
+  font-size: 0.85rem;
+  color: var(--cp-text-soft);
+  text-align: center;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+/* =========================================================================
+   Filtros (produtos/cursos)
+   ========================================================================= */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.filter-chip {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--cp-text-soft);
+}
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--cp-purple);
+  border-color: var(--cp-purple);
+  color: #fff;
+}
+
+/* =========================================================================
+   Utilidades
+   ========================================================================= */
+
+.text-center {
+  text-align: center;
+}
+
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================================================================
+   Responsivo
+   ========================================================================= */
+
+@media (max-width: 960px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 780px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+  }
+  /* CP-WEB-001: no celular o texto vem PRIMEIRO, a Ester depois — por
+     isso nenhuma ordem é forçada aqui (a ordem natural do HTML já
+     coloca o texto antes do .hero__art). */
+  .hero__art {
+    margin-top: 8px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* CP-WEB-001 (2026-09-25) — CORREÇÃO: com o slogan visível como texto real
+   no cabeçalho (.brand__tagline), a barra de navegação completa (logo +
+   tagline + 5 links + "Minha área" + seletor de idioma) deixou de caber
+   até no tablet — o breakpoint antigo (720px) só virava hambúrguer tarde
+   demais, sobrepondo texto entre ~721px e ~900px. Isolado num breakpoint
+   próprio, mais largo, só para o cabeçalho — os grids continuam
+   colapsando em 720px (regra abaixo), sem qualquer relação com isto. */
+@media (max-width: 900px) {
+  /* CP-WEB-001 — CORREÇÃO comprovada por teste real: tanto `inset: 0 0`
+     quanto uma gaveta de largura fixa ainda somavam ao scrollWidth do
+     documento enquanto a ocultação usava `transform: translateX(...)` —
+     um comportamento conhecido do Chrome com elementos fixed+transform.
+     Trocado para animar `right` diretamente (sem transform nenhum):
+     fechado, a gaveta fica com `right: -300px` (fora da área rolável de
+     verdade, não só fora da área visível); aberta, `right: 0`. */
+  .main-nav {
+    position: fixed;
+    top: 62px;
+    right: -300px;
+    /* `bottom: 0` sozinho não bastou para derivar a altura num container
+       flex fixed neste teste real (ficava do tamanho do conteúdo, não da
+       tela) — altura explícita remove a ambiguidade. */
+    height: calc(100vh - 62px);
+    width: min(300px, 88vw);
+    background: var(--cp-bg);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 20px;
+    gap: 18px;
+    visibility: hidden;
+    transition: right 0.2s ease, visibility 0.2s ease;
+    overflow-y: auto;
+    z-index: 200;
+    box-shadow: var(--cp-shadow-lg);
+  }
+
+  .main-nav.is-open {
+    right: 0;
+    visibility: visible;
+  }
+
+  .main-nav a {
+    font-size: 1.1rem;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 720px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+  }
+
+  .contact-card {
+    padding: 28px 22px;
+  }
+}
+
+/* =========================================================================
+   Botão "Minha área" (cabeçalho)
+   ========================================================================= */
+
+.btn-minha-area {
+  background: none;
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--cp-text-soft);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-minha-area:hover {
+  border-color: var(--cp-purple);
+  color: var(--cp-purple);
+}
+
+/* =========================================================================
+   WhatsApp flutuante
+   ========================================================================= */
+
+.whatsapp-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 500;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--cp-shadow-lg);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.06);
+}
+
+/* Ícone sempre pequeno e proporcional ao botão, nunca esticado — o render
+   3D já tem seu próprio brilho e sombra. */
+.whatsapp-float img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .whatsapp-float {
+    right: 14px;
+    bottom: 14px;
+    width: 52px;
+    height: 52px;
+  }
+  .whatsapp-float img {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* =========================================================================
+   Bloqueio leve de seleção/cópia no conteúdo principal
+   IMPORTANTE (honestidade): isto é só um obstáculo cosmético contra cópia
+   casual — não impede visualizar o código-fonte, desativar JavaScript, usar
+   as ferramentas de desenvolvedor do navegador, nem (é tecnicamente
+   impossível) capturas de tela. Documentado em detalhe no README. O rodapé
+   e os elementos com ".allow-select" (e-mail/WhatsApp de contato) ficam de
+   fora de propósito, para não impedir o visitante de copiar o contato.
+   ========================================================================= */
+
+main {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.allow-select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}

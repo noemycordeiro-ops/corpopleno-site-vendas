@@ -1,0 +1,100 @@
+{
+  "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções da Fase 006.1 APROVADAS por Noemi. en-US confirmado 'The Love That Teaches You to Grow' (igual ao proposto). ko-KR: Noemi aprovou '자라는 법을 가르치는 사랑' -- uma TERCEIRA formulação, diferente das 2 opções apresentadas na 006.1 ('성장을 가르치는 사랑'/'성장을 돕는 사랑') -- decisão editorial humana, registrada literalmente como fornecida. textStatus='APPROVED' em todos os 5 idiomas. cover.text.subtitle continua null (capa real não traz subtítulo impresso). Nenhuma arte nova gerada.",
+  "book_id": "amor-que-ensina-a-crescer",
+  "price": {
+    "amount": 29.90,
+    "currency": "BRL",
+    "priceVersion": "launch-2026-10",
+    "display": {
+      "pt-BR": "R$ 29,90",
+      "pt-PT": "R$ 29,90",
+      "en-US": "R$ 29.90",
+      "ko-KR": "R$ 29.90",
+      "es-CL": "R$ 29,90"
+    }
+  },
+  "pageCount": null,
+  "cover": {
+    "mode": "localized-image",
+    "locales": {
+      "pt-BR": {
+        "status": "READY",
+        "image": "assets/img/livros/amor-que-ensina-a-crescer/cover-pt-BR.png",
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "O Amor que Ensina a Crescer",
+          "subtitle": null,
+          "volume": "Volume 2",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "pt-PT": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "O Amor que Ensina a Crescer",
+          "subtitle": null,
+          "volume": "Volume 2",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "en-US": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "The Love That Teaches You to Grow",
+          "subtitle": null,
+          "volume": "Volume 2",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "ko-KR": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "자라는 법을 가르치는 사랑",
+          "titleCompact": "자라는 법을 가르치는 사랑",
+          "subtitle": null,
+          "volume": "2권",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "es-CL": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "El Amor que Enseña a Crecer",
+          "subtitle": null,
+          "volume": "Volumen 2",
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      }
+    }
+  },
+  "locales": {
+    "pt-BR": {
+      "title": "O Amor que Ensina a Crescer",
+      "subtitle": null,
+      "description": null
+    }
+  }
+}

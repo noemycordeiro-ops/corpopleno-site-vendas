@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Modelo interno] Página de produto — CorpoPleno</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <!-- MODELO INTERNO — não é uma página pública real. Não referenciada em
+       nenhum menu, rodapé ou sitemap. Existe para servir de template
+       reutilizável: quando um produto real for aprovado (ver revisão do
+       catálogo em RELATORIO_VALIDACAO.md), copie este arquivo, troque o
+       conteúdo de exemplo pelo conteúdo real, registre o produto em
+       assets/js/funnel.js (objeto PRODUCTS) e só então publique.
+       canonical/og:url intencionalmente omitidos por ser um modelo, não
+       uma página real. -->
+  <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
+</head>
+<body data-partial-i18n="true">
+  <a class="skip-link" href="#conteudo-principal" data-i18n="skip_link">Pular para o conteúdo principal</a>
+
+  <div class="notice notice-warning" style="margin: 12px 20px; text-align: center; justify-content: center;">
+    <span aria-hidden="true">🧩</span>
+    <span><strong>MODELO INTERNO — NÃO É UM PRODUTO REAL.</strong> Esta página demonstra a estrutura reutilizável de página de produto do funil de vendas CorpoPleno. Nenhum preço, imagem ou texto aqui é uma oferta real.</span>
+  </div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <picture>
+          <source srcset="assets/img/marca/logo-corpopleno-header.webp" type="image/webp" />
+          <img class="brand__logo" src="assets/img/marca/logo-corpopleno-header.png" alt="CorpoPleno" width="900" height="201" />
+        </picture>
+        <span class="brand__tagline" data-i18n="brand.slogan">Inteligente, resultado real</span>
+      </a>
+      <nav class="main-nav" id="cp-main-nav" aria-label="Navegação principal" data-i18n-aria-label="nav.aria_label">
+        <a href="index.html" data-i18n="nav.home">Início</a>
+        <a href="produtos.html" data-i18n="nav.products">Produtos</a>
+        <a href="cursos.html" data-i18n="nav.courses">Cursos</a>
+        <a href="livros.html" data-i18n="nav.books">Livros</a>
+        <a href="sobre.html" data-i18n="nav.about">Sobre</a>
+        <a href="atendimento.html" data-i18n="nav.support">Atendimento</a>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="btn-minha-area" id="cp-minha-area" data-i18n="nav.login">Entrar</button>
+        <div class="lang-select-wrap">
+          <label class="sr-only" for="cp-lang-select" data-i18n="lang_label">Selecionar idioma</label>
+          <select id="cp-lang-select" class="lang-select">
+            <option value="pt-BR">Português — PT-BR</option>
+            <option value="pt-PT">Português — PT-PT</option>
+            <option value="en-US">English — EN-US</option>
+            <option value="ko-KR">한국어 — KO-KR</option>
+            <option value="es-CL">Español — ES-CL</option>
+          </select>
+        </div>
+        <button type="button" class="nav-toggle" id="cp-nav-toggle" aria-expanded="false" aria-controls="cp-main-nav" aria-label="Abrir menu" data-i18n-aria-label="nav_toggle.open_label">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+    <section class="page-hero">
+      <div class="container">
+        <span class="section__eyebrow">[Categoria do produto]</span>
+        <h1>[Nome do Produto] <em style="color: var(--cp-text-soft); font-size: 0.5em;">(exemplo de modelo)</em></h1>
+        <p>[Descrição curta de uma linha explicando o que é o produto e para quem é.]</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="notice notice-info" id="cp-partial-translation-notice" hidden></div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: start; gap: 40px;">
+
+          <div>
+            <div class="card" style="padding: 0; overflow: hidden;">
+              <div style="aspect-ratio: 4/3; background: var(--cp-surface-soft); display:flex; align-items:center; justify-content:center; color: var(--cp-text-soft); font-size:0.9rem;" aria-hidden="true">
+                [Imagem do produto]
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+              <h3>Para quem é</h3>
+              <p>[Descrever, em 1–2 frases, o perfil de pessoa a quem este produto se destina.]</p>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+              <h3>O que você recebe</h3>
+              <ul>
+                <li>[Item 1 do que é entregue — ex.: formato do material]</li>
+                <li>[Item 2 — ex.: forma de acesso]</li>
+                <li>[Item 3 — ex.: duração/validade do acesso]</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="card" id="cp-product-price-card">
+              <span class="badge badge-preparo" data-i18n="common.in_preparation">Em preparação</span>
+              <h3>Investimento</h3>
+              <p style="font-size: 1.8rem; font-weight: 800; margin: 4px 0;" id="cp-product-price" data-price-brl="97.00">—</p>
+              <p style="font-size: 0.82rem; color: var(--cp-text-soft);">Preço ilustrativo, apenas para demonstrar o layout do modelo — não é uma oferta real.</p>
+              <button type="button" class="btn btn-primary btn-block" id="cp-product-buy" aria-disabled="true" title="Checkout ainda não configurado para este modelo">
+                Quero comprar
+              </button>
+              <p class="notice notice-info" id="cp-product-buy-status" hidden></p>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+              <h3>Benefícios</h3>
+              <ul>
+                <li>[Benefício 1 — resultado prático que a pessoa ganha]</li>
+                <li>[Benefício 2]</li>
+                <li>[Benefício 3]</li>
+              </ul>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+              <h3>Suporte</h3>
+              <p>Dúvidas antes ou depois da compra podem ser enviadas pela <a href="atendimento.html">página de Atendimento</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="section__head" style="margin-top: 56px;">
+          <h2>Perguntas frequentes</h2>
+        </div>
+        <div class="faq">
+          <details class="faq-item">
+            <summary>Como recebo o produto após a compra?</summary>
+            <p>[Explicar o processo real de entrega/acesso quando o produto for aprovado.]</p>
+          </details>
+          <details class="faq-item">
+            <summary>Qual é a política de cancelamento e reembolso?</summary>
+            <p>[Resumir a política real; detalhar em Termos de Uso.]</p>
+          </details>
+          <details class="faq-item">
+            <summary>Preciso de algum conhecimento prévio?</summary>
+            <p>[Responder de acordo com o produto real.]</p>
+          </details>
+        </div>
+
+        <div class="notice notice-warning" style="max-width: 760px; margin: 32px auto 0;">
+          <span aria-hidden="true">ℹ️</span>
+          <span>Informações obrigatórias antes da compra (carga horária, formato de entrega, política de reembolso e certificação, quando aplicável) serão detalhadas nesta seção quando o produto real for aprovado — ver <code>legal.pending_review</code>.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 data-i18n="footer.about.title">CorpoPleno</h4>
+          <p data-i18n="footer.about.body">Educação, tecnologia e cuidado organizados com responsabilidade.</p>
+          <p class="footer-company-id" data-i18n="footer.about.cnpj">CNPJ: 68.987.084/0001-32</p>
+          <p class="footer-company-id" data-i18n="footer.about.location">São Paulo, Brasil</p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.links.title">Navegação</h4>
+          <ul>
+            <li><a href="index.html" data-i18n="nav.home">Início</a></li>
+            <li><a href="produtos.html" data-i18n="nav.products">Produtos</a></li>
+            <li><a href="cursos.html" data-i18n="nav.courses">Cursos</a></li>
+            <li><a href="livros.html" data-i18n="nav.books">Livros</a></li>
+            <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
+            <li><a href="atendimento.html" data-i18n="nav.support">Atendimento</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.legal.title">Legal</h4>
+          <ul>
+            <li><a href="termos.html" data-i18n="nav.terms">Termos de Uso</a></li>
+            <li><a href="privacidade.html" data-i18n="nav.privacy">Política de Privacidade</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.contact.title">Contato</h4>
+          <ul>
+            <li><span data-i18n="footer.contact.email_label">E-mail</span>: <a href="mailto:corpoplenoresultadoreal@gmail.com">corpoplenoresultadoreal@gmail.com</a></li>
+            <li><span data-i18n="footer.contact.whatsapp_label">WhatsApp</span>: <span data-whatsapp-status data-i18n="footer.contact.pending">Canal em configuração</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-i18n="footer.copyright">© 2026 CorpoPleno. Todos os direitos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="whatsapp-float" id="cp-whatsapp-float" data-i18n-aria-label="whatsapp.float_label" aria-label="Falar pelo WhatsApp com a CorpoPleno" title="WhatsApp CorpoPleno">
+    <img src="assets/img/icones-recebidos/whatsapp.png" alt="" aria-hidden="true" />
+  </button>
+
+  <script src="assets/js/i18n.js?v=20260926a"></script>
+  <script src="assets/js/markets.js?v=20260925c"></script>
+  <script src="assets/js/funnel.js?v=20260925c"></script>
+  <script src="assets/js/api-config.js?v=20261003a"></script>
+  <script src="assets/js/meta-tracking.js?v=20261007a"></script>
+  <script src="assets/js/main.js?v=20260925c"></script>
+  <script>
+    /* Demonstração de uso do funil nesta página-modelo. Nada disto é
+       exclusivo desta página — qualquer página de produto real seguiria
+       o mesmo padrão, trocando "PRODUTO_EXEMPLO_NAO_PUBLICAR" pelo
+       productId real cadastrado em assets/js/funnel.js. */
+    (function () {
+      var PRODUCT_ID = "PRODUTO_EXEMPLO_NAO_PUBLICAR";
+
+      function currentLocale() {
+        return window.CP_I18N ? window.CP_I18N.currentLang() : "pt-BR";
+      }
+
+      function refreshPriceAndButton() {
+        var priceEl = document.getElementById("cp-product-price");
+        var buyBtn = document.getElementById("cp-product-buy");
+        if (!priceEl || !buyBtn || !window.CP_MARKETS) return;
+
+        var baseAmount = parseFloat(priceEl.getAttribute("data-price-brl"));
+        var locale = currentLocale();
+        var result = window.CP_MARKETS.convertFromBRL(baseAmount, locale);
+        priceEl.textContent = result.text;
+        priceEl.classList.toggle("price-unavailable", !result.available);
+
+        var canBuy = window.CP_FUNNEL && window.CP_FUNNEL.canCheckout(PRODUCT_ID, locale);
+        buyBtn.setAttribute("aria-disabled", canBuy ? "false" : "true");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        refreshPriceAndButton();
+        if (window.CP_FUNNEL) {
+          window.CP_FUNNEL.trackEvent("view_product", {
+            productId: PRODUCT_ID,
+            market: window.CP_MARKETS ? window.CP_MARKETS.getMarket(currentLocale()).market : null
+          });
+        }
+
+        var buyBtn = document.getElementById("cp-product-buy");
+        var buyStatus = document.getElementById("cp-product-buy-status");
+        if (buyBtn && buyStatus) {
+          buyBtn.addEventListener("click", function () {
+            var locale = currentLocale();
+            if (window.CP_FUNNEL) {
+              window.CP_FUNNEL.trackEvent("click_buy", { productId: PRODUCT_ID, locale: locale });
+            }
+            var cfg = window.CP_FUNNEL ? window.CP_FUNNEL.getProductMarketConfig(PRODUCT_ID, locale) : null;
+            if (cfg && cfg.checkoutUrl) {
+              if (window.CP_FUNNEL) {
+                window.CP_FUNNEL.trackEvent("begin_checkout", { productId: PRODUCT_ID, locale: locale, value: cfg.price, currency: cfg.checkoutCurrency });
+              }
+              window.location.href = cfg.checkoutUrl;
+            } else {
+              buyStatus.textContent = "Este é um modelo interno — nenhum checkout real existe para este produto de exemplo.";
+              buyStatus.hidden = false;
+            }
+          });
+        }
+      });
+
+      window.addEventListener("corpopleno:lang-changed", refreshPriceAndButton);
+    })();
+  </script>
+</body>
+</html>

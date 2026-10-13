@@ -1,0 +1,55 @@
+{
+  "_comment": "LIVRO DE TESTE INTERNO (Fase CorpoPleno Livros 001). NÃO é um produto real — nunca exibir/vender para clientes reais sem autorização explícita de Noemi (Passo 20 da fase). Usado só para validar catálogo, página de detalhe e leitor digital. Schema de cover migrado para o formato mode/locales na Fase CorpoPleno Livros 006 (2026-10-03) -- primeiro exemplo real de 'localized-image' com os 5 idiomas já READY (as 5 capas SVG já existiam desde a Fase 001, nunca alteradas).",
+  "id": "livro-teste",
+  "status": "PUBLISHED",
+  "internalTestOnly": true,
+  "price": {
+    "amount": 0,
+    "currency": "BRL",
+    "display": {
+      "pt-BR": "Gratuito (teste interno)",
+      "pt-PT": "Gratuito (teste interno)",
+      "en-US": "Free (internal test)",
+      "ko-KR": "무료 (내부 테스트)",
+      "es-CL": "Gratuito (prueba interna)"
+    }
+  },
+  "pageCount": 5,
+  "cover": {
+    "mode": "localized-image",
+    "locales": {
+      "pt-BR": { "status": "READY", "image": "assets/img/livros/livro-teste/cover-pt-BR.svg" },
+      "pt-PT": { "status": "READY", "image": "assets/img/livros/livro-teste/cover-pt-PT.svg" },
+      "en-US": { "status": "READY", "image": "assets/img/livros/livro-teste/cover-en-US.svg" },
+      "ko-KR": { "status": "READY", "image": "assets/img/livros/livro-teste/cover-ko-KR.svg" },
+      "es-CL": { "status": "READY", "image": "assets/img/livros/livro-teste/cover-es-CL.svg" }
+    }
+  },
+  "locales": {
+    "pt-BR": {
+      "title": "Livro de Teste CorpoPleno",
+      "subtitle": "Material interno para validar o leitor digital",
+      "description": "Este é um livro de teste interno, usado apenas para validar o catálogo, a página de detalhe, a compra e o leitor digital CorpoPleno. Não é um produto real à venda."
+    },
+    "pt-PT": {
+      "title": "Livro de Teste CorpoPleno",
+      "subtitle": "Material interno para validar o leitor digital",
+      "description": "Este é um livro de teste interno, usado apenas para validar o catálogo, a página de detalhe, a compra e o leitor digital CorpoPleno. Não é um produto real à venda."
+    },
+    "en-US": {
+      "title": "CorpoPleno Test Book",
+      "subtitle": "Internal material to validate the digital reader",
+      "description": "This is an internal test book, used only to validate the catalog, the detail page, the purchase flow and the CorpoPleno digital reader. It is not a real product for sale."
+    },
+    "ko-KR": {
+      "title": "코르포플레누 테스트 도서",
+      "subtitle": "디지털 리더 검증을 위한 내부 자료",
+      "description": "이 도서는 카탈로그, 상세 페이지, 구매 흐름, 코르포플레누 디지털 리더를 검증하기 위한 내부 테스트용입니다. 실제 판매 상품이 아닙니다."
+    },
+    "es-CL": {
+      "title": "Libro de Prueba CorpoPleno",
+      "subtitle": "Material interno para validar el lector digital",
+      "description": "Este es un libro de prueba interno, usado solo para validar el catálogo, la página de detalle, el flujo de compra y el lector digital CorpoPleno. No es un producto real a la venta."
+    }
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "_comment": "Fase CorpoPleno Livros 006.3 (2026-10-03) -- manifesto de CONTROLE do pipeline de recebimento das capas localizadas. NUNCA é a fonte de verdade do texto aprovado (isso continua em assets/books/<book_id>/metadata.json, campo cover.locales.*.text) -- approvedTitle aqui é só um resumo para conferência visual rápida do checklist, nunca editado isoladamente. Gerado/atualizado por tools/validar_capa_localizada.js -- nunca editado manualmente além da criação inicial. pt-BR é sempre 'CANONICAL' e nunca passa pelo validador (o validador recusa explicitamente qualquer tentativa de usar o slot pt-BR como alvo).",
+  "pathConvention": "assets/img/livros/<book_id>/cover-<locale>.png",
+  "locales": ["pt-BR", "pt-PT", "en-US", "ko-KR", "es-CL"],
+  "statusValues": ["CANONICAL", "AWAITING_IMAGE", "READY", "REJECTED"],
+  "technicalValidationValues": ["NOT_SUBMITTED", "PASS", "FAIL"],
+  "humanVisualApprovalValues": ["NOT_APPLICABLE", "PENDING", "APPROVED"],
+  "variants": [
+    {
+      "bookId": "hene-sem-medo-livro-1", "locale": "pt-BR",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-1/cover-pt-BR.png",
+      "status": "CANONICAL", "sourceLocale": null,
+      "approvedTitle": "Henê Sem Medo", "originalArtworkPreserved": true,
+      "imageReady": true, "technicalValidation": "PASS", "humanVisualApproval": "APPROVED",
+      "checksum": "9525df6ba8fe0827166618a9a21867a1"
+    },
+    {
+      "bookId": "hene-sem-medo-livro-1", "locale": "pt-PT",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-1/cover-pt-PT.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê Sem Medo", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "hene-sem-medo-livro-1", "locale": "en-US",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-1/cover-en-US.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê Without Fear", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "hene-sem-medo-livro-1", "locale": "ko-KR",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-1/cover-ko-KR.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê, 두려움 없이", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "hene-sem-medo-livro-1", "locale": "es-CL",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-1/cover-es-CL.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê Sin Miedo", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+
+    {
+      "bookId": "hene-sem-medo-livro-2", "locale": "pt-BR",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-2/cover-pt-BR.png",
+      "status": "CANONICAL", "sourceLocale": null,
+      "approvedTitle": "Henê Sem Medo", "originalArtworkPreserved": true,
+      "imageReady": true, "technicalValidation": "PASS", "humanVisualApproval": "APPROVED",
+      "checksum": "bedb9cdf742dff0def69fae0b6af0765"
+    },
+    {
+      "bookId": "hene-sem-medo-livro-2", "locale": "pt-PT",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-2/cover-pt-PT.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê Sem Medo", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "hene-sem-medo-livro-2", "locale": "en-US",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-2/cover-en-US.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê Without Fear", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "hene-sem-medo-livro-2", "locale": "ko-KR",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-2/cover-ko-KR.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê, 두려움 없이", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "hene-sem-medo-livro-2", "locale": "es-CL",
+      "expectedPath": "assets/img/livros/hene-sem-medo-livro-2/cover-es-CL.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Henê Sin Miedo", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+
+    {
+      "bookId": "amor-que-aprendeu-a-ficar", "locale": "pt-BR",
+      "expectedPath": "assets/img/livros/amor-que-aprendeu-a-ficar/cover-pt-BR.png",
+      "status": "CANONICAL", "sourceLocale": null,
+      "approvedTitle": "O Amor que Aprendeu a Ficar", "originalArtworkPreserved": true,
+      "imageReady": true, "technicalValidation": "PASS", "humanVisualApproval": "APPROVED",
+      "checksum": "bf3ae522b33a5b8fb4eb9571f17dc19a"
+    },
+    {
+      "bookId": "amor-que-aprendeu-a-ficar", "locale": "pt-PT",
+      "expectedPath": "assets/img/livros/amor-que-aprendeu-a-ficar/cover-pt-PT.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "O Amor que Aprendeu a Ficar", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "amor-que-aprendeu-a-ficar", "locale": "en-US",
+      "expectedPath": "assets/img/livros/amor-que-aprendeu-a-ficar/cover-en-US.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "The Love That Learned to Stay", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "amor-que-aprendeu-a-ficar", "locale": "ko-KR",
+      "expectedPath": "assets/img/livros/amor-que-aprendeu-a-ficar/cover-ko-KR.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "머무는 법을 배운 사랑", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "amor-que-aprendeu-a-ficar", "locale": "es-CL",
+      "expectedPath": "assets/img/livros/amor-que-aprendeu-a-ficar/cover-es-CL.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "El Amor que Aprendió a Quedarse", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+
+    {
+      "bookId": "amor-que-ensina-a-crescer", "locale": "pt-BR",
+      "expectedPath": "assets/img/livros/amor-que-ensina-a-crescer/cover-pt-BR.png",
+      "status": "CANONICAL", "sourceLocale": null,
+      "approvedTitle": "O Amor que Ensina a Crescer", "originalArtworkPreserved": true,
+      "imageReady": true, "technicalValidation": "PASS", "humanVisualApproval": "APPROVED",
+      "checksum": "5f6906c07840d0b0878bc608ba1574ab"
+    },
+    {
+      "bookId": "amor-que-ensina-a-crescer", "locale": "pt-PT",
+      "expectedPath": "assets/img/livros/amor-que-ensina-a-crescer/cover-pt-PT.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "O Amor que Ensina a Crescer", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "amor-que-ensina-a-crescer", "locale": "en-US",
+      "expectedPath": "assets/img/livros/amor-que-ensina-a-crescer/cover-en-US.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "The Love That Teaches You to Grow", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "amor-que-ensina-a-crescer", "locale": "ko-KR",
+      "expectedPath": "assets/img/livros/amor-que-ensina-a-crescer/cover-ko-KR.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "자라는 법을 가르치는 사랑", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "amor-que-ensina-a-crescer", "locale": "es-CL",
+      "expectedPath": "assets/img/livros/amor-que-ensina-a-crescer/cover-es-CL.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "El Amor que Enseña a Crecer", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+
+    {
+      "bookId": "receitas-corpopleno", "locale": "pt-BR",
+      "expectedPath": "assets/img/livros/receitas-corpopleno/cover-pt-BR.png",
+      "status": "CANONICAL", "sourceLocale": null,
+      "approvedTitle": "Livro de Receitas", "originalArtworkPreserved": true,
+      "imageReady": true, "technicalValidation": "PASS", "humanVisualApproval": "APPROVED",
+      "checksum": "a83249570f09ecb0ce175b7b03490e1b"
+    },
+    {
+      "bookId": "receitas-corpopleno", "locale": "pt-PT",
+      "expectedPath": "assets/img/livros/receitas-corpopleno/cover-pt-PT.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Livro de Receitas", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "receitas-corpopleno", "locale": "en-US",
+      "expectedPath": "assets/img/livros/receitas-corpopleno/cover-en-US.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Cookbook", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "receitas-corpopleno", "locale": "ko-KR",
+      "expectedPath": "assets/img/livros/receitas-corpopleno/cover-ko-KR.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "레시피북", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    },
+    {
+      "bookId": "receitas-corpopleno", "locale": "es-CL",
+      "expectedPath": "assets/img/livros/receitas-corpopleno/cover-es-CL.png",
+      "status": "AWAITING_IMAGE", "sourceLocale": "pt-BR",
+      "approvedTitle": "Libro de Recetas", "originalArtworkPreserved": null,
+      "imageReady": false, "technicalValidation": "NOT_SUBMITTED", "humanVisualApproval": "NOT_APPLICABLE",
+      "checksum": null
+    }
+  ]
+}

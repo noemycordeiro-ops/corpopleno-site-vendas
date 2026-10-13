@@ -1,0 +1,42 @@
+[
+  {
+    "page": 1,
+    "blocks": [
+      { "type": "heading", "text": "Bem-vindo ao leitor CorpoPleno" },
+      { "type": "paragraph", "text": "Este é um livro de teste interno. Ele existe só para validar a experiência completa do leitor: navegação entre páginas, troca de idioma, ajuste de tela e tamanho de texto, e proteção de conteúdo." },
+      { "type": "callout", "text": "Nenhum conteúdo real da CorpoPleno está sendo publicado aqui — este livro nunca deve ser vendido a um cliente de verdade." }
+    ]
+  },
+  {
+    "page": 2,
+    "blocks": [
+      { "type": "heading", "text": "Como a leitura funciona" },
+      { "type": "paragraph", "text": "Use as setas no rodapé do leitor para avançar e voltar de página. No celular, toque nas setas; no computador, você também pode usar as setas do teclado." },
+      { "type": "image", "src": "assets/img/marca/logo-corpopleno-header.png", "alt": "Logotipo CorpoPleno em tons de roxo e rosa", "caption": "Identidade visual CorpoPleno, usada como exemplo de imagem integrada à página." }
+    ]
+  },
+  {
+    "page": 3,
+    "blocks": [
+      { "type": "heading", "text": "Ajustando a tela" },
+      { "type": "paragraph", "text": "O leitor se adapta automaticamente ao tamanho da sua tela. Se preferir, use o ícone \"Ajustar leitura\" para escolher manualmente entre Computador/TV, Tablet ou Celular, e também para aumentar ou diminuir o texto." },
+      { "type": "icon", "glyph": "🖥️", "label": "Modo Computador / TV" }
+    ]
+  },
+  {
+    "page": 4,
+    "blocks": [
+      { "type": "heading", "text": "Sua leitura fica salva" },
+      { "type": "paragraph", "text": "Sempre que você muda de página, o progresso é salvo automaticamente. Ao reabrir este livro, você volta exatamente de onde parou." },
+      { "type": "callout", "text": "Neste momento, o progresso é salvo apenas neste navegador — quando a conta real do cliente existir, ele passará a acompanhar você em qualquer dispositivo." }
+    ]
+  },
+  {
+    "page": 5,
+    "blocks": [
+      { "type": "heading", "text": "Fim do livro de teste" },
+      { "type": "paragraph", "text": "Você chegou à última página deste livro de teste. Em um livro real, aqui poderiam aparecer referências, agradecimentos ou um convite para o próximo título." },
+      { "type": "reference", "text": "CorpoPleno — Biblioteca Digital (material interno de validação, 2026)." }
+    ]
+  }
+]
