@@ -13,6 +13,7 @@
   <meta property="og:description" content="Catálogo de produtos CorpoPleno, organizado por categoria." />
   <meta property="og:locale" content="pt_BR" />
   <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
+  <link rel="stylesheet" href="assets/css/books.css?v=20261002a" />
 </head>
 <body data-partial-i18n="true">
   <a class="skip-link" href="#conteudo-principal" data-i18n="skip_link">Pular para o conteúdo principal</a>
@@ -30,7 +31,6 @@
         <a href="index.html" data-i18n="nav.home">Início</a>
         <a href="produtos.html" aria-current="page" data-i18n="nav.products">Produtos</a>
         <a href="cursos.html" data-i18n="nav.courses">Cursos</a>
-        <a href="livros.html" data-i18n="nav.books">Livros</a>
         <a href="sobre.html" data-i18n="nav.about">Sobre</a>
         <a href="atendimento.html" data-i18n="nav.support">Atendimento</a>
       </nav>
@@ -93,6 +93,19 @@
         <p class="catalog-empty-state" id="cp-products-empty" data-i18n="catalog.empty_state" hidden>Novidades estão sendo preparadas para você.</p>
       </div>
     </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="books.hero.eyebrow">Biblioteca CorpoPleno</span>
+          <h2 data-i18n="books.hero.title">Livros CorpoPleno</h2>
+        </div>
+
+        <div id="cp-books-grid"></div>
+
+        <p class="catalog-empty-state" id="cp-books-empty" data-i18n="catalog.empty_state" hidden>Novidades estão sendo preparadas para você.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -110,7 +123,6 @@
             <li><a href="index.html" data-i18n="nav.home">Início</a></li>
             <li><a href="produtos.html" data-i18n="nav.products">Produtos</a></li>
             <li><a href="cursos.html" data-i18n="nav.courses">Cursos</a></li>
-            <li><a href="livros.html" data-i18n="nav.books">Livros</a></li>
             <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
             <li><a href="atendimento.html" data-i18n="nav.support">Atendimento</a></li>
           </ul>
@@ -148,5 +160,8 @@
   <script src="assets/js/main.js?v=20260925c"></script>
   <script src="assets/js/catalog-data.js?v=20260925c"></script>
   <script src="assets/js/catalog-render.js?v=20260925c"></script>
+  <script src="assets/js/books-data.js?v=20261002a"></script>
+  <script src="assets/js/book-cover.js?v=20261003a"></script>
+  <script src="assets/js/books-render.js?v=20261002a"></script>
 </body>
 </html>
