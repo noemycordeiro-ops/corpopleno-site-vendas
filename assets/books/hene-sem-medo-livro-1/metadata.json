@@ -1,120 +1,47 @@
 {
-  "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções editoriais das Fases 006.1 APROVADAS por Noemi. Decisão final: título comercial em en-US é 'Henê Without Fear' ('Fearless Henê' foi proposto e EXPLICITAMENTE REJEITADO -- nunca usar). ko-KR final usa a vírgula: 'Henê, 두려움 없이'. textStatus='APPROVED' em todos os 5 idiomas (decisão humana registrada, nunca mais 'pendente'). Nenhuma arte nova gerada -- image continua null nos 4 idiomas, exatamente como nas Fases 006/006.1.",
   "book_id": "hene-sem-medo-livro-1",
+  "internalTestOnly": false,
+  "cover": {
+    "mode": "static-image",
+    "url": "assets/img/book-covers/hene-sem-medo-livro-1.jpg",
+    "fallback_image": "assets/img/book-covers/placeholder.jpg"
+  },
   "price": {
     "amount": 39.90,
     "currency": "BRL",
-    "priceVersion": "launch-2026-10",
     "display": {
       "pt-BR": "R$ 39,90",
-      "pt-PT": "R$ 39,90",
-      "en-US": "R$ 39.90",
-      "ko-KR": "R$ 39.90",
-      "es-CL": "R$ 39,90"
-    }
-  },
-  "pageCount": null,
-  "cover": {
-    "mode": "localized-image",
-    "locales": {
-      "pt-BR": {
-        "status": "READY",
-        "image": "assets/img/livros/hene-sem-medo-livro-1/cover-pt-BR.png",
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Sem Medo",
-          "subtitle": "Guia prático para reduzir riscos",
-          "volume": "Livro 1",
-          "category": "Manual para Iniciantes",
-          "slogan": "Inteligente, resultado real",
-          "additional_lines": [
-            "Cronograma Capilar 60 dias + Checklist de Segurança",
-            "Cronograma Capilar de 60 dias",
-            "Importante: faça o teste de mecha e siga as orientações do fabricante."
-          ]
-        }
-      },
-      "pt-PT": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Sem Medo",
-          "subtitle": "Guia prático para reduzir riscos",
-          "volume": "Livro 1",
-          "category": "Manual para Iniciantes",
-          "slogan": "Inteligente, resultado real",
-          "additional_lines": [
-            "Cronograma Capilar de 60 Dias + Checklist de Segurança",
-            "Cronograma Capilar de 60 Dias",
-            "Importante: faça o teste de mecha e siga as instruções do fabricante."
-          ]
-        }
-      },
-      "en-US": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Without Fear",
-          "subtitle": "A Practical Guide to Reducing Risks",
-          "volume": "Book 1",
-          "category": "Beginner's Manual",
-          "slogan": "Smart, real results",
-          "additional_lines": [
-            "60-Day Hair Care Schedule + Safety Checklist",
-            "60-Day Hair Care Schedule",
-            "Important: do a strand test and follow the manufacturer's instructions."
-          ]
-        }
-      },
-      "ko-KR": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê, 두려움 없이",
-          "titleCompact": "Henê 두려움 없이",
-          "subtitle": "위험을 줄이는 실전 가이드",
-          "volume": "1권",
-          "category": "초보자 매뉴얼",
-          "slogan": "지능적으로, 진짜 결과로",
-          "additional_lines": [
-            "60일 모발 관리 일정 + 안전 체크리스트",
-            "60일 모발 관리 일정",
-            "중요: 스트랜드 테스트를 진행하고 제조사의 안내를 따르세요."
-          ]
-        }
-      },
-      "es-CL": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Sin Miedo",
-          "subtitle": "Guía práctica para reducir riesgos",
-          "volume": "Libro 1",
-          "category": "Manual para Principiantes",
-          "slogan": "Inteligente, resultado real",
-          "additional_lines": [
-            "Cronograma Capilar de 60 Días + Lista de Verificación de Seguridad",
-            "Cronograma Capilar de 60 Días",
-            "Importante: haz la prueba de mechón y sigue las instrucciones del fabricante."
-          ]
-        }
-      }
+      "en-US": "US$ 13.99",
+      "es-CL": "CLP 29.990",
+      "ko-KR": "₩ 59,900",
+      "pt-PT": "€ 12,99"
     }
   },
   "locales": {
     "pt-BR": {
       "title": "Henê Sem Medo — Livro 1",
-      "subtitle": null,
-      "description": null
+      "subtitle": "Cronograma Capilar de 60 Dias e Checklist de Segurança",
+      "description": "Cuide dos seus cabelos com mais informação e organização. Um guia educativo completo com cronograma de 60 dias, orientações de leitura de rótulos, checklists de segurança e cuidados complementares."
+    },
+    "en-US": {
+      "title": "Hené Without Fear — Book 1",
+      "subtitle": "60-Day Hair Care Schedule and Safety Checklist",
+      "description": "Care for your hair with more information and organization. A complete educational guide with a 60-day schedule, product label reading guide, safety checklists and complementary care."
+    },
+    "pt-PT": {
+      "title": "Henê Sem Medo — Livro 1",
+      "subtitle": "Cronograma Capilar de 60 Dias e Checklist de Segurança",
+      "description": "Cuide do seu cabelo com mais informação e organização. Um guia educativo completo com cronograma de 60 dias, orientações de leitura de rótulos, checklists de segurança e cuidados complementares."
+    },
+    "es-CL": {
+      "title": "Henna Sin Miedo — Libro 1",
+      "subtitle": "Cronograma Capilar de 60 Días y Lista de Verificación de Seguridad",
+      "description": "Cuida tu cabello con más información y organización. Una guía educativa completa con cronograma de 60 días, orientaciones de lectura de etiquetas, listas de verificación de seguridad y cuidados complementarios."
+    },
+    "ko-KR": {
+      "title": "헤나 두려움 없이 — 책 1",
+      "subtitle": "60일 모발 관리 일정 및 안전 체크리스트",
+      "description": "더 많은 정보와 조직으로 머릿결을 관리하세요. 60일 일정, 제품 라벨 읽기 가이드, 안전 체크리스트 및 보완 관리가 포함된 완전한 교육 가이드입니다."
     }
   }
 }

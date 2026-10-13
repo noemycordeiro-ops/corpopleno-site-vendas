@@ -1,0 +1,137 @@
+{
+  "hene-sem-medo-livro-1": {
+    "productId": "hene-sem-medo-livro-1",
+    "nome": "Henê Sem Medo: Cronograma Capilar de 60 Dias e Checklist de Segurança",
+    "categoria": "Livro Digital",
+    "descricaoCurta": "Livro 1 da Coleção Henê Sem Medo",
+    "precoAtual": 39.90,
+    "moeda": "BRL",
+    "status": "PRECO_CONFIGURADO",
+    "destinoVenda": {
+      "checkoutProvider": "ASAAS_PRODUCTION",
+      "checkoutStatus": "CHECKOUT_CONFIGURADO",
+      "asaasStatus": "ASAAS_CONECTADO",
+      "subscriptionType": "unico",
+      "currency": "BRL",
+      "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
+      "chargeType": "DETACHED"
+    },
+    "atualizadoEm": "2026-10-12T00:00:00Z"
+  },
+  "hene-sem-medo-livro-2": {
+    "productId": "hene-sem-medo-livro-2",
+    "nome": "Henê Sem Medo: 30 Rotinas de Cuidado",
+    "categoria": "Livro Digital",
+    "descricaoCurta": "Livro 2 da Coleção Henê Sem Medo",
+    "precoAtual": 39.90,
+    "moeda": "BRL",
+    "status": "PRECO_CONFIGURADO",
+    "destinoVenda": {
+      "checkoutProvider": "ASAAS_PRODUCTION",
+      "checkoutStatus": "CHECKOUT_CONFIGURADO",
+      "asaasStatus": "ASAAS_CONECTADO",
+      "subscriptionType": "unico",
+      "currency": "BRL",
+      "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
+      "chargeType": "DETACHED"
+    },
+    "atualizadoEm": "2026-10-12T00:00:00Z"
+  },
+  "hene-sem-medo-combo": {
+    "productId": "hene-sem-medo-combo",
+    "nome": "Combo Henê Sem Medo: Os 2 Livros",
+    "categoria": "Combo Livro Digital",
+    "descricaoCurta": "Livros 1 e 2 da Coleção Henê Sem Medo com desconto",
+    "precoAtual": 70.00,
+    "moeda": "BRL",
+    "status": "PRECO_CONFIGURADO",
+    "destinoVenda": {
+      "checkoutProvider": "ASAAS_PRODUCTION",
+      "checkoutStatus": "CHECKOUT_CONFIGURADO",
+      "asaasStatus": "ASAAS_CONECTADO",
+      "subscriptionType": "unico",
+      "currency": "BRL",
+      "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
+      "chargeType": "DETACHED"
+    },
+    "comboItens": ["hene-sem-medo-livro-1", "hene-sem-medo-livro-2"],
+    "atualizadoEm": "2026-10-12T00:00:00Z"
+  },
+  "amor-que-aprendeu-a-ficar": {
+    "productId": "amor-que-aprendeu-a-ficar",
+    "nome": "O Amor que Aprendeu a Ficar - Volume 1",
+    "categoria": "Livro Digital",
+    "descricaoCurta": "Volume 1 da Coleção Histórias de Aprendizado Familiar",
+    "precoAtual": 29.90,
+    "moeda": "BRL",
+    "status": "PRECO_CONFIGURADO",
+    "destinoVenda": {
+      "checkoutProvider": "ASAAS_PRODUCTION",
+      "checkoutStatus": "CHECKOUT_CONFIGURADO",
+      "asaasStatus": "ASAAS_CONECTADO",
+      "subscriptionType": "unico",
+      "currency": "BRL",
+      "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
+      "chargeType": "DETACHED"
+    },
+    "atualizadoEm": "2026-10-12T00:00:00Z"
+  },
+  "amor-que-ensina-a-crescer": {
+    "productId": "amor-que-ensina-a-crescer",
+    "nome": "O Amor que Ensina a Crescer - Volume 2",
+    "categoria": "Livro Digital",
+    "descricaoCurta": "Volume 2 da Coleção Histórias de Aprendizado Familiar",
+    "precoAtual": 29.90,
+    "moeda": "BRL",
+    "status": "PRECO_CONFIGURADO",
+    "destinoVenda": {
+      "checkoutProvider": "ASAAS_PRODUCTION",
+      "checkoutStatus": "CHECKOUT_CONFIGURADO",
+      "asaasStatus": "ASAAS_CONECTADO",
+      "subscriptionType": "unico",
+      "currency": "BRL",
+      "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
+      "chargeType": "DETACHED"
+    },
+    "atualizadoEm": "2026-10-12T00:00:00Z"
+  },
+  "romance-combo": {
+    "productId": "romance-combo",
+    "nome": "Combo Histórias de Aprendizado Familiar: Os 2 Livros",
+    "categoria": "Combo Livro Digital",
+    "descricaoCurta": "Volumes 1 e 2 da Coleção Histórias de Aprendizado Familiar com desconto",
+    "precoAtual": 50.00,
+    "moeda": "BRL",
+    "status": "PRECO_CONFIGURADO",
+    "destinoVenda": {
+      "checkoutProvider": "ASAAS_PRODUCTION",
+      "checkoutStatus": "CHECKOUT_CONFIGURADO",
+      "asaasStatus": "ASAAS_CONECTADO",
+      "subscriptionType": "unico",
+      "currency": "BRL",
+      "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
+      "chargeType": "DETACHED"
+    },
+    "comboItens": ["amor-que-aprendeu-a-ficar", "amor-que-ensina-a-crescer"],
+    "atualizadoEm": "2026-10-12T00:00:00Z"
+  },
+  "receitas-corpopleno": {
+    "productId": "receitas-corpopleno",
+    "nome": "Livro de Receitas CorpoPleno",
+    "categoria": "Livro Digital",
+    "descricaoCurta": "Receitas culinárias da Coleção CorpoPleno Alimentação",
+    "precoAtual": 200.00,
+    "moeda": "BRL",
+    "status": "PRECO_CONFIGURADO",
+    "destinoVenda": {
+      "checkoutProvider": "ASAAS_PRODUCTION",
+      "checkoutStatus": "CHECKOUT_CONFIGURADO",
+      "asaasStatus": "ASAAS_CONECTADO",
+      "subscriptionType": "unico",
+      "currency": "BRL",
+      "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
+      "chargeType": "DETACHED"
+    },
+    "atualizadoEm": "2026-10-12T00:00:00Z"
+  }
+}

@@ -1,126 +1,47 @@
 {
-  "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções editoriais das Fases 006.1 APROVADAS por Noemi. Decisão final: título comercial em en-US é 'Henê Without Fear' ('Fearless Henê' foi proposto e EXPLICITAMENTE REJEITADO -- nunca usar), consistente com hene-sem-medo-livro-1. ko-KR final usa a vírgula: 'Henê, 두려움 없이'; versão compacta '모발 관리 레시피 30가지' explicitamente aprovada para o subtítulo quando o espaço da capa exigir. textStatus='APPROVED' em todos os 5 idiomas. 'receitas' aqui é SEMPRE capilar, nunca culinário -- mantido explícito em category/subtitle. Nenhuma arte nova gerada.",
   "book_id": "hene-sem-medo-livro-2",
+  "internalTestOnly": false,
+  "cover": {
+    "mode": "static-image",
+    "url": "assets/img/book-covers/hene-sem-medo-livro-2.jpg",
+    "fallback_image": "assets/img/book-covers/placeholder.jpg"
+  },
   "price": {
     "amount": 39.90,
     "currency": "BRL",
-    "priceVersion": "launch-2026-10",
     "display": {
       "pt-BR": "R$ 39,90",
-      "pt-PT": "R$ 39,90",
-      "en-US": "R$ 39.90",
-      "ko-KR": "R$ 39.90",
-      "es-CL": "R$ 39,90"
-    }
-  },
-  "pageCount": null,
-  "cover": {
-    "mode": "localized-image",
-    "locales": {
-      "pt-BR": {
-        "status": "READY",
-        "image": "assets/img/livros/hene-sem-medo-livro-2/cover-pt-BR.png",
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Sem Medo",
-          "subtitle": "30 receitas práticas para o cronograma capilar",
-          "volume": "Livro 2",
-          "category": "Guia de Receitas Capilares",
-          "slogan": "Inteligente, resultado real",
-          "additional_lines": [
-            "30 Receitas + Opções Veganas",
-            "Hidratação · Nutrição · Reconstrução · Umectação",
-            "Receitas para o Cronograma Capilar",
-            "Importante: faça o teste de mecha e de contato antes do uso."
-          ]
-        }
-      },
-      "pt-PT": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Sem Medo",
-          "subtitle": "30 receitas práticas para o cronograma capilar",
-          "volume": "Livro 2",
-          "category": "Guia de Receitas Capilares",
-          "slogan": "Inteligente, resultado real",
-          "additional_lines": [
-            "30 Receitas + Opções Veganas",
-            "Hidratação · Nutrição · Reconstrução · Umectação",
-            "Receitas para o Cronograma Capilar",
-            "Importante: faça o teste de mecha e de contacto antes do uso."
-          ]
-        }
-      },
-      "en-US": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Without Fear",
-          "subtitle": "30 Practical Recipes for Your Hair Care Schedule",
-          "volume": "Book 2",
-          "category": "Hair Care Recipe Guide",
-          "slogan": "Smart, real results",
-          "additional_lines": [
-            "30 Recipes + Vegan Options",
-            "Hydration · Nourishment · Repair · Moisture",
-            "Recipes for Your Hair Care Schedule",
-            "Important: do a strand test and a patch test before use."
-          ]
-        }
-      },
-      "ko-KR": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê, 두려움 없이",
-          "titleCompact": "Henê 두려움 없이",
-          "subtitle": "모발 관리 일정을 위한 실전 레시피 30가지",
-          "subtitleCompact": "모발 관리 레시피 30가지",
-          "volume": "2권",
-          "category": "모발 관리 레시피 가이드",
-          "slogan": "지능적으로, 진짜 결과로",
-          "additional_lines": [
-            "30가지 레시피 + 비건 옵션",
-            "수분 공급 · 영양 공급 · 손상 복구 · 보습",
-            "모발 관리 일정을 위한 레시피",
-            "중요: 사용 전 스트랜드 테스트와 패치 테스트를 진행하세요."
-          ]
-        }
-      },
-      "es-CL": {
-        "status": "PENDING",
-        "image": null,
-        "textStatus": "APPROVED",
-        "text": {
-          "brand": "CorpoPleno",
-          "title": "Henê Sin Miedo",
-          "subtitle": "30 recetas prácticas para tu cronograma capilar",
-          "volume": "Libro 2",
-          "category": "Guía de Recetas Capilares",
-          "slogan": "Inteligente, resultado real",
-          "additional_lines": [
-            "30 Recetas + Opciones Veganas",
-            "Hidratación · Nutrición · Reconstrucción · Humectación",
-            "Recetas para el Cronograma Capilar",
-            "Importante: haz la prueba de mechón y de contacto antes de usar."
-          ]
-        }
-      }
+      "en-US": "US$ 13.99",
+      "es-CL": "CLP 29.990",
+      "ko-KR": "₩ 59,900",
+      "pt-PT": "€ 12,99"
     }
   },
   "locales": {
     "pt-BR": {
-      "title": "Henê Sem Medo — Livro 2",
-      "subtitle": null,
-      "description": null
+      "title": "CorpoPleno — hene-sem-medo-livro-2",
+      "subtitle": "Livro informativo",
+      "description": "Explorar o mundo do conhecimento e bem-estar com CorpoPleno."
+    },
+    "en-US": {
+      "title": "CorpoPleno — hene-sem-medo-livro-2",
+      "subtitle": "Informative Book",
+      "description": "Explore the world of knowledge and well-being with CorpoPleno."
+    },
+    "pt-PT": {
+      "title": "CorpoPleno — hene-sem-medo-livro-2",
+      "subtitle": "Livro informativo",
+      "description": "Explorar o mundo do conhecimento e bem-estar com CorpoPleno."
+    },
+    "es-CL": {
+      "title": "CorpoPleno — hene-sem-medo-livro-2",
+      "subtitle": "Libro informativo",
+      "description": "Explora el mundo del conocimiento y el bienestar con CorpoPleno."
+    },
+    "ko-KR": {
+      "title": "CorpoPleno — hene-sem-medo-livro-2",
+      "subtitle": "정보 제공 도서",
+      "description": "CorpoPleno와 함께 지식과 웰빙의 세계를 탐험하세요."
     }
   }
 }

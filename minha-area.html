@@ -26,7 +26,6 @@
         <a href="index.html" data-i18n="nav.home">Início</a>
         <a href="produtos.html" data-i18n="nav.products">Produtos</a>
         <a href="cursos.html" data-i18n="nav.courses">Cursos</a>
-        <a href="livros.html" data-i18n="nav.books">Livros</a>
         <a href="sobre.html" data-i18n="nav.about">Sobre</a>
         <a href="atendimento.html" data-i18n="nav.support">Atendimento</a>
       </nav>
@@ -51,7 +50,7 @@
       <div class="container">
         <span class="section__eyebrow" data-i18n="login.hero.eyebrow">Acesso à conta</span>
         <h1 data-i18n="account.hero.title">Minha área</h1>
-        <p id="cp-account-redirect-message" data-i18n="account.redirect.message">Para acessar sua área, você precisa entrar na sua conta.</p>
+        <p data-i18n="account.redirect.message">Para acessar sua área, você precisa entrar na sua conta.</p>
       </div>
     </section>
 
@@ -61,20 +60,21 @@
 
     <section class="section">
       <div class="container">
-        <p id="cp-account-loading" data-i18n="account.loading">Verificando sua conta…</p>
-
-        <div id="cp-account-redirect" hidden class="card contact-card auth-card" style="text-align: center;">
+        <div class="card contact-card auth-card" style="text-align: center;">
           <a class="btn btn-primary btn-block" href="login.html" data-i18n="account.redirect.cta">Entrar</a>
-        </div>
-
-        <div id="cp-account-home" hidden class="card contact-card auth-card" style="text-align: center;">
-          <p data-i18n="account.welcome">Você está conectado à sua conta CorpoPleno.</p>
-          <a class="btn btn-primary btn-block" href="meus-livros.html" data-i18n="nav.books_account">Meus Livros</a>
-          <button type="button" class="btn btn-secondary btn-block" id="cp-account-logout" data-i18n="account.logout">Sair</button>
         </div>
       </div>
     </section>
   </main>
+
+  <script>
+    /* Enquanto não existir autenticação real, não há sessão nenhuma para
+       verificar — por isso todo acesso direto a esta página redireciona
+       para login.html. Nada aqui grava nem simula uma sessão autenticada;
+       é só um redirecionamento honesto. O conteúdo acima (título + botão)
+       fica visível como alternativa caso o JavaScript esteja desativado. */
+    window.location.replace("login.html");
+  </script>
 
   <footer class="site-footer">
     <div class="container">
@@ -91,7 +91,6 @@
             <li><a href="index.html" data-i18n="nav.home">Início</a></li>
             <li><a href="produtos.html" data-i18n="nav.products">Produtos</a></li>
             <li><a href="cursos.html" data-i18n="nav.courses">Cursos</a></li>
-            <li><a href="livros.html" data-i18n="nav.books">Livros</a></li>
             <li><a href="sobre.html" data-i18n="nav.about">Sobre</a></li>
             <li><a href="atendimento.html" data-i18n="nav.support">Atendimento</a></li>
           </ul>
@@ -127,6 +126,5 @@
   <script src="assets/js/api-config.js?v=20261003a"></script>
   <script src="assets/js/meta-tracking.js?v=20261007a"></script>
   <script src="assets/js/main.js?v=20260925c"></script>
-  <script src="assets/js/account-home.js?v=20261003a"></script>
 </body>
 </html>
