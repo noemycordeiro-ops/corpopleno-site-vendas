@@ -62,14 +62,14 @@
     <section class="section">
       <div class="container">
         <form class="card contact-card auth-card" id="cp-signup-form" autocomplete="off" novalidate>
-          <label class="auth-field-label" for="cp-signup-name" data-i18n="signup.form.name_label">Nome</label>
-          <input class="cp-field" type="text" id="cp-signup-name" name="name" autocomplete="off" />
+          <label class="auth-field-label" for="cp-signup-name">Nome completo</label>
+          <input class="cp-field" type="text" id="cp-signup-name" name="name" autocomplete="name" required maxlength="120" />
 
           <label class="auth-field-label" for="cp-signup-email" data-i18n="signup.form.email_label">E-mail</label>
           <input class="cp-field" type="email" id="cp-signup-email" name="email" autocomplete="off" />
 
           <label class="auth-field-label" for="cp-signup-phone" data-i18n="signup.form.phone_label">Telefone</label>
-          <input class="cp-field" type="tel" id="cp-signup-phone" name="phone" autocomplete="off" />
+          <input class="cp-field" type="tel" id="cp-signup-phone" name="phone" autocomplete="tel" required maxlength="20" placeholder="(11) 99999-9999" />
 
           <label class="auth-field-label" for="cp-signup-password" data-i18n="signup.form.password_label">Senha</label>
           <input class="cp-field" type="password" id="cp-signup-password" name="password" autocomplete="off" />
@@ -86,6 +86,8 @@
               <a href="privacidade.html" data-i18n="nav.privacy">Política de Privacidade</a>.
             </span>
           </label>
+
+          <p class="auth-privacy-note" style="font-size: 0.85rem; color: var(--cp-text-soft); margin: 0;">Usamos seu nome, e-mail e telefone apenas para sua conta, suas compras e o atendimento. Sua senha é guardada só de forma criptografada (nunca em texto).</p>
 
           <button type="submit" class="btn btn-primary btn-block" data-i18n="signup.form.submit">Criar conta</button>
 
@@ -152,6 +154,6 @@
   <script src="assets/js/api-config.js?v=20261003a"></script>
   <script src="assets/js/meta-tracking.js?v=20261007a"></script>
   <script src="assets/js/main.js?v=20260925c"></script>
-  <script src="assets/js/auth-signup.js?v=20261015a"></script>
+  <script src="assets/js/auth-signup.js?v=20261015b"></script>
 </body>
 </html>

@@ -16,7 +16,9 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS users (
      id TEXT PRIMARY KEY,
      email TEXT NOT NULL UNIQUE,
-     name TEXT,
+     name TEXT NOT NULL,
+     phone TEXT NOT NULL,
+     terms_accepted_at INTEGER NOT NULL,
      pw_hash TEXT NOT NULL,
      pw_salt TEXT NOT NULL,
      pw_iter INTEGER NOT NULL,
@@ -36,6 +38,8 @@ const SCHEMA = [
      count INTEGER NOT NULL,
      window_start INTEGER NOT NULL
    )`,
+  // id = código de compra legível e não sequencial (CP-XXXXXXXX), usado
+  // também como externalReference no Asaas e consultado pelo Cordex.
   `CREATE TABLE IF NOT EXISTS purchases (
      id TEXT PRIMARY KEY,
      user_id TEXT NOT NULL,

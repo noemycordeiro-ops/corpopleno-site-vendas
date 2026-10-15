@@ -38,6 +38,17 @@ export function randomId(prefix) {
   return prefix + "_" + b64url(randomBytes(16));
 }
 
+// Código de compra: "CP-" + 8 caracteres aleatórios em base32 Crockford
+// (sem I/L/O/U, que se confundem com 1/0/V) -> 32^8 ≈ 1,1e12
+// combinações, sem viés (256 é múltiplo de 32) e não sequencial.
+const CODE_ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+export function purchaseCode() {
+  const bytes = randomBytes(8);
+  let out = "CP-";
+  for (const b of bytes) out += CODE_ALPHABET[b % CODE_ALPHABET.length];
+  return out;
+}
+
 export async function sha256Hex(text) {
   const digest = await crypto.subtle.digest("SHA-256", enc.encode(text));
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -143,6 +154,22 @@ export async function clearAttempts(db, bucket) {
 
 export function normalizeEmail(email) {
   return typeof email === "string" ? email.trim().toLowerCase() : "";
+}
+
+// Nome completo: 2+ palavras, 5-120 caracteres, só letras/espaços/'.-
+export function normalizeName(value) {
+  return typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "";
+}
+export function isValidFullName(name) {
+  return name.length >= 5 && name.length <= 120 && name.includes(" ") && /^[\p{L}' .-]+$/u.test(name);
+}
+
+// Telefone: só dígitos, 10-15 (DDD + número no Brasil, ou formato internacional).
+export function normalizePhone(value) {
+  return typeof value === "string" ? value.replace(/\D/g, "") : "";
+}
+export function isValidPhone(digits) {
+  return digits.length >= 10 && digits.length <= 15;
 }
 
 export function isValidEmail(email) {

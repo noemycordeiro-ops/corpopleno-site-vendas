@@ -9,13 +9,14 @@
   - Idempotência: no máximo uma compra em aberto por (usuário, produto)
     (índice único parcial no D1). Repetir com o mesmo método devolve a
     mesma fatura; trocar de método cancela a cobrança anterior no Asaas.
-  - Resposta 201 {ok:true, paymentMethod, invoiceUrl, purchaseId}.
+  - Código de compra único CP-XXXXXXXX (= purchases.id = externalReference no Asaas).
+  - Resposta 201 {ok:true, paymentMethod, invoiceUrl, purchaseCode, purchaseId}.
     O pagamento (PIX ou cartão) acontece na fatura hospedada do Asaas --
     nenhum dado de cartão passa pelo site.
 */
 import { json, methodNotAllowed, readJson, sameOriginOk } from "../../../_lib/http.js";
 import { getDb, now } from "../../../_lib/db.js";
-import { getSessionUser, randomId } from "../../../_lib/auth.js";
+import { getSessionUser, purchaseCode } from "../../../_lib/auth.js";
 import { getProduct } from "../../../_lib/catalog.js";
 import {
   asaasConfig, findOrCreateCustomer, createPayment, deletePayment, dueDateInDays,
@@ -79,7 +80,7 @@ export async function onRequest({ request, env, params }) {
     } else if (open.created_at + PENDING_MAX_AGE_MS < now()) {
       await setStatus(db, open.id, "EXPIRED");
     } else if (open.payment_method === method && open.installment_count === installments && open.invoice_url) {
-      return json(201, { ok: true, reused: true, paymentMethod: method, invoiceUrl: open.invoice_url, purchaseId: open.id });
+      return json(201, { ok: true, reused: true, paymentMethod: method, invoiceUrl: open.invoice_url, purchaseCode: open.id, purchaseId: open.id });
     } else {
       // Troca de método/parcelas: cancela a cobrança anterior antes de criar outra,
       // para nunca existirem duas cobranças pagáveis do mesmo produto.
@@ -108,22 +109,27 @@ export async function onRequest({ request, env, params }) {
   }
 
   // ---- Reserva local (trava de idempotência) ----------------------------
-  const purchaseId = randomId("pur");
-  const t = now();
-  try {
-    await db
-      .prepare(
-        `INSERT INTO purchases (id, user_id, product_id, amount_cents, payment_method, installment_count, status, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, 'CREATING', ?, ?)`
-      )
-      .bind(purchaseId, user.id, productId, product.priceCents, method, installments, t, t)
-      .run();
-  } catch (e) {
-    if (String(e && e.message).includes("UNIQUE")) {
-      return json(409, { ok: false, erro: "PAYMENT_ATTEMPT_ALREADY_DISPATCHING" });
+  let purchaseId = null;
+  for (let tentativa = 0; tentativa < 3 && !purchaseId; tentativa++) {
+    const code = purchaseCode();
+    const t = now();
+    try {
+      await db
+        .prepare(
+          `INSERT INTO purchases (id, user_id, product_id, amount_cents, payment_method, installment_count, status, created_at, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, 'CREATING', ?, ?)`
+        )
+        .bind(code, user.id, productId, product.priceCents, method, installments, t, t)
+        .run();
+      purchaseId = code;
+    } catch (e) {
+      const msg = String(e && e.message);
+      if (msg.includes("purchases.id")) continue; // colisão (rara) do código: gera outro
+      if (msg.includes("UNIQUE")) return json(409, { ok: false, erro: "PAYMENT_ATTEMPT_ALREADY_DISPATCHING" });
+      throw e;
     }
-    throw e;
   }
+  if (!purchaseId) return json(500, { ok: false, erro: "ERRO_INTERNO_CHECKOUT" });
 
   try {
     let customerId = user.asaas_customer_id;
@@ -155,7 +161,7 @@ export async function onRequest({ request, env, params }) {
       .bind(payment.id, payment.installment || null, payment.invoiceUrl, now(), purchaseId)
       .run();
 
-    return json(201, { ok: true, paymentMethod: method, invoiceUrl: payment.invoiceUrl, purchaseId });
+    return json(201, { ok: true, paymentMethod: method, invoiceUrl: payment.invoiceUrl, purchaseCode: purchaseId, purchaseId });
   } catch (e) {
     await setStatus(db, purchaseId, "FAILED");
     if (e instanceof AsaasError) {

@@ -1,14 +1,19 @@
 /*
-  POST /api/auth/signup  {email, password, nomeCompleto?}
+  POST /api/auth/signup  {nomeCompleto, email, telefone, password, termsAccepted:true}
+  Todos os campos obrigatórios e validados aqui no servidor.
   Contrato esperado por assets/js/auth-signup.js:
-    sucesso -> {ok:true} + cookie de sessão (já entra logado)
-    erros   -> EMAIL_INVALIDO | SENHA_FORA_DO_TAMANHO_PERMITIDO | EMAIL_JA_CADASTRADO
+    sucesso -> 201 {ok:true} + cookie de sessão (já entra logado)
+    erros   -> NOME_INVALIDO | EMAIL_INVALIDO | TELEFONE_INVALIDO |
+               SENHA_FORA_DO_TAMANHO_PERMITIDO | TERMS_NOT_ACCEPTED | EMAIL_JA_CADASTRADO
+  LGPD: só o mínimo para conta e compras (nome, e-mail, telefone); a
+  senha existe apenas como hash PBKDF2 e nunca é logada nem devolvida;
+  o momento do aceite dos Termos/Política fica registrado.
 */
 import { json, methodNotAllowed, readJson, sameOriginOk, clientIp } from "../../_lib/http.js";
 import { getDb, now } from "../../_lib/db.js";
 import {
   hashPassword, createSession, sessionCookie, randomId, normalizeEmail, isValidEmail,
-  isRateLimited, registerAttempt,
+  isRateLimited, registerAttempt, normalizeName, isValidFullName, normalizePhone, isValidPhone,
 } from "../../_lib/auth.js";
 
 const SIGNUP_LIMIT = 10;
@@ -25,12 +30,16 @@ export async function onRequest({ request, env }) {
 
   const email = normalizeEmail(body.email);
   const password = typeof body.password === "string" ? body.password : "";
-  const name = typeof body.nomeCompleto === "string" ? body.nomeCompleto.trim().slice(0, 120) : "";
+  const name = normalizeName(body.nomeCompleto);
+  const phone = normalizePhone(body.telefone);
 
+  if (!isValidFullName(name)) return json(400, { ok: false, erro: "NOME_INVALIDO" });
   if (!isValidEmail(email)) return json(400, { ok: false, erro: "EMAIL_INVALIDO" });
+  if (!isValidPhone(phone)) return json(400, { ok: false, erro: "TELEFONE_INVALIDO" });
   if (password.length < 8 || password.length > 512) {
     return json(400, { ok: false, erro: "SENHA_FORA_DO_TAMANHO_PERMITIDO" });
   }
+  if (body.termsAccepted !== true) return json(400, { ok: false, erro: "TERMS_NOT_ACCEPTED" });
 
   const ipBucket = "signup:ip:" + clientIp(request);
   if (await isRateLimited(db, ipBucket, SIGNUP_LIMIT, SIGNUP_WINDOW_MS)) {
@@ -46,9 +55,10 @@ export async function onRequest({ request, env }) {
   try {
     await db
       .prepare(
-        "INSERT INTO users (id, email, name, pw_hash, pw_salt, pw_iter, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        `INSERT INTO users (id, email, name, phone, terms_accepted_at, pw_hash, pw_salt, pw_iter, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
-      .bind(userId, email, name || null, pw.hash, pw.salt, pw.iterations, now())
+      .bind(userId, email, name, phone, now(), pw.hash, pw.salt, pw.iterations, now())
       .run();
   } catch (e) {
     if (String(e && e.message).includes("UNIQUE")) return json(409, { ok: false, erro: "EMAIL_JA_CADASTRADO" });

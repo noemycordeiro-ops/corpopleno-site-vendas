@@ -1,10 +1,10 @@
 /*
   Fase CorpoPleno Livros 003.2 (2026-10-03) — controlador REAL de
   cadastro.html. Chama POST /api/auth/signup de verdade. Coleta SOMENTE
-  nome, e-mail, senha, confirmação de senha e aceite dos termos (campo
-  de telefone já existe na interface desde a Fase 001, mas não é
-  obrigatório nem enviado nesta etapa — "não coletar mais dados do que o
-  necessário"). Nunca dispara cobrança/ASAAS aqui.
+  nome, e-mail, senha, confirmação de senha e aceite dos termos.
+  Fase Livros 015 (2026-10-15): nome completo, e-mail, telefone e senha
+  passaram a ser obrigatórios (decisão da Noemi), validados no servidor.
+  Nunca dispara cobrança/ASAAS aqui.
 */
 (function () {
   "use strict";
@@ -31,6 +31,18 @@
     }
     if (erro === "EMAIL_INVALIDO") {
       return t("signup.form.error.invalid_email", "Digite um e-mail válido.");
+    }
+    if (erro === "NOME_INVALIDO") {
+      return "Digite seu nome completo (nome e sobrenome).";
+    }
+    if (erro === "TELEFONE_INVALIDO") {
+      return "Digite um telefone válido com DDD.";
+    }
+    if (erro === "TERMS_NOT_ACCEPTED") {
+      return t("signup.form.error.terms_required", "Você precisa aceitar os Termos de Uso e a Política de Privacidade.");
+    }
+    if (erro === "MUITAS_TENTATIVAS") {
+      return "Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente.";
     }
     if (erro === "SENHA_FORA_DO_TAMANHO_PERMITIDO") {
       return t("signup.form.error.password_length", "A senha deve ter entre 8 e 512 caracteres.");
@@ -68,14 +80,18 @@
       event.preventDefault();
       var nome = document.getElementById("cp-signup-name").value.trim();
       var email = document.getElementById("cp-signup-email").value.trim();
+      var telefoneEl = document.getElementById("cp-signup-phone");
+      var telefone = telefoneEl ? telefoneEl.value.trim() : "";
       var password = document.getElementById("cp-signup-password").value;
       var passwordConfirm = document.getElementById("cp-signup-password-confirm").value;
       var termos = document.getElementById("cp-signup-terms").checked;
 
       status.hidden = true;
 
-      if (!email || !password) {
-        status.textContent = t("signup.form.error.missing_fields", "Preencha e-mail e senha.");
+      // Fase Livros 015 -- todos os campos são obrigatórios (validados
+      // de novo no servidor, que é quem decide).
+      if (!nome || !email || !telefone || !password) {
+        status.textContent = "Preencha nome completo, e-mail, telefone e senha.";
         status.hidden = false;
         return;
       }
@@ -96,7 +112,7 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ email: email, password: password, nomeCompleto: nome || undefined }),
+        body: JSON.stringify({ nomeCompleto: nome, email: email, telefone: telefone, password: password, termsAccepted: termos }),
       })
         .then(function (res) {
           return res.json().then(function (dados) { return { ok: res.ok, dados: dados }; });
