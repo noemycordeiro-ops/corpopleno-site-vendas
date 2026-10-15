@@ -56,11 +56,6 @@
       <div class="container">
         <span class="section__eyebrow" data-i18n="products.hero.eyebrow">Catálogo CorpoPleno</span>
         <h1 data-i18n="products.hero.title">Produtos</h1>
-        <p data-i18n="products.hero.lead">
-          Categorias organizadas para receber os produtos CorpoPleno. Itens ainda não lançados aparecem
-          como "Em preparação" — nada aqui está disponível para compra até que o checkout oficial seja
-          conectado.
-        </p>
       </div>
     </section>
 
@@ -70,16 +65,9 @@
 
     <section class="section">
       <div class="container">
-        <div class="notice notice-warning" id="cp-products-notice" style="max-width: 760px; margin: 0 auto 32px;">
-          <span aria-hidden="true">⚠️</span>
-          <span data-i18n="products.notice">
-            Nenhum link de checkout foi configurado ainda. Os botões de compra abaixo estão desativados
-            de propósito.
-          </span>
-        </div>
-
         <div class="filter-bar" data-filter-bar>
           <button type="button" class="filter-chip" aria-pressed="true" data-filter="all" data-i18n="products.filter.all">Todas as categorias</button>
+          <button type="button" class="filter-chip" data-filter="livros" data-i18n="products.filter.books">Livros</button>
         </div>
 
         <!--
@@ -91,19 +79,18 @@
         <div class="grid grid-4" id="cp-products-grid"></div>
 
         <p class="catalog-empty-state" id="cp-products-empty" data-i18n="catalog.empty_state" hidden>Novidades estão sendo preparadas para você.</p>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section__head">
-          <span class="section__eyebrow" data-i18n="books.hero.eyebrow">Biblioteca CorpoPleno</span>
-          <h2 data-i18n="books.hero.title">Livros CorpoPleno</h2>
+        <!-- Biblioteca CorpoPleno: integrada em Produtos com filtro "Livros" -->
+        <div id="cp-books-section" class="section-books" style="margin-top: 48px;">
+          <div class="section__head">
+            <span class="section__eyebrow" data-i18n="books.hero.eyebrow">Biblioteca CorpoPleno</span>
+            <h2 data-i18n="books.hero.title">Livros CorpoPleno</h2>
+          </div>
+
+          <div id="cp-books-grid"></div>
+
+          <p class="catalog-empty-state" id="cp-books-empty" data-i18n="catalog.empty_state" hidden>Novidades estão sendo preparadas para você.</p>
         </div>
-
-        <div id="cp-books-grid"></div>
-
-        <p class="catalog-empty-state" id="cp-books-empty" data-i18n="catalog.empty_state" hidden>Novidades estão sendo preparadas para você.</p>
       </div>
     </section>
   </main>
