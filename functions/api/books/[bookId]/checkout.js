@@ -55,18 +55,21 @@ export async function onRequest(context) {
       });
     }
 
-    // 4. Preparar checkout via Asaas (Sandbox)
-    const checkoutData = {
-      paymentMethod,
-      bookId,
-      price,
-      sandbox: true,
-      // PIX simulado
-      pix: {
-        encodedImage: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
-        payload: "00020126580014br.gov.bcb.pix0136" + generateRandomString(32)
+    // 4. Preparar checkout via Asaas (PRODUÇÃO)
+    const asaasUrl = env.ASAAS_API_URL || "https://api.asaas.com/api/v3";
+    const asaasKey = env.ASAAS_API_KEY; // Token secreto
+
+    const checkoutData = await createAsaasPayment(
+      asaasUrl,
+      asaasKey,
+      {
+        customerId: sessionToken.customerId,
+        bookId,
+        price,
+        paymentMethod,
+        purchaseIntentId: generatePurchaseIntentId(sessionToken.customerId, bookId)
       }
-    };
+    );
 
     return new Response(JSON.stringify({ ok: true, ...checkoutData }), {
       status: 201,
@@ -103,4 +106,41 @@ function getCatalogPrice(bookId) {
 
 function generateRandomString(len) {
   return Math.random().toString(36).substr(2, len);
+}
+
+function generatePurchaseIntentId(customerId, bookId) {
+  const hash = require('crypto').createHash('sha256').update(`${customerId}:${bookId}`).digest('hex');
+  return `${hash.slice(0,8)}-${hash.slice(8,12)}-${hash.slice(12,16)}-${hash.slice(16,20)}-${hash.slice(20,32)}`;
+}
+
+async function createAsaasPayment(asaasUrl, asaasKey, data) {
+  // Chamar Asaas API real para criar pagamento
+  const response = await fetch(`${asaasUrl}/payments`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${asaasKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      customer: data.customerId,
+      billingType: data.paymentMethod === "PIX" ? "PIX" : "CREDIT_CARD",
+      value: data.price,
+      description: `Livro: ${data.bookId}`,
+      externalReference: data.purchaseIntentId,
+      dueDate: new Date(Date.now() + 86400000).toISOString().split('T')[0]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Asaas API error: ${response.status}`);
+  }
+
+  const payment = await response.json();
+  return {
+    ok: true,
+    paymentMethod: data.paymentMethod,
+    pixUrl: payment.pixQrCodeUrl,
+    checkoutUrl: payment.invoiceUrl,
+    externalId: payment.id
+  };
 }
