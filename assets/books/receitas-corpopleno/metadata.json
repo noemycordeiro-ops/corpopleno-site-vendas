@@ -1,47 +1,114 @@
 {
+  "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções da Fase 006.1 APROVADAS por Noemi exatamente como propostas (en-US 'Cookbook', não 'Recipe Book'). textStatus='APPROVED' em todos os 5 idiomas. 'receitas' aqui é genuinamente CULINÁRIO (a arte mostra comida de verdade). 'CorpoPleno' permanece intacto como marca em todos os idiomas, inclusive coreano (alfabeto latino). Nenhuma arte nova gerada.",
   "book_id": "receitas-corpopleno",
-  "internalTestOnly": false,
-  "cover": {
-    "mode": "static-image",
-    "url": "assets/img/book-covers/receitas-corpopleno.jpg",
-    "fallback_image": "assets/img/book-covers/placeholder.jpg"
-  },
   "price": {
-    "amount": 39.90,
+    "_comment": "Preço aprovado por Noemi em 2026-10-09: R$ 200,00 à vista no PIX; no cartão, 4x de R$ 50,00 sem juros (mesmo total de R$ 200,00; parcelamento é apresentação comercial -- não há installmentCount sendo enviado a nenhuma API ainda). FONTE DE VERDADE COMERCIAL continua sendo a Oferta no Cordex (server/funil_vendas_data/ofertas.json); este campo é só para EXIBIÇÃO no site.",
+    "amount": 200.00,
     "currency": "BRL",
+    "priceVersion": "launch-2026-10-09",
+    "installments": {
+      "card": { "count": 4, "value": 50.00, "interestFree": true }
+    },
     "display": {
-      "pt-BR": "R$ 39,90",
-      "en-US": "US$ 13.99",
-      "es-CL": "CLP 29.990",
-      "ko-KR": "₩ 59,900",
-      "pt-PT": "€ 12,99"
+      "pt-BR": "R$ 200,00 no PIX ou 4x de R$ 50,00 sem juros no cartão",
+      "pt-PT": "R$ 200,00 no PIX ou 4x de R$ 50,00 sem juros no cartão",
+      "en-US": "R$ 200.00 (BRL) via PIX or 4x R$ 50.00 interest-free by card",
+      "ko-KR": "PIX 결제 시 R$ 200.00, 카드 결제 시 무이자 4개월 할부 R$ 50.00",
+      "es-CL": "R$ 200,00 por PIX o 4 cuotas de R$ 50,00 sin interés con tarjeta"
+    }
+  },
+  "pageCount": null,
+  "cover": {
+    "mode": "localized-image",
+    "locales": {
+      "pt-BR": {
+        "status": "READY",
+        "image": "assets/img/livros/receitas-corpopleno/cover-pt-BR.png",
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "Livro de Receitas",
+          "subtitle": null,
+          "volume": null,
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "pt-PT": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "Livro de Receitas",
+          "subtitle": null,
+          "volume": null,
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "en-US": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "Cookbook",
+          "subtitle": null,
+          "volume": null,
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "ko-KR": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "레시피북",
+          "titleCompact": "레시피북",
+          "subtitle": null,
+          "volume": null,
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      },
+      "es-CL": {
+        "status": "PENDING",
+        "image": null,
+        "textStatus": "APPROVED",
+        "text": {
+          "brand": "CorpoPleno",
+          "title": "Libro de Recetas",
+          "subtitle": null,
+          "volume": null,
+          "category": null,
+          "slogan": null,
+          "additional_lines": null
+        }
+      }
     }
   },
   "locales": {
     "pt-BR": {
-      "title": "CorpoPleno — receitas-corpopleno",
-      "subtitle": "Livro informativo",
-      "description": "Explorar o mundo do conhecimento e bem-estar com CorpoPleno."
+      "title": "Livro de Receitas CorpoPleno",
+      "subtitle": null,
+      "description": null
     },
     "en-US": {
-      "title": "CorpoPleno — receitas-corpopleno",
-      "subtitle": "Informative Book",
-      "description": "Explore the world of knowledge and well-being with CorpoPleno."
+      "title": "CorpoPleno Cookbook",
+      "subtitle": null,
+      "description": null
     },
     "pt-PT": {
-      "title": "CorpoPleno — receitas-corpopleno",
-      "subtitle": "Livro informativo",
-      "description": "Explorar o mundo do conhecimento e bem-estar com CorpoPleno."
-    },
-    "es-CL": {
-      "title": "CorpoPleno — receitas-corpopleno",
-      "subtitle": "Libro informativo",
-      "description": "Explora el mundo del conocimiento y el bienestar con CorpoPleno."
-    },
-    "ko-KR": {
-      "title": "CorpoPleno — receitas-corpopleno",
-      "subtitle": "정보 제공 도서",
-      "description": "CorpoPleno와 함께 지식과 웰빙의 세계를 탐험하세요."
+      "title": "Livro de Receitas CorpoPleno",
+      "subtitle": null,
+      "description": null
     }
   }
 }

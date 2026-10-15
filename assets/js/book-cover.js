@@ -88,6 +88,25 @@
       return img;
     }
 
+    // Fase Livros 015 -- combo: as capas ORIGINAIS dos livros do combo,
+    // sobrepostas só por CSS (books.css, .book-cover--combo). Nenhuma
+    // imagem nova é gerada.
+    if (cover && cover.mode === "combo" && Array.isArray(cover.items) && cover.items.length >= 2) {
+      var combo = document.createElement("div");
+      combo.className = className + " book-cover--combo";
+      combo.setAttribute("role", "img");
+      if (opcoes.alt) combo.setAttribute("aria-label", opcoes.alt);
+      cover.items.slice(0, 2).forEach(function (src, idx) {
+        var capa = document.createElement("img");
+        capa.className = "book-cover__combo-item book-cover__combo-item--" + (idx === 0 ? "back" : "front");
+        capa.src = src;
+        capa.alt = "";
+        if (opcoes.loading) capa.loading = opcoes.loading;
+        combo.appendChild(capa);
+      });
+      return combo;
+    }
+
     if (resolvido.mode === "dynamic" && resolvido.pronto) {
       var wrap = document.createElement("div");
       wrap.className = className + " book-cover--dynamic";

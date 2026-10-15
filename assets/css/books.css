@@ -79,6 +79,33 @@
    Nenhum livro real usa este modo ainda (todas as 5 capas atuais têm
    texto incorporado na arte, mode "localized-image") -- preparado e
    testado para quando uma arte "limpa" existir. */
+/* Fase Livros 015 -- capa de combo: duas capas originais sobrepostas. */
+.book-cover--combo {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: var(--cp-surface-soft);
+}
+.book-cover__combo-item {
+  position: absolute;
+  width: 68%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.28);
+}
+.book-cover__combo-item--back {
+  top: 6%;
+  left: 5%;
+  transform: rotate(-6deg);
+}
+.book-cover__combo-item--front {
+  bottom: 6%;
+  right: 5%;
+  transform: rotate(4deg);
+}
+
 .book-cover--dynamic {
   position: relative;
   background-size: cover;

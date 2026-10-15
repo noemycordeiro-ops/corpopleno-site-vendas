@@ -1,49 +1,36 @@
 {
+  "_comment": "Combo (Fase Livros 015, 2026-10-15): capa = as capas ORIGINAIS dos 2 livros sobrepostas via CSS (book-cover.js mode 'combo'), nenhuma imagem nova. Preço exibido em BRL, igual aos livros avulsos; o valor cobrado vem SEMPRE do servidor (functions/_lib/catalog.js). Só pt-BR: as traduções geradas antes usavam nomes não aprovados ('Hené', 'Henna Sin Miedo') -- os outros idiomas caem no pt-BR até haver tradução aprovada.",
   "book_id": "hene-sem-medo-combo",
   "internalTestOnly": false,
   "is_combo": true,
-  "combo_items": ["hene-sem-medo-livro-1", "hene-sem-medo-livro-2"],
-  "cover": {
-    "mode": "static-image",
-    "url": "assets/img/book-covers/hene-sem-medo-combo.jpg",
-    "fallback_image": "assets/img/book-covers/placeholder.jpg"
-  },
+  "combo_items": [
+    "hene-sem-medo-livro-1",
+    "hene-sem-medo-livro-2"
+  ],
   "price": {
-    "amount": 70.00,
+    "amount": 70.0,
     "currency": "BRL",
     "display": {
       "pt-BR": "R$ 70,00",
-      "en-US": "US$ 24.50",
-      "es-CL": "CLP 58.800",
-      "ko-KR": "₩ 105,000",
-      "pt-PT": "€ 22,50"
+      "pt-PT": "R$ 70,00",
+      "en-US": "R$ 70,00",
+      "ko-KR": "R$ 70,00",
+      "es-CL": "R$ 70,00"
     }
+  },
+  "pageCount": null,
+  "cover": {
+    "mode": "combo",
+    "items": [
+      "assets/img/livros/hene-sem-medo-livro-1/cover-pt-BR.png",
+      "assets/img/livros/hene-sem-medo-livro-2/cover-pt-BR.png"
+    ]
   },
   "locales": {
     "pt-BR": {
       "title": "Henê Sem Medo — Coleção Completa",
       "subtitle": "Livros 1 e 2 — Guias de Cuidado Capilar",
       "description": "Adquira os dois livros da coleção Henê Sem Medo com desconto promocional. Inclui cronogramas capilares de 60 dias, checklists de segurança e orientações completas de cuidado. Ganhe acesso aos dois títulos com um único pagamento."
-    },
-    "en-US": {
-      "title": "Hené Without Fear — Complete Collection",
-      "subtitle": "Books 1 and 2 — Hair Care Guides",
-      "description": "Get both books from the Hené Without Fear collection at a promotional discount. Includes 60-day hair schedules, safety checklists and complete care guidance. Gain access to both titles with a single payment."
-    },
-    "pt-PT": {
-      "title": "Henê Sem Medo — Coleção Completa",
-      "subtitle": "Livros 1 e 2 — Guias de Cuidado Capilar",
-      "description": "Adquira os dois livros da coleção Henê Sem Medo com desconto promocional. Inclui cronogramas capilares de 60 dias, checklists de segurança e orientações completas de cuidado. Obtenha acesso aos dois títulos com um único pagamento."
-    },
-    "es-CL": {
-      "title": "Henna Sin Miedo — Colección Completa",
-      "subtitle": "Libros 1 y 2 — Guías de Cuidado Capilar",
-      "description": "Adquiere ambos libros de la colección Henna Sin Miedo con descuento promocional. Incluye cronogramas capilares de 60 días, listas de verificación de seguridad y orientación completa de cuidado. Obtén acceso a ambos títulos con un único pago."
-    },
-    "ko-KR": {
-      "title": "헤나 두려움 없이 — 전체 컬렉션",
-      "subtitle": "책 1과 2 — 모발 관리 가이드",
-      "description": "헤나 두려움 없이 컬렉션의 두 책을 프로모션 할인으로 구입하세요. 60일 모발 일정, 안전 체크리스트 및 완전한 관리 지침이 포함됩니다. 단일 결제로 두 제목 모두에 액세스하세요."
     }
   }
 }
