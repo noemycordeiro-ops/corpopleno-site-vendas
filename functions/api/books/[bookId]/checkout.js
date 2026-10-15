@@ -30,7 +30,7 @@ export async function onRequest({ request, env, params }) {
   if (!sameOriginOk(request)) return json(403, { ok: false, erro: "ORIGEM_INVALIDA" });
 
   const db = await getDb(env);
-  if (!db) return json(503, { ok: false, erro: "PAYMENT_PROVIDER_UNAVAILABLE" });
+  if (!db) return json(503, { ok: false, erro: "BANCO_NAO_CONFIGURADO" });
 
   const user = await getSessionUser(db, request);
   if (!user) return json(401, { ok: false, erro: "NAO_AUTENTICADO" });

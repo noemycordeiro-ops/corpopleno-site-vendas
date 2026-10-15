@@ -175,6 +175,7 @@
       PAYMENT_METHOD_NOT_ALLOWED: "book.checkout.error.method_not_allowed",
       CHARGE_TYPE_NOT_SUPPORTED_FOR_BOOKS: "book.checkout.error.method_not_allowed",
       AMBIENTE_ASAAS_NAO_CONFIGURADO: "book.checkout.error.provider_unavailable",
+      BANCO_NAO_CONFIGURADO: "book.checkout.error.provider_unavailable",
       PAYMENT_PROVIDER_UNAVAILABLE: "book.checkout.error.provider_unavailable",
       PAYMENT_PROVIDER_REJECTED: "book.checkout.error.provider_unavailable",
       CUSTOMER_DOCUMENT_REQUIRED: "book.checkout.error.document_required",
