@@ -1,0 +1,29 @@
+name = "cp-web-001"
+type = "javascript"
+main = "index.html"
+compatibility_date = "2026-10-15"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Pages Functions
+[env.production]
+routes = [
+  { pattern = "www.corpoplenoresultadoreal.com.br", zone_name = "corpoplenoresultadoreal.com.br" }
+]
+
+[build]
+command = ""
+cwd = "."
+watch_paths = ["functions/**/*.js"]
+
+# Cache da build (Beta)
+[env.production.cache_on_cookie]
+session = "corpopleno_session"
+
+# Variáveis secretas (não logadas)
+[env.production.vars]
+ASAAS_ENVIRONMENT = "sandbox"
+ASAAS_API_URL = "https://sandbox.asaas.com/api/v3"
+
+# Implantação automática via GitHub
+[triggers]
+crons = ["0 2 * * *"]
