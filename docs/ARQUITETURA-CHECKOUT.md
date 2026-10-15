@@ -2,7 +2,7 @@
 
 > Memória do projeto. Branch: `feature/catalogo-combos-checkout`.
 > Projeto Cloudflare Pages: `cp-web-001` (www.corpoplenoresultadoreal.com.br).
-> Última atualização: 2026-10-15.
+> Última atualização: 2026-10-15 (Fase 2: D1 criados, leitura dos livros, recuperação de senha).
 > Este arquivo **não** é publicado no site: `/docs/*` responde 404 por meio de `functions/docs/[[path]].js` e `_routes.json`.
 
 ## 1. Visão geral
@@ -39,7 +39,11 @@ Cordex (local) ──GET──> /api/admin/purchases (Bearer ADMIN_API_TOKEN, so
 | `functions/api/books/[bookId]/purchase-confirmation.js` | evento Purchase da Meta só após o pagamento |
 | `functions/api/books/webhook.js` | webhook Asaas |
 | `functions/api/admin/purchases.js` | consulta somente leitura para o Cordex |
+| `functions/api/books/[bookId]/content/[locale].js` | conteúdo pago do livro, só para quem comprou |
+| `functions/api/auth/password-reset/request.js` · `confirm.js` | recuperação de senha |
+| `functions/_lib/email.js` | envio de e-mail pelo Resend |
 | `functions/docs/[[path]].js` | bloqueia `/docs/*` no site público |
+| `docs/tools/importar-conteudo-livros.py` | gera os .sql do conteúdo pago (fora do repositório) |
 
 ## 2. Autenticação
 
@@ -114,6 +118,40 @@ curl -s "https://www.corpoplenoresultadoreal.com.br/api/admin/purchases?code=CP-
 
 O token fica numa variável de ambiente do Cordex. Nunca deve ir para código, log ou HTML.
 
+## 5a. Leitura dos livros comprados
+
+`GET /api/books/:bookId/content/:locale` segue o mesmo contrato que o Cordex usava e que o `reader.js` espera:
+
+- `401 NAO_AUTENTICADO` sem sessão;
+- `403 ACESSO_NEGADO` sem compra (mesma resposta para livro inexistente);
+- `404 CONTEUDO_NAO_ENCONTRADO` quando o idioma não tem conteúdo carregado;
+- `200 {ok:true, pages:[...]}` com `Cache-Control: private, no-store`.
+
+O conteúdo fica na tabela `book_pages` do D1, uma linha por página. O R2 não está habilitado na conta (a API respondeu 403 "Please enable R2"). O limite do D1 é 2 MB por linha e a maior página tem cerca de 23 KB. Os 23 pares (livro, idioma) somam cerca de 7 MB em SQL.
+
+**Origem do conteúdo:** `cordex_unificado_preparacao_20260915/unificado/private_content/books/<livro>/<idioma>/pages.json` no notebook. Idiomas disponíveis:
+
+- livros Henê e "O Amor que Ensina": 5 idiomas cada;
+- "O Amor que Aprendeu a Ficar": 5 idiomas, mas o ko-KR tem só 9 páginas e os arquivos en-US e es-CL têm exatamente o mesmo tamanho do pt-BR, então parecem não traduzidos (conferir);
+- Receitas: pt-BR, pt-PT e en-US (ko-KR e es-CL só têm arquivos de trabalho em `_build/`, sem `pages.json`).
+
+**O repositório no GitHub é PÚBLICO.** O conteúdo pago nunca entra no git. O script `docs/tools/importar-conteudo-livros.py` gera os .sql numa pasta fora do repositório e se recusa a gravar dentro dele. Os arquivos saem em partes de até ~500 KB (um arquivo de 3 MB travou o D1 local). A parte 01 de cada (livro, idioma) apaga e recarrega, então rodar de novo é seguro.
+
+## 5b. Recuperação de senha
+
+- `POST /api/auth/password-reset/request {email}` responde **sempre 200** para não revelar quais e-mails têm conta. Se a conta existir:
+  - invalida os pedidos anteriores;
+  - cria um token aleatório de 32 bytes, de **uso único**, válido por **60 minutos**; no banco fica só o **SHA-256** (tabela `password_resets`);
+  - envia o link `https://<site>/redefinir-senha.html#token=...`.
+- Limite: 3 pedidos por e-mail e 10 por IP a cada hora (429).
+- `POST /api/auth/password-reset/confirm {token, password}`:
+  - "gasta" o token com um UPDATE condicional **antes** de trocar a senha, então nem duas requisições simultâneas conseguem usá-lo duas vezes;
+  - grava a nova senha com PBKDF2;
+  - **encerra todas as sessões** da conta;
+  - erros: `400 TOKEN_INVALIDO_OU_EXPIRADO` e `400 SENHA_FORA_DO_TAMANHO_PERMITIDO`.
+- O token vai no **fragmento** da URL (`#`), que o navegador não envia ao servidor. O `auth-reset.js` é carregado antes de todos os outros scripts, lê o token e o apaga da barra de endereço. As páginas `esqueci-senha.html` e `redefinir-senha.html` não carregam o pixel da Meta e usam `referrer: no-referrer`.
+- **E-mail:** o envio usa o Resend (`RESEND_API_KEY` + `EMAIL_FROM`). Sem esses Secrets, nada é enviado e o motivo vai para o log (nunca o token). Nesse caso a cliente vê a mesma mensagem, mas **não recebe o e-mail**.
+
 ## 6. Banco D1 (binding `DB`)
 
 | Tabela | Colunas principais |
@@ -124,6 +162,8 @@ O token fica numa variável de ambiente do Cordex. Nunca deve ir para código, l
 | `purchases` | **id = código CP-XXXXXXXX**, user_id, product_id, amount_cents, payment_method, installment_count, status, asaas_payment_id, asaas_installment_id, invoice_url, created_at, updated_at, paid_at |
 | `entitlements` | (user_id, book_id) PK, purchase_id, granted_at |
 | `webhook_events` | event_id, event_type, payment_id, purchase_id, result, received_at |
+| `book_pages` | (book_id, locale, page_index) PK, content (JSON da página) |
+| `password_resets` | token_hash (SHA-256), user_id, created_at, expires_at, used_at |
 
 Índice único parcial `purchases_open (user_id, product_id) WHERE status IN ('CREATING','PENDING')`.
 Status de compra: `CREATING → PENDING → PAID`, ou `CANCELLED` / `EXPIRED` / `FAILED`.
@@ -145,10 +185,12 @@ Status de compra: `CREATING → PENDING → PAID`, ou `CANCELLED` / `EXPIRED` / 
 | `ASAAS_API_URL` | variável | `https://api.asaas.com/v3` (padrão do código, opcional) | `https://api-sandbox.asaas.com/v3` (**obrigatória**: sem ela o código usa a URL de produção) |
 | `ASAAS_WEBHOOK_TOKEN` | Secret | criar | criar (pode ser diferente) |
 | `ADMIN_API_TOKEN` | Secret | criar (token longo e aleatório) | opcional |
+| `RESEND_API_KEY` | Secret | criar (conta Resend) | opcional |
+| `EMAIL_FROM` | variável | ex.: `CorpoPleno <nao-responda@corpoplenoresultadoreal.com.br>` (domínio verificado no Resend) | igual |
 
 Não existe `wrangler.toml`. Bindings, variáveis e Secrets ficam no painel do Cloudflare, separados para Production e Preview. Motivos:
 
-- não havia credencial Cloudflare disponível para criar o D1 (MCP 401, wrangler sem login);
+- na Fase 1 não havia credencial Cloudflare disponível (MCP 401, wrangler sem login); na Fase 2 o MCP passou a funcionar, mas ele não tem ferramentas de Pages, então não consegue ligar bindings nem gravar Secrets;
 - um `database_id` fictício quebraria o build;
 - o Pages publica a raiz `.`, então `/wrangler.toml` era servido publicamente (confirmado: HTTP 200 no Preview antigo).
 
@@ -156,14 +198,43 @@ O arquivo antigo era de Workers (`type`, `routes`, `[triggers]`, `cache_on_cooki
 
 ## 9. Passos manuais
 
-### Cloudflare (dash.cloudflare.com → Workers & Pages)
+### Cloudflare: D1 (já criados na Fase 2)
 
-1. **Criar os bancos D1:** em Storage & Databases → D1 → Create, crie `corpopleno-livros` (produção) e `corpopleno-livros-preview`.
-2. Em **Pages `cp-web-001` → Settings → Bindings → Add → D1 database**, use o nome de variável `DB`: em Production aponte para `corpopleno-livros` e em Preview para `corpopleno-livros-preview`.
-3. Em **Settings → Variables and Secrets**:
-   - Production: confira `ASAAS_API_KEY` (já existe); crie os Secrets `ASAAS_WEBHOOK_TOKEN` e `ADMIN_API_TOKEN`, que podem ser gerados com `openssl rand -hex 32`.
+Os bancos foram criados pelo conector MCP Cloudflare em 2026-10-15, na região ENAM:
+
+| Banco | UUID | Uso |
+|---|---|---|
+| `corpopleno-livros` | `1bb6ea26-b951-4ba8-b4da-079ccf49ca74` | Production (vazio; o esquema é criado na primeira requisição) |
+| `corpopleno-livros-preview` | `d1aed434-bbb6-4031-b4fe-ce64990889c1` | Preview (esquema aplicado e conferido: 8 tabelas) |
+
+O MCP não mostra o id da conta. **Confirme no painel** que os dois bancos aparecem na mesma conta do `cp-web-001` (id `4fc3a975…`). Se não aparecerem, crie-os nessa conta com os mesmos nomes.
+
+### Cloudflare: o que o assistente NÃO conseguiu fazer (precisa da Noemi)
+
+O MCP Cloudflare não tem ferramentas de Pages. O `npx wrangler whoami` responde "You are not authenticated" e não há `CLOUDFLARE_API_TOKEN` no ambiente. Duas opções:
+
+- **A)** Rodar `npx wrangler login` no notebook (exige Node 22 ou mais, porque o Node 18 instalado não roda o wrangler 4; o wrangler 3 funciona). Depois disso o assistente consegue fazer os passos abaixo.
+- **B)** Fazer pelo painel:
+
+1. **Pages `cp-web-001` → Settings → Bindings → Add → D1 database**, nome de variável `DB`: em Production, `corpopleno-livros`; em Preview, `corpopleno-livros-preview`.
+2. **Settings → Variables and Secrets:**
+   - Production: confira `ASAAS_API_KEY` (já existe) e crie os Secrets `ASAAS_WEBHOOK_TOKEN` e `ADMIN_API_TOKEN` (valores aleatórios, por exemplo `openssl rand -hex 32`).
    - Preview: crie `ASAAS_API_KEY` com a **chave Sandbox**, a variável `ASAAS_API_URL = https://api-sandbox.asaas.com/v3` e `ASAAS_WEBHOOK_TOKEN`.
-4. Faça um novo deploy (um push na branch ou "Retry deployment"), porque bindings e Secrets só valem a partir do deploy seguinte.
+   - Recuperação de senha (opcional): `RESEND_API_KEY` e `EMAIL_FROM`.
+3. Faça um novo deploy (um push na branch ou "Retry deployment").
+4. **Carregar o conteúdo dos livros** (depois do login do wrangler):
+   ```bash
+   python3 docs/tools/importar-conteudo-livros.py \
+     --origem ~/CorpoPleno-IA/workspace/cordex_unificado_preparacao_20260915/unificado/private_content/books \
+     --saida /tmp/conteudo-livros-sql --banco corpopleno-livros
+   # rode os comandos impressos (32 arquivos), em ordem; repita com --banco corpopleno-livros-preview
+   ```
+
+Se for criar um token de API em vez de usar o login: My Profile → API Tokens → Create Token, com as permissões **Account → Cloudflare Pages: Edit** e **Account → D1: Edit**, restrito à conta da CorpoPleno.
+
+### Resend (recuperação de senha)
+
+Crie uma conta em resend.com e verifique o domínio `corpoplenoresultadoreal.com.br` (registros DNS que o Resend indicar). Depois gere uma API key e grave `RESEND_API_KEY` e `EMAIL_FROM` no Pages. Se preferir outro provedor, só `functions/_lib/email.js` muda.
 
 ### Asaas (painel → Integrações → Webhooks)
 
@@ -225,6 +296,53 @@ Verificação visual (Chromium headless): em Produtos, os cards dos 2 combos apa
   - `/docs/*`: 404.
 - `/wrangler.toml` deixou de ser servido.
 
+### Fase 2 (2026-10-15)
+
+**Verificado:**
+
+- Credenciais: o conector MCP Cloudflare respondeu (antes dava 401); `wrangler whoami` continua sem login; não há `CLOUDFLARE_API_TOKEN` no ambiente.
+- D1 `corpopleno-livros` e `corpopleno-livros-preview` criados. No banco de Preview, o esquema completo foi aplicado e conferido no D1 real (8 tabelas e os índices, incluindo o índice único parcial).
+- Origem dos 503 no Preview `0412b75e` (commit `df36a4b`, build ok):
+  - `me`, checkout, conteúdo, access e recuperação de senha → `BANCO_NAO_CONFIGURADO` (falta o binding `DB`);
+  - webhook → `WEBHOOK_NAO_CONFIGURADO`;
+  - admin → `ADMIN_NAO_CONFIGURADO`.
+
+  Todos dependem de configuração, não de código. O único erro de código encontrado foi corrigido: o checkout dizia `PAYMENT_PROVIDER_UNAVAILABLE` quando, na verdade, faltava o banco.
+- **Leitura (local, D1 local, conteúdo real importado pelo script):**
+
+| Teste | HTTP |
+|---|---|
+| conteúdo sem sessão | 401 |
+| conteúdo com sessão, antes de pagar | 403 ACESSO_NEGADO |
+| combo pago → os 2 livros pt-BR | 200 (31 e 29 páginas, **idênticas ao pages.json original**) |
+| Receitas pt-BR paga | 200, 439 páginas, 1,78 MB, idênticas ao original |
+| idioma sem conteúdo / idioma inválido | 404 / 404 |
+| livro não comprado / tentativa de path traversal | 403 / 403 |
+| cabeçalho | `Cache-Control: private, no-store` |
+
+- **Recuperação de senha** (local, com um stub do Resend):
+
+| Teste | HTTP |
+|---|---|
+| e-mail inválido | 400 |
+| e-mail inexistente | 200 (nenhum e-mail enviado) |
+| e-mail existente (link com `#token=`) | 200 |
+| token antigo depois de um novo pedido | 400 |
+| senha curta | 400 |
+| token malformado | 400 |
+| token válido | 200 |
+| mesmo token de novo | 400 (uso único) |
+| token vencido (gravado vencido no banco) | 400 |
+| sessão antiga depois da troca | 401 |
+| login com a senha antiga / nova | 401 / 200 |
+| 4.º pedido na hora | 429 |
+| Origin de outro site | 403 |
+
+  No banco ficam só hashes de 64 caracteres com validade de 60 minutos. Sem o provedor configurado, `sendEmail` devolve `EMAIL_NAO_CONFIGURADO` (testado isoladamente).
+- Página `redefinir-senha.html` no Chromium headless: sem token mostra "Link inválido"; com token, o aviso fica oculto e o formulário aparece.
+
+**Não verificado:** carga do conteúdo no D1 **remoto** (precisa de login no wrangler); envio real de e-mail; qualquer coisa com Asaas real ou Sandbox; troca de senha pela interface até o fim (só a API foi testada de ponta a ponta).
+
 ### Também corrigido nesta branch
 
 O commit `5eec59a` ("Deploy CorpoPleno") tinha:
@@ -238,10 +356,12 @@ Tudo foi restaurado a partir da versão em produção (`c482e69`). "Livros" saiu
 ### Não verificado / pendente
 
 - **Nenhum teste ponta a ponta com o Asaas real ou Sandbox** (cliente, cobrança, fatura, webhook de verdade). Fazer no Preview com a chave Sandbox antes de vender.
-- O D1 de produção e o de preview ainda não existem. Sem o binding `DB`, as rotas respondem 503.
-- **Leitura do conteúdo:** o leitor (`reader.js`) busca `GET /api/books/:id/content/:locale`, que ainda vivia no Cordex (`private_content/`). Esse endpoint **não existe** no Pages. A cliente vê o livro em "Meus Livros", mas ainda não consegue ler o conteúdo. É preciso decidir onde guardar o conteúdo privado (por exemplo, R2 privado ou D1) numa próxima etapa.
+- Ligar o binding `DB` (Production e Preview) e gravar os Secrets: precisa da Noemi (seção 9). Até lá, o Preview responde 503.
+- Confirmar que os D1 criados estão na conta do `cp-web-001`.
+- Carregar o conteúdo pago no D1 remoto (script da seção 5a, depois do `wrangler login`). Até lá, a leitura responde 404 CONTEUDO_NAO_ENCONTRADO.
+- Conferir as traduções de "O Amor que Aprendeu a Ficar" (en-US e es-CL parecem cópias do pt-BR; ko-KR tem só 9 páginas) e o conteúdo ko-KR/es-CL de Receitas (só existe `_build/`).
+- E-mail de recuperação: falta configurar o provedor (Resend + domínio verificado). Sem ele, a interface funciona mas a cliente não recebe o link.
 - Estorno e chargeback (`PAYMENT_REFUNDED`, `PAYMENT_CHARGEBACK_*`) ainda não revogam o acesso.
-- Não há "esqueci minha senha" (o link continua mostrando o aviso de "em preparação").
-- Os novos textos de checkout e cadastro (CPF, parcelas, mensagens de erro) estão só em pt-BR.
+- Os novos textos (checkout, cadastro, recuperação de senha) estão só em pt-BR.
 - Outros arquivos da raiz continuam públicos porque o Pages publica `.` (por exemplo `README.md`, `PROMPT_MASTER_SITE_CORPOPLENO.md`, `RELATORIO_VALIDACAO.md`, `tools/`). Vale revisar.
 - Não fazer merge em `master` antes do teste no Sandbox.
