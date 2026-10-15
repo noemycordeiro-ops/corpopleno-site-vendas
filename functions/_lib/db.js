@@ -66,6 +66,25 @@ const SCHEMA = [
      granted_at INTEGER NOT NULL,
      PRIMARY KEY (user_id, book_id)
    )`,
+  // Conteúdo PAGO dos livros, uma linha por página (limite do D1: 2 MB por
+  // linha; a maior página tem ~23 KB). Carregado por
+  // docs/tools/importar-conteudo-livros.py -- nunca vai para o GitHub.
+  `CREATE TABLE IF NOT EXISTS book_pages (
+     book_id TEXT NOT NULL,
+     locale TEXT NOT NULL,
+     page_index INTEGER NOT NULL,
+     content TEXT NOT NULL,
+     PRIMARY KEY (book_id, locale, page_index)
+   )`,
+  // Recuperação de senha: só o SHA-256 do token; uso único (used_at) e expiração.
+  `CREATE TABLE IF NOT EXISTS password_resets (
+     token_hash TEXT PRIMARY KEY,
+     user_id TEXT NOT NULL,
+     created_at INTEGER NOT NULL,
+     expires_at INTEGER NOT NULL,
+     used_at INTEGER
+   )`,
+  `CREATE INDEX IF NOT EXISTS password_resets_user ON password_resets(user_id)`,
   `CREATE TABLE IF NOT EXISTS webhook_events (
      event_id TEXT PRIMARY KEY,
      event_type TEXT,
