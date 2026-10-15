@@ -30,6 +30,9 @@
     if (erro === "CREDENCIAIS_INVALIDAS") {
       return t("login.form.error.invalid_credentials", "E-mail ou senha incorretos.");
     }
+    if (erro === "MUITAS_TENTATIVAS") {
+      return "Muitas tentativas seguidas. Aguarde 15 minutos e tente novamente.";
+    }
     return t("login.form.error.generic", "Não foi possível entrar agora. Tente novamente em alguns minutos.");
   }
 

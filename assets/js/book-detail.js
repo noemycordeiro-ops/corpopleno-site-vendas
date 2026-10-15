@@ -24,7 +24,9 @@
 
   function t(key, fallback) {
     if (window.CP_I18N && typeof window.CP_I18N.t === "function") {
-      return window.CP_I18N.t(key, currentLang());
+      var traduzido = window.CP_I18N.t(key, currentLang());
+      // i18n.js devolve a própria chave quando ela não existe -- usa o fallback.
+      return traduzido === key && fallback ? fallback : traduzido;
     }
     return fallback || key;
   }
@@ -135,10 +137,33 @@
 
   function el(id) { return document.getElementById(id); }
 
+  // Fase Livros 015 -- devolve os dados da sessão (ou null), para saber
+  // se ainda faltam nome/CPF exigidos pelo Asaas na primeira compra.
+  var sessaoAtual = null;
   function estaLogado() {
     return fetch(apiBase() + "/api/auth/me", { credentials: "include" })
-      .then(function (res) { return res.ok; })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (dados) {
+        sessaoAtual = dados && dados.autenticado === true ? dados : null;
+        return !!sessaoAtual;
+      })
       .catch(function () { return false; });
+  }
+
+  // Parcelamento no cartão: só onde o servidor permite (Receitas, até 4x).
+  var PRODUTOS_PARCELAVEIS = { "receitas-corpopleno": true };
+  function atualizarCamposExtras() {
+    var metodoEl = document.querySelector('input[name="cp-checkout-method"]:checked');
+    var parcelas = el("cp-checkout-installments-wrap");
+    if (parcelas) {
+      parcelas.hidden = !(metodoEl && metodoEl.value === "CREDIT_CARD" && PRODUTOS_PARCELAVEIS[qs("id") || ""]);
+    }
+    var buyer = el("cp-checkout-buyer");
+    var precisaNome = !(sessaoAtual && sessaoAtual.nome);
+    var precisaDoc = !(sessaoAtual && sessaoAtual.temDocumento);
+    if (el("cp-checkout-name-wrap")) el("cp-checkout-name-wrap").hidden = !precisaNome;
+    if (el("cp-checkout-doc-wrap")) el("cp-checkout-doc-wrap").hidden = !precisaDoc;
+    if (buyer) buyer.hidden = !(precisaNome || precisaDoc);
   }
 
   // Mensagens claras para os códigos de erro reais que
@@ -152,7 +177,10 @@
       AMBIENTE_ASAAS_NAO_CONFIGURADO: "book.checkout.error.provider_unavailable",
       PAYMENT_PROVIDER_UNAVAILABLE: "book.checkout.error.provider_unavailable",
       PAYMENT_PROVIDER_REJECTED: "book.checkout.error.provider_unavailable",
-      CUSTOMER_DOCUMENT_REQUIRED: "book.checkout.error.provider_unavailable",
+      CUSTOMER_DOCUMENT_REQUIRED: "book.checkout.error.document_required",
+      CUSTOMER_DOCUMENT_INVALID: "book.checkout.error.document_invalid",
+      CUSTOMER_NAME_REQUIRED: "book.checkout.error.name_required",
+      ALREADY_OWNED: "book.checkout.error.already_owned",
       PAYMENT_ATTEMPT_ALREADY_DISPATCHING: "book.checkout.error.already_processing",
       TERMS_NOT_ACCEPTED: "book.checkout.must_accept_terms",
     };
@@ -162,6 +190,10 @@
       "book.checkout.error.method_not_allowed": "Esta forma de pagamento não está disponível para este livro.",
       "book.checkout.error.provider_unavailable": "O pagamento ainda não está disponível. Tente novamente mais tarde.",
       "book.checkout.error.already_processing": "Sua compra já está sendo processada. Aguarde um instante e verifique Meus Livros.",
+      "book.checkout.error.document_required": "Informe seu CPF ou CNPJ para emitir a cobrança.",
+      "book.checkout.error.document_invalid": "CPF ou CNPJ inválido. Confira os números digitados.",
+      "book.checkout.error.name_required": "Informe seu nome completo para emitir a cobrança.",
+      "book.checkout.error.already_owned": "Você já tem este conteúdo. Veja em Meus Livros.",
       "book.checkout.must_accept_terms": "É preciso aceitar os Termos de Uso e a Política de Privacidade para continuar.",
       "book.checkout.error.generic": "Não foi possível iniciar a compra agora. Tente novamente em alguns minutos.",
     };
@@ -215,10 +247,19 @@
       if (img && dados.pix.encodedImage) img.src = "data:image/png;base64," + dados.pix.encodedImage;
       if (payload) payload.value = dados.pix.payload || "";
       if (pixWrap) pixWrap.hidden = false;
-    } else if (dados.paymentMethod === "CREDIT_CARD" && dados.invoiceUrl) {
+    } else if (dados.invoiceUrl) {
+      // Fase Livros 015 -- PIX e cartão são pagos na fatura segura
+      // hospedada pelo Asaas (invoiceUrl); nenhum dado de cartão passa
+      // pelo site.
       var cardWrap = el("cp-checkout-card");
       var link = el("cp-checkout-card-link");
       if (link) link.href = dados.invoiceUrl;
+      if (dados.paymentMethod === "PIX" && cardWrap) {
+        var h3 = cardWrap.querySelector("h3");
+        var p = cardWrap.querySelector("p");
+        if (h3) { h3.removeAttribute("data-i18n"); h3.textContent = t("book.checkout.pix_title", "Pague com PIX"); }
+        if (p) { p.removeAttribute("data-i18n"); p.textContent = "Abra a fatura segura para ver o QR Code e o código PIX copia e cola. Seu livro é liberado em Meus Livros assim que o pagamento for confirmado."; }
+      }
       if (cardWrap) cardWrap.hidden = false;
     } else {
       // Sucesso no servidor, mas sem dado suficiente para exibir ainda
@@ -253,6 +294,7 @@
             return;
           }
           resetarPainelCheckout();
+          atualizarCamposExtras();
           buyBtn.hidden = true;
           if (buyStatus) buyStatus.hidden = true;
           if (checkoutPanel) checkoutPanel.hidden = false;
@@ -279,6 +321,15 @@
         var metodoEl = document.querySelector('input[name="cp-checkout-method"]:checked');
         var metodo = metodoEl ? metodoEl.value : "PIX";
         var bookId = qs("id") || "";
+        var payload = { paymentMethod: metodo, termsAccepted: true };
+        var nomeEl = el("cp-checkout-name");
+        var docEl = el("cp-checkout-doc");
+        var parcelasWrap = el("cp-checkout-installments-wrap");
+        if (nomeEl && nomeEl.value.trim()) payload.nomeCompleto = nomeEl.value.trim();
+        if (docEl && docEl.value.trim()) payload.cpfCnpj = docEl.value.trim();
+        if (parcelasWrap && !parcelasWrap.hidden) {
+          payload.installmentCount = Number(el("cp-checkout-installments").value) || 1;
+        }
 
         // Idempotência contra duplo-clique é garantida pelo SERVIDOR
         // (referência determinística, Fase 009.2) -- desabilitar o
@@ -289,7 +340,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ paymentMethod: metodo, termsAccepted: true }),
+          body: JSON.stringify(payload),
         })
           .then(function (res) {
             return res.json().then(function (dados) { return { status: res.status, dados: dados || {} }; });
@@ -308,6 +359,10 @@
           });
       });
     }
+
+    document.querySelectorAll('input[name="cp-checkout-method"]').forEach(function (radio) {
+      radio.addEventListener("change", atualizarCamposExtras);
+    });
 
     if (copyBtn) {
       copyBtn.addEventListener("click", function () {

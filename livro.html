@@ -104,6 +104,29 @@
                 </label>
               </fieldset>
 
+              <!-- Dados exigidos pelo Asaas para emitir a cobrança (só
+                   pedidos na primeira compra; depois ficam na conta). -->
+              <div class="checkout-panel__buyer" id="cp-checkout-buyer" hidden>
+                <div id="cp-checkout-name-wrap">
+                  <label class="auth-field-label" for="cp-checkout-name">Nome completo</label>
+                  <input class="cp-field" type="text" id="cp-checkout-name" autocomplete="name" maxlength="120" />
+                </div>
+                <div id="cp-checkout-doc-wrap">
+                  <label class="auth-field-label" for="cp-checkout-doc">CPF ou CNPJ (exigido para emitir a cobrança)</label>
+                  <input class="cp-field" type="text" id="cp-checkout-doc" inputmode="numeric" autocomplete="off" maxlength="18" />
+                </div>
+              </div>
+
+              <div id="cp-checkout-installments-wrap" hidden>
+                <label class="auth-field-label" for="cp-checkout-installments">Parcelas no cartão</label>
+                <select class="cp-field" id="cp-checkout-installments">
+                  <option value="1">1x (à vista)</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                  <option value="4">4x</option>
+                </select>
+              </div>
+
               <ul class="checkout-panel__notes">
                 <li data-i18n="book.checkout.single_payment_note">Pagamento único, sem assinatura ou cobrança recorrente.</li>
                 <li data-i18n="book.checkout.digital_access_note">Acesso digital imediato após a confirmação do pagamento.</li>
@@ -210,6 +233,6 @@
   <script src="assets/js/main.js?v=20260925c"></script>
   <script src="assets/js/books-data.js?v=20261002a"></script>
   <script src="assets/js/book-cover.js?v=20261003a"></script>
-  <script src="assets/js/book-detail.js?v=20261002a"></script>
+  <script src="assets/js/book-detail.js?v=20261015a"></script>
 </body>
 </html>
