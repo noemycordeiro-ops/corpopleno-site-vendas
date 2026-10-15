@@ -34,6 +34,11 @@ export function randomBytes(n) {
   return crypto.getRandomValues(new Uint8Array(n));
 }
 
+// Token aleatório de 32 bytes em base64url (sessão, recuperação de senha).
+export function randomToken() {
+  return b64url(randomBytes(32));
+}
+
 export function randomId(prefix) {
   return prefix + "_" + b64url(randomBytes(16));
 }
