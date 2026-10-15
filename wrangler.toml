@@ -9,11 +9,6 @@ routes = [
   { pattern = "www.corpoplenoresultadoreal.com.br", zone_name = "corpoplenoresultadoreal.com.br" }
 ]
 
-[build]
-command = ""
-cwd = "."
-watch_paths = ["functions/**/*.js"]
-
 # Cache da build (Beta)
 [env.production.cache_on_cookie]
 session = "corpopleno_session"
