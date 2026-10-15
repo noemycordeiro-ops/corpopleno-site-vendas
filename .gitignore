@@ -20,3 +20,7 @@ node_modules/
 .env.local
 .env*.local
 secrets/
+
+# Wrangler (estado local de desenvolvimento)
+.wrangler/
+.dev.vars

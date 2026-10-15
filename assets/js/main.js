@@ -165,19 +165,36 @@
     });
   }
 
-  /* Botão de cabeçalho para conta do cliente. Hoje não existe autenticação
-     real — por isso ele sempre mostra "Entrar" (data-i18n="nav.login") e
-     sempre leva a login.html. Quando a autenticação real existir, este é o
-     lugar a atualizar para checar a sessão de verdade e trocar para
-     "Minha área" (data-i18n="nav.account") + minha-area.html apenas quando
-     houver sessão válida — nunca simular isso aqui com localStorage. */
+  /* Fase CorpoPleno Livros 003.2 (2026-10-03) — sessão REAL. Pergunta a
+     GET /api/auth/me (nunca localStorage/cookie lido diretamente aqui —
+     o cookie HttpOnly corpopleno_customer_session é invisível a este
+     JS por desenho; quem decide é sempre o servidor) e troca o botão
+     entre "Entrar"/login.html e "Minha área"/minha-area.html conforme a
+     resposta real. Falha de rede/CORS -> trata como não autenticado
+     (fail-closed visualmente: nunca mostra "Minha área" por engano). */
   function setupMinhaArea() {
     var btn = document.getElementById("cp-minha-area");
     if (!btn) return;
+    var apiBase = typeof window.CP_API_BASE === "string" ? window.CP_API_BASE : "";
+
     btn.addEventListener("click", function (event) {
       event.preventDefault();
-      window.location.href = "login.html";
+      window.location.href = btn.getAttribute("data-cp-autenticado") === "1" ? "minha-area.html" : "login.html";
     });
+
+    fetch(apiBase + "/api/auth/me", { credentials: "include" })
+      .then(function (res) { return res.ok ? res.json() : { autenticado: false }; })
+      .then(function (dados) {
+        var autenticado = !!(dados && dados.autenticado === true);
+        btn.setAttribute("data-cp-autenticado", autenticado ? "1" : "0");
+        var chave = autenticado ? "nav.account" : "nav.login";
+        var fallback = autenticado ? "Minha área" : "Entrar";
+        btn.setAttribute("data-i18n", chave);
+        btn.textContent = currentLangText(chave, fallback);
+      })
+      .catch(function () {
+        btn.setAttribute("data-cp-autenticado", "0");
+      });
   }
 
   function currentLangText(key, fallback) {
