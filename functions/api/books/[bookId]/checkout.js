@@ -59,6 +59,7 @@ export async function onRequest(context) {
     const asaasUrl = env.ASAAS_API_URL || "https://api.asaas.com/api/v3";
     const asaasKey = env.ASAAS_API_KEY; // Token secreto
 
+    const purchaseIntentId = await generatePurchaseIntentId(sessionToken.customerId, bookId);
     const checkoutData = await createAsaasPayment(
       asaasUrl,
       asaasKey,
@@ -67,7 +68,7 @@ export async function onRequest(context) {
         bookId,
         price,
         paymentMethod,
-        purchaseIntentId: generatePurchaseIntentId(sessionToken.customerId, bookId)
+        purchaseIntentId
       }
     );
 
@@ -108,9 +109,12 @@ function generateRandomString(len) {
   return Math.random().toString(36).substr(2, len);
 }
 
-function generatePurchaseIntentId(customerId, bookId) {
-  const hash = require('crypto').createHash('sha256').update(`${customerId}:${bookId}`).digest('hex');
-  return `${hash.slice(0,8)}-${hash.slice(8,12)}-${hash.slice(12,16)}-${hash.slice(16,20)}-${hash.slice(20,32)}`;
+async function generatePurchaseIntentId(customerId, bookId) {
+  const data = new TextEncoder().encode(`${customerId}:${bookId}`);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return `${hashHex.slice(0,8)}-${hashHex.slice(8,12)}-${hashHex.slice(12,16)}-${hashHex.slice(16,20)}-${hashHex.slice(20,32)}`;
 }
 
 async function createAsaasPayment(asaasUrl, asaasKey, data) {
