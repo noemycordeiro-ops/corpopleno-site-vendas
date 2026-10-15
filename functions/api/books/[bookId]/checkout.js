@@ -1,157 +1,175 @@
-/**
- * Cloudflare Pages Function: POST /api/books/:bookId/checkout
- * Fase CorpoPleno Livros 014 (2026-10-15)
- *
- * Rota de checkout segura rodando em Cloudflare Workers (serverless).
- * Não expõe credenciais Asaas, implementa idempotência e webhook.
- * Usa APENAS Asaas Sandbox durante validação.
- */
+/*
+  POST /api/books/:bookId/checkout
+  Corpo: {paymentMethod: "PIX"|"CREDIT_CARD", termsAccepted: true,
+          cpfCnpj?, nomeCompleto?, installmentCount?}
 
-export async function onRequest(context) {
-  const { request, env } = context;
-  const { bookId } = context.params;
+  - Sessão obrigatória (cookie HttpOnly) -> 401 NAO_AUTENTICADO.
+  - Preço SEMPRE do catálogo do servidor (functions/_lib/catalog.js).
+  - Cliente Asaas criado/reutilizado (externalReference = id do usuário).
+  - Idempotência: no máximo uma compra em aberto por (usuário, produto)
+    (índice único parcial no D1). Repetir com o mesmo método devolve a
+    mesma fatura; trocar de método cancela a cobrança anterior no Asaas.
+  - Resposta 201 {ok:true, paymentMethod, invoiceUrl, purchaseId}.
+    O pagamento (PIX ou cartão) acontece na fatura hospedada do Asaas --
+    nenhum dado de cartão passa pelo site.
+*/
+import { json, methodNotAllowed, readJson, sameOriginOk } from "../../../_lib/http.js";
+import { getDb, now } from "../../../_lib/db.js";
+import { getSessionUser, randomId } from "../../../_lib/auth.js";
+import { getProduct } from "../../../_lib/catalog.js";
+import {
+  asaasConfig, findOrCreateCustomer, createPayment, deletePayment, dueDateInDays,
+  normalizeDocument, isValidDocument, AsaasError,
+} from "../../../_lib/asaas.js";
 
-  // Apenas POST
-  if (request.method !== "POST") {
-    return new Response(JSON.stringify({ erro: "METHOD_NOT_ALLOWED" }), {
-      status: 405,
-      headers: { "Content-Type": "application/json" }
-    });
+const PENDING_MAX_AGE_MS = 3 * 24 * 3600 * 1000;
+
+export async function onRequest({ request, env, params }) {
+  if (request.method !== "POST") return methodNotAllowed();
+  if (!sameOriginOk(request)) return json(403, { ok: false, erro: "ORIGEM_INVALIDA" });
+
+  const db = await getDb(env);
+  if (!db) return json(503, { ok: false, erro: "PAYMENT_PROVIDER_UNAVAILABLE" });
+
+  const user = await getSessionUser(db, request);
+  if (!user) return json(401, { ok: false, erro: "NAO_AUTENTICADO" });
+
+  const body = await readJson(request);
+  if (!body) return json(400, { ok: false, erro: "JSON_INVALIDO" });
+  if (body.termsAccepted !== true) return json(400, { ok: false, erro: "TERMS_NOT_ACCEPTED" });
+
+  const method = body.paymentMethod || "PIX";
+  if (method !== "PIX" && method !== "CREDIT_CARD") {
+    return json(400, { ok: false, erro: "PAYMENT_METHOD_NOT_ALLOWED" });
+  }
+
+  const productId = String(params.bookId || "");
+  const product = getProduct(productId);
+  if (!product) return json(409, { ok: false, erro: "BOOK_PRICE_NOT_CONFIGURED" });
+
+  let installments = 1;
+  if (method === "CREDIT_CARD" && body.installmentCount != null) {
+    installments = Number(body.installmentCount);
+    if (!Number.isInteger(installments) || installments < 1 || installments > product.maxInstallments) {
+      return json(400, { ok: false, erro: "INSTALLMENTS_NOT_ALLOWED" });
+    }
+  }
+
+  // Já possui todos os livros do produto? Não cobra de novo.
+  const owned = await db
+    .prepare(`SELECT COUNT(*) AS n FROM entitlements WHERE user_id = ? AND book_id IN (${product.items.map(() => "?").join(",")})`)
+    .bind(user.id, ...product.items)
+    .first();
+  if (owned && owned.n >= product.items.length) return json(409, { ok: false, erro: "ALREADY_OWNED" });
+
+  const cfg = asaasConfig(env);
+  if (!cfg) return json(503, { ok: false, erro: "AMBIENTE_ASAAS_NAO_CONFIGURADO" });
+
+  // ---- Compra em aberto já existente? ---------------------------------
+  const open = await db
+    .prepare("SELECT * FROM purchases WHERE user_id = ? AND product_id = ? AND status IN ('CREATING','PENDING')")
+    .bind(user.id, productId)
+    .first();
+  if (open) {
+    if (open.status === "CREATING") {
+      if (open.updated_at + 60 * 1000 > now()) {
+        return json(409, { ok: false, erro: "PAYMENT_ATTEMPT_ALREADY_DISPATCHING" });
+      }
+      await setStatus(db, open.id, "FAILED"); // reserva órfã (ex.: timeout)
+    } else if (open.created_at + PENDING_MAX_AGE_MS < now()) {
+      await setStatus(db, open.id, "EXPIRED");
+    } else if (open.payment_method === method && open.installment_count === installments && open.invoice_url) {
+      return json(201, { ok: true, reused: true, paymentMethod: method, invoiceUrl: open.invoice_url, purchaseId: open.id });
+    } else {
+      // Troca de método/parcelas: cancela a cobrança anterior antes de criar outra,
+      // para nunca existirem duas cobranças pagáveis do mesmo produto.
+      try {
+        await deletePayment(cfg, open);
+      } catch (e) {
+        console.error("[checkout] falha ao cancelar cobrança anterior", e.message);
+        return json(409, { ok: false, erro: "PAYMENT_ATTEMPT_ALREADY_DISPATCHING" });
+      }
+      await setStatus(db, open.id, "CANCELLED");
+    }
+  }
+
+  // ---- Dados do cliente para o Asaas -----------------------------------
+  let cpfCnpj = user.cpf_cnpj;
+  if (!user.asaas_customer_id && !cpfCnpj) {
+    const doc = normalizeDocument(body.cpfCnpj);
+    if (!doc) return json(400, { ok: false, erro: "CUSTOMER_DOCUMENT_REQUIRED" });
+    if (!isValidDocument(doc)) return json(400, { ok: false, erro: "CUSTOMER_DOCUMENT_INVALID" });
+    cpfCnpj = doc;
+  }
+  let name = user.name;
+  if (!name) {
+    name = typeof body.nomeCompleto === "string" ? body.nomeCompleto.trim().slice(0, 120) : "";
+    if (name.length < 3) return json(400, { ok: false, erro: "CUSTOMER_NAME_REQUIRED" });
+  }
+
+  // ---- Reserva local (trava de idempotência) ----------------------------
+  const purchaseId = randomId("pur");
+  const t = now();
+  try {
+    await db
+      .prepare(
+        `INSERT INTO purchases (id, user_id, product_id, amount_cents, payment_method, installment_count, status, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, 'CREATING', ?, ?)`
+      )
+      .bind(purchaseId, user.id, productId, product.priceCents, method, installments, t, t)
+      .run();
+  } catch (e) {
+    if (String(e && e.message).includes("UNIQUE")) {
+      return json(409, { ok: false, erro: "PAYMENT_ATTEMPT_ALREADY_DISPATCHING" });
+    }
+    throw e;
   }
 
   try {
-    // 1. Validar sessão (cookie HttpOnly)
-    const sessionToken = extractSessionToken(request);
-    if (!sessionToken) {
-      return new Response(JSON.stringify({ erro: "NAO_AUTENTICADO" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" }
-      });
+    let customerId = user.asaas_customer_id;
+    if (!customerId) {
+      customerId = await findOrCreateCustomer(cfg, { userId: user.id, name, email: user.email, cpfCnpj });
+      await db
+        .prepare("UPDATE users SET asaas_customer_id = ?, cpf_cnpj = COALESCE(cpf_cnpj, ?), name = COALESCE(name, ?) WHERE id = ?")
+        .bind(customerId, cpfCnpj || null, name || null, user.id)
+        .run();
     }
 
-    // 2. Validar corpo (método pagamento + aceite termos)
-    const body = await request.json();
-    if (body.termsAccepted !== true) {
-      return new Response(JSON.stringify({ erro: "TERMS_NOT_ACCEPTED" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-
-    const paymentMethod = body.paymentMethod || "PIX";
-    if (!["PIX", "CREDIT_CARD"].includes(paymentMethod)) {
-      return new Response(JSON.stringify({ erro: "PAYMENT_METHOD_NOT_ALLOWED" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-
-    // 3. Obter preço do catálogo (nunca do cliente)
-    const price = getCatalogPrice(bookId);
-    if (!price) {
-      return new Response(JSON.stringify({ erro: "BOOK_PRICE_NOT_CONFIGURED" }), {
-        status: 409,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-
-    // 4. Preparar checkout via Asaas (PRODUÇÃO)
-    const asaasUrl = env.ASAAS_API_URL || "https://api.asaas.com/api/v3";
-    const asaasKey = env.ASAAS_API_KEY;
-
-    if (!asaasKey) {
-      return new Response(JSON.stringify({ erro: "ASAAS_KEY_NOT_CONFIGURED" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-
-    const purchaseIntentId = await generatePurchaseIntentId(sessionToken.customerId, bookId);
-    const checkoutData = await createAsaasPayment(
-      asaasUrl,
-      asaasKey,
-      {
-        customerId: sessionToken.customerId,
-        bookId,
-        price,
-        paymentMethod,
-        purchaseIntentId
-      }
-    );
-
-    return new Response(JSON.stringify({ ok: true, ...checkoutData }), {
-      status: 201,
-      headers: { "Content-Type": "application/json" }
+    const payment = await createPayment(cfg, {
+      customerId,
+      billingType: method,
+      valueCents: product.priceCents,
+      installmentCount: installments,
+      dueDate: dueDateInDays(2),
+      description: `CorpoPleno — ${product.title}`,
+      externalReference: purchaseId,
     });
 
-  } catch (error) {
-    console.error("[checkout.js]", error.message);
-    return new Response(JSON.stringify({ erro: "ERRO_INTERNO_CHECKOUT" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
+    if (!payment || !payment.id || !payment.invoiceUrl) throw new AsaasError("rejected", 200, "missing_fields");
+
+    await db
+      .prepare(
+        `UPDATE purchases SET status = 'PENDING', asaas_payment_id = ?, asaas_installment_id = ?, invoice_url = ?, updated_at = ?
+          WHERE id = ? AND status = 'CREATING'`
+      )
+      .bind(payment.id, payment.installment || null, payment.invoiceUrl, now(), purchaseId)
+      .run();
+
+    return json(201, { ok: true, paymentMethod: method, invoiceUrl: payment.invoiceUrl, purchaseId });
+  } catch (e) {
+    await setStatus(db, purchaseId, "FAILED");
+    if (e instanceof AsaasError) {
+      console.error("[checkout] asaas", e.kind, e.status, e.detail || "");
+      return json(e.kind === "unavailable" ? 503 : 502, {
+        ok: false,
+        erro: e.kind === "unavailable" ? "PAYMENT_PROVIDER_UNAVAILABLE" : "PAYMENT_PROVIDER_REJECTED",
+      });
+    }
+    console.error("[checkout] erro interno", e && e.message);
+    return json(500, { ok: false, erro: "ERRO_INTERNO_CHECKOUT" });
   }
 }
 
-function extractSessionToken(request) {
-  const cookie = request.headers.get("cookie") || "";
-  const match = cookie.match(/corpopleno_session=([^;]+)/);
-  return match ? match[1] : null;
-}
-
-function getCatalogPrice(bookId) {
-  const catalog = {
-    "hene-sem-medo-livro-1": 39.90,
-    "hene-sem-medo-livro-2": 39.90,
-    "amor-que-aprendeu-a-ficar": 29.90,
-    "amor-que-ensina-a-crescer": 29.90,
-    "receitas-corpopleno": 200.00,
-    "hene-sem-medo-combo": 70.00,
-    "romance-combo": 50.00
-  };
-  return catalog[bookId] || null;
-}
-
-function generateRandomString(len) {
-  return Math.random().toString(36).substr(2, len);
-}
-
-async function generatePurchaseIntentId(customerId, bookId) {
-  const data = new TextEncoder().encode(`${customerId}:${bookId}`);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  return `${hashHex.slice(0,8)}-${hashHex.slice(8,12)}-${hashHex.slice(12,16)}-${hashHex.slice(16,20)}-${hashHex.slice(20,32)}`;
-}
-
-async function createAsaasPayment(asaasUrl, asaasKey, data) {
-  // Chamar Asaas API real para criar pagamento
-  const response = await fetch(`${asaasUrl}/payments`, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${asaasKey}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      customer: data.customerId,
-      billingType: data.paymentMethod === "PIX" ? "PIX" : "CREDIT_CARD",
-      value: data.price,
-      description: `Livro: ${data.bookId}`,
-      externalReference: data.purchaseIntentId,
-      dueDate: new Date(Date.now() + 86400000).toISOString().split('T')[0]
-    })
-  });
-
-  if (!response.ok) {
-    throw new Error(`Asaas API error: ${response.status}`);
-  }
-
-  const payment = await response.json();
-  return {
-    ok: true,
-    paymentMethod: data.paymentMethod,
-    pixUrl: payment.pixQrCodeUrl,
-    checkoutUrl: payment.invoiceUrl,
-    externalId: payment.id
-  };
+function setStatus(db, id, status) {
+  return db.prepare("UPDATE purchases SET status = ?, updated_at = ? WHERE id = ?").bind(status, now(), id).run();
 }
