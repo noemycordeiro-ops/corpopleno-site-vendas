@@ -57,7 +57,14 @@ export async function onRequest(context) {
 
     // 4. Preparar checkout via Asaas (PRODUÇÃO)
     const asaasUrl = env.ASAAS_API_URL || "https://api.asaas.com/api/v3";
-    const asaasKey = env.ASAAS_API_KEY; // Token secreto
+    const asaasKey = env.ASAAS_API_KEY;
+
+    if (!asaasKey) {
+      return new Response(JSON.stringify({ erro: "ASAAS_KEY_NOT_CONFIGURED" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
 
     const purchaseIntentId = await generatePurchaseIntentId(sessionToken.customerId, bookId);
     const checkoutData = await createAsaasPayment(
