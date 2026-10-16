@@ -1,7 +1,7 @@
 # Arquitetura do checkout de livros
 
 > Memória do projeto. Branch: `feature/catalogo-combos-checkout`.
-> Última atualização: 2026-10-16 (Fases 5 e 6: produção publicada e leitor completo).
+> Última atualização: 2026-10-16 (Fase 7: lupa mágica de tradução nas capas).
 > Este arquivo **não** é publicado no site (`/docs/*` responde 404 por meio de `functions/docs/[[path]].js` e `_routes.json`). Mas **o repositório no GitHub é público**: aqui não entram IDs de banco ou de conta, caminhos de máquinas locais nem instruções de acesso administrativo.
 
 ## 1. Visão geral
@@ -128,6 +128,19 @@ O conteúdo fica na tabela `book_pages`, uma linha por página. O R2 não está 
 - **Captura de tela não pode ser impedida por um site.** A marca d'água e o desfoque são só dissuasão.
 
 **Corrigido:** a capa em Meus Livros ficava quebrada (usava um campo inexistente); agora usa o `book-cover.js`.
+
+## 5c. Lupa mágica de tradução nas capas
+
+- **Dados:** um arquivo por livro, `assets/data/image-hotspots/<book_id>.json`.
+  - Cada área de texto da capa tem coordenadas em % da imagem original (1024×1536) e o texto em pt-BR, pt-PT, en-US, ko-KR e es-CL, cada um com `revisado`.
+  - Os textos que já tinham sido **aprovados** para as capas vieram do histórico com `revisado: true`. As composições e os textos novos estão com `revisado: false`.
+- **Componente:** `assets/js/image-lens.js` + estilos `.cp-lens` em `books.css`, carregado em `produtos.html`, `livro.html` e `livros.html`.
+  - Passar o mouse (ou tocar e arrastar) sobre uma área marcada abre uma lupa circular que **amplia** a capa e, fora do pt-BR, mostra a tradução no idioma do seletor do site.
+  - Funciona nas capas giradas dos combos.
+  - Sem `innerHTML` e sem `preventDefault`, então clique e rolagem continuam iguais; um toque simples no card continua abrindo o livro.
+  - Cada capa ganha uma legenda oculta (`sr-only`) com o texto no idioma atual.
+  - Nenhuma imagem foi alterada.
+- **Para revisar:** procure `"revisado": false` nos arquivos. Depois de revisar, troque para `true`. Hoje são as lombadas do Henê 1 e 2 e de Receitas em en-US, ko-KR e es-CL.
 
 ## 6. Recuperação de senha
 
@@ -264,6 +277,24 @@ Para voltar: um commit de revert na master até o conteúdo de `c482e69`.
 **Antes do merge**, testado localmente e no Preview Sandbox:
 - PIX real da Sandbox: QR em PNG, copia-e-cola EMV `000201…` e fatura `sandbox.asaas.com`;
 - revogação: estorno, chargeback e PAYMENT_DELETED de compra paga, com idempotência e livro coberto por outra compra preservado.
+
+### Fase 7 — lupa mágica (2026-10-16)
+
+Verificado com Chromium headless (puppeteer), no local e no Preview, em desktop e celular, nos 5 idiomas: **49 de 49 casos ok**.
+
+Casos testados:
+- título do Henê 1;
+- capa girada do combo Romance;
+- lombada de Receitas;
+- área fora do texto (a lupa some);
+- legenda acessível no idioma certo;
+- página do combo Henê;
+- clique e toque no card continuam abrindo o livro.
+
+Resultados:
+- zero erros de console;
+- os 7 resumos intactos;
+- 0 imagens alteradas.
 
 ### Fase 6 — leitor (2026-10-16)
 
