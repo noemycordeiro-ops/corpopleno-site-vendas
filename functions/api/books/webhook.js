@@ -11,6 +11,9 @@
     (UPDATE condicional + INSERT OR IGNORE).
   - PAYMENT_DELETED / PAYMENT_OVERDUE: encerra a compra pendente para que
     a cliente possa gerar outra cobrança.
+  - PAYMENT_REFUNDED / PAYMENT_CHARGEBACK_REQUESTED / PAYMENT_CHARGEBACK_DISPUTE
+    (e PAYMENT_DELETED de compra já paga): revogam o acesso, de forma
+    idempotente; uma compra revogada nunca volta a liberar.
   - Eventos ignorados respondem 200 (o Asaas pausa a fila se receber erro).
 */
 import { json, methodNotAllowed, readJson } from "../../_lib/http.js";
@@ -20,6 +23,50 @@ import { getProduct } from "../../_lib/catalog.js";
 
 const PAID_EVENTS = new Set(["PAYMENT_RECEIVED", "PAYMENT_CONFIRMED"]);
 const CLOSE_EVENTS = { PAYMENT_DELETED: "CANCELLED", PAYMENT_OVERDUE: "EXPIRED" };
+// Eventos que REVOGAM o acesso de uma compra já paga (idempotente).
+const REVOKE_EVENTS = {
+  PAYMENT_REFUNDED: "REFUNDED",
+  PAYMENT_CHARGEBACK_REQUESTED: "CHARGEBACK",
+  PAYMENT_CHARGEBACK_DISPUTE: "CHARGEBACK",
+  PAYMENT_DELETED: "CANCELLED",
+};
+const REVOKED_STATUSES = new Set(["REFUNDED", "CHARGEBACK", "REVOKED"]);
+
+/*
+  Revoga: muda o status (só se ainda estiver PAID), apaga os acessos que
+  vieram DESTA compra e, para cada livro, devolve o acesso se outra compra
+  PAGA da mesma cliente também cobrir esse livro (ex.: livro avulso +
+  combo). Repetir o evento não muda nada.
+*/
+async function revokePurchase(db, purchase, newStatus, log) {
+  const t = now();
+  const product = getProduct(purchase.product_id);
+  const items = product ? product.items : [];
+  const results = await db.batch([
+    db.prepare("UPDATE purchases SET status = ?, updated_at = ? WHERE id = ? AND status = 'PAID'").bind(newStatus, t, purchase.id),
+    db.prepare("DELETE FROM entitlements WHERE purchase_id = ?").bind(purchase.id),
+    log(purchase.id, "REVOKED_" + newStatus),
+  ]);
+  const { results: others } = await db
+    .prepare("SELECT id, product_id FROM purchases WHERE user_id = ? AND status = 'PAID' AND id != ?")
+    .bind(purchase.user_id, purchase.id)
+    .all();
+  const regrants = [];
+  for (const bookId of items) {
+    const cover = (others || []).find((o) => {
+      const prod = getProduct(o.product_id);
+      return prod && prod.items.includes(bookId);
+    });
+    if (cover) {
+      regrants.push(
+        db.prepare("INSERT OR IGNORE INTO entitlements (user_id, book_id, purchase_id, granted_at) VALUES (?, ?, ?, ?)")
+          .bind(purchase.user_id, bookId, cover.id, t)
+      );
+    }
+  }
+  if (regrants.length) await db.batch(regrants);
+  return { changed: results[0] && results[0].meta ? results[0].meta.changes : 0, kept: regrants.length };
+}
 
 export async function onRequest({ request, env }) {
   if (request.method !== "POST") return methodNotAllowed();
@@ -62,6 +109,15 @@ export async function onRequest({ request, env }) {
     return json(200, { ok: true, ignored: true });
   }
 
+  if (REVOKE_EVENTS[event.event] && (purchase.status === "PAID" || REVOKED_STATUSES.has(purchase.status))) {
+    if (purchase.status !== "PAID") {
+      await log(purchase.id, "ALREADY_REVOKED").run();
+      return json(200, { ok: true, alreadyRevoked: true });
+    }
+    const r = await revokePurchase(db, purchase, REVOKE_EVENTS[event.event], log);
+    return json(200, { ok: true, revoked: true, status: REVOKE_EVENTS[event.event], newlyRevoked: r.changed > 0, keptByOtherPurchase: r.kept });
+  }
+
   if (CLOSE_EVENTS[event.event]) {
     await db.batch([
       db.prepare("UPDATE purchases SET status = ?, updated_at = ? WHERE id = ? AND status = 'PENDING'")
@@ -79,6 +135,11 @@ export async function onRequest({ request, env }) {
   if (purchase.status === "PAID") {
     await log(purchase.id, "ALREADY_PAID").run();
     return json(200, { ok: true, alreadyPaid: true });
+  }
+  // Compra estornada/contestada nunca volta a liberar por reentrega antiga.
+  if (REVOKED_STATUSES.has(purchase.status)) {
+    await log(purchase.id, "IGNORED_REVOKED").run();
+    return json(200, { ok: true, ignored: true });
   }
 
   // Cobrança à vista: o valor pago precisa bater com o preço do catálogo.

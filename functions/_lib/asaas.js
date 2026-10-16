@@ -105,6 +105,18 @@ export async function createPayment(cfg, p) {
   return call(cfg, "POST", "/payments", payload);
 }
 
+// QR Code PIX real da cobrança (imagem base64 + copia-e-cola). Melhor
+// esforço: se falhar, o site mostra a fatura hospedada (invoiceUrl).
+export async function getPixQrCode(cfg, paymentId) {
+  try {
+    const d = await call(cfg, "GET", `/payments/${encodeURIComponent(paymentId)}/pixQrCode`);
+    if (d && d.encodedImage && d.payload) {
+      return { encodedImage: d.encodedImage, payload: d.payload, expirationDate: d.expirationDate || null };
+    }
+  } catch (_) { /* cai na fatura hospedada */ }
+  return null;
+}
+
 export async function deletePayment(cfg, purchase) {
   if (purchase.asaas_installment_id) {
     return call(cfg, "DELETE", `/installments/${encodeURIComponent(purchase.asaas_installment_id)}`);

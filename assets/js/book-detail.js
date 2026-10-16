@@ -339,6 +339,39 @@
     erro.hidden = false;
   }
 
+  // Fase Livros 017 -- depois de mostrar o PIX, pergunta a cada 5 s
+  // (por até 15 min) se o webhook já liberou os livros. Nunca decide nada
+  // no navegador: só lê GET /api/me/books.
+  var aguardandoTimer = null;
+  function aguardarLiberacao() {
+    if (aguardandoTimer || !currentMeta) return;
+    var alvo = Array.isArray(currentMeta.combo_items) && currentMeta.combo_items.length
+      ? currentMeta.combo_items : [qs("id") || ""];
+    var inicio = Date.now();
+    aguardandoTimer = setInterval(function () {
+      if (Date.now() - inicio > 15 * 60 * 1000) { clearInterval(aguardandoTimer); return; }
+      fetch(apiBase() + "/api/me/books", { credentials: "include" })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (d) {
+          if (!d || !Array.isArray(d.livros)) return;
+          var meus = d.livros.map(function (l) { return l.bookId; });
+          var liberado = alvo.every(function (b) { return meus.indexOf(b) !== -1; });
+          if (!liberado) return;
+          clearInterval(aguardandoTimer);
+          var aviso = el("cp-checkout-pix-waiting");
+          if (aviso) {
+            aviso.textContent = "";
+            aviso.appendChild(document.createTextNode("✅ Pagamento confirmado! "));
+            var link = document.createElement("a");
+            link.href = "meus-livros.html";
+            link.textContent = "Ir para Meus Livros";
+            aviso.appendChild(link);
+          }
+        })
+        .catch(function () { /* tenta de novo no próximo intervalo */ });
+    }, 5000);
+  }
+
   function exibirResultadoCheckout(dados) {
     ["cp-checkout-terms", "cp-checkout-confirm", "cp-checkout-cancel"].forEach(function (id) {
       var nodo = el(id);
@@ -359,6 +392,7 @@
       if (img && dados.pix.encodedImage) img.src = "data:image/png;base64," + dados.pix.encodedImage;
       if (payload) payload.value = dados.pix.payload || "";
       if (pixWrap) pixWrap.hidden = false;
+      aguardarLiberacao();
     } else if (dados.invoiceUrl) {
       // Fase Livros 015 -- PIX e cartão são pagos na fatura segura
       // hospedada pelo Asaas (invoiceUrl); nenhum dado de cartão passa

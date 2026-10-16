@@ -10,7 +10,9 @@
     (índice único parcial no D1). Repetir com o mesmo método devolve a
     mesma fatura; trocar de método cancela a cobrança anterior no Asaas.
   - Código de compra único CP-XXXXXXXX (= purchases.id = externalReference no Asaas).
-  - Resposta 201 {ok:true, paymentMethod, invoiceUrl, purchaseCode, purchaseId}.
+  - Resposta 201 {ok:true, paymentMethod, invoiceUrl, pix?, purchaseCode, purchaseId}.
+    PIX: pix = {encodedImage, payload} reais do Asaas (GET /payments/{id}/pixQrCode),
+    exibidos no próprio site; cartão: sempre a fatura hospedada (invoiceUrl).
     O pagamento (PIX ou cartão) acontece na fatura hospedada do Asaas --
     nenhum dado de cartão passa pelo site.
 */
@@ -20,7 +22,7 @@ import { getSessionUser, purchaseCode } from "../../../_lib/auth.js";
 import { getProduct } from "../../../_lib/catalog.js";
 import {
   asaasConfig, findOrCreateCustomer, createPayment, deletePayment, dueDateInDays,
-  normalizeDocument, isValidDocument, AsaasError,
+  normalizeDocument, isValidDocument, AsaasError, getPixQrCode,
 } from "../../../_lib/asaas.js";
 
 const PENDING_MAX_AGE_MS = 3 * 24 * 3600 * 1000;
@@ -80,7 +82,8 @@ export async function onRequest({ request, env, params }) {
     } else if (open.created_at + PENDING_MAX_AGE_MS < now()) {
       await setStatus(db, open.id, "EXPIRED");
     } else if (open.payment_method === method && open.installment_count === installments && open.invoice_url) {
-      return json(201, { ok: true, reused: true, paymentMethod: method, invoiceUrl: open.invoice_url, purchaseCode: open.id, purchaseId: open.id });
+      const pixReuso = method === "PIX" && open.asaas_payment_id ? await getPixQrCode(cfg, open.asaas_payment_id) : null;
+      return json(201, { ok: true, reused: true, paymentMethod: method, invoiceUrl: open.invoice_url, pix: pixReuso, purchaseCode: open.id, purchaseId: open.id });
     } else {
       // Troca de método/parcelas: cancela a cobrança anterior antes de criar outra,
       // para nunca existirem duas cobranças pagáveis do mesmo produto.
@@ -161,7 +164,8 @@ export async function onRequest({ request, env, params }) {
       .bind(payment.id, payment.installment || null, payment.invoiceUrl, now(), purchaseId)
       .run();
 
-    return json(201, { ok: true, paymentMethod: method, invoiceUrl: payment.invoiceUrl, purchaseCode: purchaseId, purchaseId });
+    const pix = method === "PIX" ? await getPixQrCode(cfg, payment.id) : null;
+    return json(201, { ok: true, paymentMethod: method, invoiceUrl: payment.invoiceUrl, pix, purchaseCode: purchaseId, purchaseId });
   } catch (e) {
     await setStatus(db, purchaseId, "FAILED");
     if (e instanceof AsaasError) {

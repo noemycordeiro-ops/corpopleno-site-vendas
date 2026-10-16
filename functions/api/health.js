@@ -1,8 +1,7 @@
 /*
   GET /api/health -- diagnóstico de configuração. Mostra só se cada item
-  está configurado (true/false) e o ambiente Asaas efetivo; NUNCA mostra
-  valores. Em produção (ASAAS_ENVIRONMENT=production) responde só
-  {ok:true}, para não expor detalhes da configuração no site oficial.
+  está configurado (true/false), o ambiente Asaas efetivo e os NOMES do
+  que falta; NUNCA mostra valores.
 */
 import { json, methodNotAllowed } from "../_lib/http.js";
 import { getDb } from "../_lib/db.js";
@@ -11,7 +10,6 @@ import { emailConfigured } from "../_lib/email.js";
 
 export async function onRequest({ request, env }) {
   if (request.method !== "GET") return methodNotAllowed();
-  if (env.ASAAS_ENVIRONMENT === "production") return json(200, { ok: true });
 
   let banco = false;
   let tabelas = null;
