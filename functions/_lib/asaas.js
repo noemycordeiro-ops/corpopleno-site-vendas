@@ -7,6 +7,7 @@
 */
 
 export const ASAAS_PRODUCTION_URL = "https://api.asaas.com/v3";
+export const ASAAS_SANDBOX_URL = "https://api-sandbox.asaas.com/v3";
 
 export class AsaasError extends Error {
   constructor(kind, status, detail) {
@@ -17,10 +18,34 @@ export class AsaasError extends Error {
   }
 }
 
+/*
+  Escolha SEGURA do ambiente Asaas (Fase 3):
+  - Produção só quando a variável ASAAS_ENVIRONMENT = "production" estiver
+    definida (cadastrar SOMENTE no ambiente Production do Pages). Aí a URL
+    é sempre a de produção.
+  - Em qualquer outro caso (Preview, local), o padrão é a SANDBOX. Uma
+    ASAAS_API_URL só é aceita se for a Sandbox ou localhost (stub de
+    teste); apontar para a produção fora de produção é recusado.
+  Assim, esquecer uma variável nunca faz um Preview cobrar de verdade.
+  Devolve null (-> 503 AMBIENTE_ASAAS_NAO_CONFIGURADO) se faltar a chave
+  ou se a combinação for insegura.
+*/
 export function asaasConfig(env) {
   if (!env.ASAAS_API_KEY) return null;
-  const baseUrl = (env.ASAAS_API_URL || ASAAS_PRODUCTION_URL).replace(/\/+$/, "");
-  return { baseUrl, apiKey: env.ASAAS_API_KEY };
+  if (env.ASAAS_ENVIRONMENT === "production") {
+    return { baseUrl: ASAAS_PRODUCTION_URL, apiKey: env.ASAAS_API_KEY, environment: "production" };
+  }
+  const baseUrl = (env.ASAAS_API_URL || ASAAS_SANDBOX_URL).replace(/\/+$/, "");
+  let host;
+  try { host = new URL(baseUrl).hostname; } catch (_) { return null; }
+  const permitido = host === "api-sandbox.asaas.com" || host === "127.0.0.1" || host === "localhost";
+  if (!permitido) return null;
+  return { baseUrl, apiKey: env.ASAAS_API_KEY, environment: "sandbox" };
+}
+
+export function asaasEnvironment(env) {
+  const cfg = asaasConfig(env);
+  return cfg ? cfg.environment : null;
 }
 
 async function call(cfg, method, path, body) {
