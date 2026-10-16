@@ -197,7 +197,7 @@ localmente e corrigida onde necessário, permanecendo inteiramente dentro de
 `site_publico_corpopleno_master_20260919/`. Nenhum dado real, número de
 vendas, link de checkout, contato ou credencial foi inventado — todos os
 itens não confirmados aparecem como placeholder claramente identificado,
-conforme a regra de honestidade do prompt master.
+conforme a regra de honestidade das diretrizes internas do site.
 
 ---
 

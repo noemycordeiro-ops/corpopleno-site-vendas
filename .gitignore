@@ -24,3 +24,6 @@ secrets/
 # Wrangler (estado local de desenvolvimento)
 .wrangler/
 .dev.vars
+
+# Documento interno de diretrizes: nunca versionar (repositório público)
+PROMPT_MASTER_SITE_CORPOPLENO.md

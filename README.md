@@ -256,7 +256,7 @@ Todos os gráficos do `admin-preview` (`admin-preview/assets/js/charts.js`)
 são gerados em **SVG puro via JavaScript nativo**, sem nenhuma biblioteca
 externa e sem dependência de internet. Isso foi uma escolha deliberada para:
 
-- manter o painel leve, compatível com o item 15 do prompt master
+- manter o painel leve, compatível com o item 15 das diretrizes internas do site
   (evitar dependências pesadas e não sobrecarregar o notebook);
 - evitar carregar uma lib de terceiros só para 5 gráficos simples
   (barra, linha e funil horizontal cobrem todos os casos pedidos:

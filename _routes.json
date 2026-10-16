@@ -2,7 +2,12 @@
   "version": 1,
   "include": [
     "/api/*",
-    "/docs/*"
+    "/docs/*",
+    "/README.md",
+    "/RELATORIO_VALIDACAO.md",
+    "/PROMPT_MASTER_SITE_CORPOPLENO.md",
+    "/tools/*",
+    "/assets/books/receitas-corpopleno/ADMIN_INSTRUCTIONS.md"
   ],
   "exclude": []
 }
