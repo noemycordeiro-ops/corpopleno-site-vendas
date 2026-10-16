@@ -1,7 +1,7 @@
 # Arquitetura do checkout de livros
 
 > Memória do projeto. Branch: `feature/catalogo-combos-checkout`.
-> Última atualização: 2026-10-16 (Fase 4: resumos oficiais em "Conhecer o livro").
+> Última atualização: 2026-10-16 (Fases 5 e 6: produção publicada e leitor completo).
 > Este arquivo **não** é publicado no site (`/docs/*` responde 404 por meio de `functions/docs/[[path]].js` e `_routes.json`). Mas **o repositório no GitHub é público**: aqui não entram IDs de banco ou de conta, caminhos de máquinas locais nem instruções de acesso administrativo.
 
 ## 1. Visão geral
@@ -62,7 +62,7 @@ Asaas ──webhook──> /api/books/webhook ──> D1 (PAID + livros liberado
    - Cliques simultâneos: só um cria a cobrança.
 5. Na primeira compra pede CPF/CNPJ (com verificação dos dígitos). Cria ou reutiliza o cliente Asaas.
 6. Gera o **código de compra** `CP-XXXXXXXX` (aleatório, não sequencial), que também é o `externalReference` no Asaas.
-7. Responde 201 com `invoiceUrl` e `purchaseCode`.
+7. Responde 201 com `invoiceUrl` e `purchaseCode`. No **PIX**, também devolve `pix: {encodedImage, payload}` reais do Asaas (`GET /payments/{id}/pixQrCode`): o site mostra o QR Code e o copia-e-cola e, a cada 5 s, consulta Meus Livros para avisar quando o livro é liberado. O **cartão** usa sempre a fatura hospedada do Asaas (até 4x só em Receitas).
 
 ### Ambiente Asaas (seguro por padrão)
 
@@ -85,8 +85,14 @@ Asaas ──webhook──> /api/books/webhook ──> D1 (PAID + livros liberado
 1. Valida o header `asaas-access-token` contra o Secret `ASAAS_WEBHOOK_TOKEN` (comparação em tempo constante).
 2. Localiza a compra pelo código e confere o id da cobrança e, à vista, o valor.
 3. `PAYMENT_RECEIVED` / `PAYMENT_CONFIRMED`: numa única transação, marca `PAID` uma única vez e libera 1 livro ou os 2 do combo. Reentregas do evento são inofensivas.
-4. `PAYMENT_DELETED` → `CANCELLED`; `PAYMENT_OVERDUE` → `EXPIRED`.
-5. Eventos que não se aplicam respondem 200, para o Asaas não pausar a fila.
+4. `PAYMENT_DELETED` → `CANCELLED`; `PAYMENT_OVERDUE` → `EXPIRED` (compra pendente).
+5. **Revogação de acesso** (idempotente):
+   - `PAYMENT_REFUNDED` → `REFUNDED`;
+   - `PAYMENT_CHARGEBACK_REQUESTED` / `PAYMENT_CHARGEBACK_DISPUTE` → `CHARGEBACK`;
+   - `PAYMENT_DELETED` de compra já paga → `CANCELLED`.
+
+   Em todos os casos a cliente perde os livros liberados por aquela compra. Se outra compra paga cobrir o mesmo livro (ex.: avulso + combo), o acesso continua. Uma compra revogada nunca volta a liberar por reentrega antiga do evento.
+6. Eventos que não se aplicam respondem 200, para o Asaas não pausar a fila.
 
 ## 5. Leitura dos livros comprados
 
@@ -98,6 +104,30 @@ Asaas ──webhook──> /api/books/webhook ──> D1 (PAID + livros liberado
 - 200 `{ok, pages}` com `Cache-Control: private, no-store`.
 
 O conteúdo fica na tabela `book_pages`, uma linha por página. O R2 não está habilitado na conta, o limite do D1 é 2 MB por linha e a maior página tem cerca de 23 KB. Ele é carregado com `docs/tools/importar-conteudo-livros.py` a partir da cópia privada dos livros. O script grava os .sql fora do repositório e se recusa a gravar dentro dele.
+
+## 5b. Leitor (`leitor.html` + `assets/js/reader.js`)
+
+**Já existia:**
+- A−/A/A+;
+- modos de tela e duas páginas;
+- setas na tela e no teclado;
+- "Página X de Y";
+- tela cheia;
+- busca e favoritos de receitas;
+- bloqueio de impressão;
+- conteúdo desfocado quando a aba perde o foco;
+- "Ler agora" em Meus Livros.
+
+**Criado na Fase 6:**
+- **Sumário** gerado dos títulos das páginas, **modo claro/escuro** e **swipe** no celular.
+- **Idiomas reais:** `GET /api/books/:id/content` lista só os idiomas que têm conteúdo no banco. Sem tradução automática. Idiomas que não estão em `REVIEWED_LOCALES` (`functions/_lib/catalog.js`; hoje só pt-BR) mostram o selo **"Tradução não revisada"**.
+- **Progresso no D1** (`GET/PUT /api/books/:id/progress`, tabela `reading_progress`), por cliente + livro: idioma, página, **marcador estável** `p<página>-b<bloco>` e preferências (fonte, tema, modo, disposição). Ao abrir, o leitor volta ao ponto salvo; Meus Livros mostra **"Continuar leitura (pág. N)"**.
+- **Proteções só na área de leitura:** sem menu de contexto, cópia, recorte, seleção e arrastar; Ctrl/Cmd+C, X e A bloqueados fora de campos de digitação.
+- **Marca d'água** discreta com o **código curto do cliente** (`CL-XXXXXXXX`, derivado do id; nunca o e-mail).
+- **Limites:** 60 leituras de conteúdo e 120 gravações de progresso por cliente a cada 10 minutos (429).
+- **Captura de tela não pode ser impedida por um site.** A marca d'água e o desfoque são só dissuasão.
+
+**Corrigido:** a capa em Meus Livros ficava quebrada (usava um campo inexistente); agora usa o `book-cover.js`.
 
 ## 6. Recuperação de senha
 
@@ -132,36 +162,48 @@ O conteúdo fica na tabela `book_pages`, uma linha por página. O R2 não está 
 | `webhook_events` | registro dos eventos recebidos |
 | `book_pages` | (livro, idioma, página), conteúdo |
 | `password_resets` | hash do token, usuário, validade, uso |
+| `reading_progress` | (cliente, livro), idioma, página, marcador do bloco, preferências, data |
 
 ## 8. Variáveis, Secrets e bindings (só nomes)
 
+Estado conferido em 2026-10-16 pelo `GET /api/health`, que mostra só true/false e nomes.
+
 | Nome | Tipo | Production | Preview |
 |---|---|---|---|
-| `DB` | binding D1 | banco de produção | banco de preview — **ligado** |
-| `ASAAS_API_KEY` | Secret | chave de produção (já existia) | chave Sandbox — **cadastrada** |
-| `ASAAS_ENVIRONMENT` | variável | **`production` (falta cadastrar)** | não cadastrar |
+| `DB` | binding D1 | **ligado** (banco de produção) | **ligado** (banco de preview) |
+| `ASAAS_API_KEY` | Secret | **não detectado** — cadastrar a chave de produção | chave Sandbox — ok |
+| `ASAAS_ENVIRONMENT` | variável | **falta** (`production`) | não cadastrar |
 | `ASAAS_API_URL` | variável | desnecessária | desnecessária (o padrão é a Sandbox) |
-| `ASAAS_WEBHOOK_TOKEN` | Secret | falta | **falta** |
-| `ADMIN_API_TOKEN` | Secret | falta | **falta** (opcional) |
-| `RESEND_API_KEY` | Secret | falta | **falta** |
-| `EMAIL_FROM` | variável | falta | **falta** |
+| `ASAAS_WEBHOOK_TOKEN` | Secret | **falta** | **falta** |
+| `ADMIN_API_TOKEN` | Secret | **falta** | **falta** (opcional) |
+| `RESEND_API_KEY` | Secret | **falta** | **falta** |
+| `EMAIL_FROM` | variável | **falta** | **falta** |
+| `META_PIXEL_ID` | variável (id público) | opcional | opcional |
 
-O diagnóstico `GET /api/health` (só no Preview) lista o que falta, mostrando apenas nomes e true/false.
+`GET /api/health` lista o que falta (apenas nomes e true/false), em Preview e em Production.
 
 ## 9. Passos manuais
 
 **Cloudflare (painel do projeto Pages):**
 
-1. **Production:**
-   - ligar `DB` ao banco de produção;
+1. **Production** (o `DB` já está ligado):
    - criar a variável `ASAAS_ENVIRONMENT=production`;
+   - criar o Secret `ASAAS_API_KEY` com a chave de produção (ela **não aparece** no ambiente Production hoje);
    - criar os Secrets `ASAAS_WEBHOOK_TOKEN` e `ADMIN_API_TOKEN` (valores aleatórios longos);
-   - criar `RESEND_API_KEY` e `EMAIL_FROM`.
-2. **Preview:** criar `ASAAS_WEBHOOK_TOKEN` (pode ser diferente do de produção), `RESEND_API_KEY` e `EMAIL_FROM`.
+   - criar `RESEND_API_KEY` e `EMAIL_FROM`;
+   - opcional: `META_PIXEL_ID`.
+2. **Preview:** criar `ASAAS_WEBHOOK_TOKEN`, `RESEND_API_KEY` e `EMAIL_FROM`.
 3. Carregar o conteúdo dos livros nos dois bancos com o script da seção 5. Isso exige `npx wrangler login` (Node 22 ou mais) ou um token com as permissões "Cloudflare Pages: Edit" e "D1: Edit".
-4. Bindings e Secrets só valem a partir do deploy seguinte (faça um push na branch ou "Retry deployment").
+4. Bindings e Secrets só valem a partir do deploy seguinte ("Retry deployment" ou um push).
+5. Depois de configurar, abrir `/api/health`: deve mostrar `asaasAmbiente: "production"` e `faltando: []`.
 
-**Asaas:** criar o webhook de Cobranças apontando para `/api/books/webhook` do site (no Sandbox, para a URL do Preview), com o mesmo token de `ASAAS_WEBHOOK_TOKEN` e os eventos `PAYMENT_RECEIVED`, `PAYMENT_CONFIRMED`, `PAYMENT_OVERDUE` e `PAYMENT_DELETED`. Conferir se cartão e parcelamento até 4x estão habilitados.
+**Asaas (produção):** criar o webhook de Cobranças com:
+
+- URL `https://www.corpoplenoresultadoreal.com.br/api/books/webhook`;
+- o mesmo token de `ASAAS_WEBHOOK_TOKEN`;
+- os eventos `PAYMENT_RECEIVED`, `PAYMENT_CONFIRMED`, `PAYMENT_OVERDUE`, `PAYMENT_DELETED`, `PAYMENT_REFUNDED`, `PAYMENT_CHARGEBACK_REQUESTED` e `PAYMENT_CHARGEBACK_DISPUTE`.
+
+No Sandbox, o mesmo vale apontando para a URL do Preview. Conferir também se o PIX (chave cadastrada), o cartão e o parcelamento até 4x estão habilitados.
 
 **Resend:** verificar o domínio do site e gerar a API key.
 
@@ -195,6 +237,57 @@ Os 7 cards aparecem em Produtos: 5 livros e 2 combos, com as capas sobrepostas e
 
 **Causa de cada 503:** só a falta de `ASAAS_WEBHOOK_TOKEN` (webhook) e de `ADMIN_API_TOKEN` (consulta administrativa). Nenhum 500.
 
+### Fase 5 — produção (2026-10-16)
+
+**Checkpoints de restauração:**
+- `checkpoint-pre-producao-20261016`: a master antiga, com build falho;
+- `checkpoint-producao-no-ar-c482e69`: a versão que estava no ar.
+
+Para voltar: um commit de revert na master até o conteúdo de `c482e69`.
+
+**Merge:** fast-forward da branch na master (`d55f277`), build de Production ok.
+
+**Verificado no domínio oficial:**
+- as páginas públicas respondem 200;
+- 7 cards com capas e preços corretos;
+- os 7 "Conhecer o livro" com o resumo literal;
+- menu sem "Livros";
+- sem erros de console;
+- `.md` internos com 404;
+- o documento interno de diretrizes saiu do repositório: antes estava público com HTTP 200; o histórico do git ainda o contém.
+
+**Produção (D1):** cadastro 201, login 401/200, `me` 200, Meus Livros vazio, conteúdo 403 sem compra, pedido de recuperação de senha 200.
+- Usuário de teste criado: `qa.producao.20261016@exemplo.com`. **Remover** quando quiser (tabelas `users` e `sessions`).
+- Checkout: 503 `AMBIENTE_ASAAS_NAO_CONFIGURADO`, porque falta a chave em Production. Nenhuma chamada ao Asaas, nenhuma cobrança.
+- Webhook: 503 (falta o token).
+
+**Antes do merge**, testado localmente e no Preview Sandbox:
+- PIX real da Sandbox: QR em PNG, copia-e-cola EMV `000201…` e fatura `sandbox.asaas.com`;
+- revogação: estorno, chargeback e PAYMENT_DELETED de compra paga, com idempotência e livro coberto por outra compra preservado.
+
+### Fase 6 — leitor (2026-10-16)
+
+Verificado com Chromium headless:
+- **localmente**, com conteúdo real;
+- **no Preview**, com um usuário de teste cujo acesso foi concedido direto no D1 de Preview, e páginas fixture `QA-PREVIEW` — **removidas** depois, junto com o usuário.
+
+Resultados:
+- leitor abre e mostra a página atual/total;
+- só os idiomas existentes aparecem;
+- selo "Tradução não revisada" no idioma não revisado;
+- marca d'água `CorpoPleno · CL-…`;
+- sumário;
+- A+ (1 → 1,15);
+- tema escuro;
+- teclado, botão e swipe;
+- contextmenu, copy, selectstart e Ctrl+C bloqueados (`user-select: none`);
+- progresso no D1 (`p2-b0` + prefs) e reabertura na mesma página e tema;
+- troca de idioma mantém a página;
+- Meus Livros com "Continuar leitura (pág. 2)" e a capa correta;
+- conteúdo 401 / 403 / 200;
+- 61.ª leitura → 429;
+- **zero erros de console**, incluindo os antigos 404 `/api/public-config` e 401 `/api/auth/me`, que agora responde 200 para visitante.
+
 ### Fase 4 — resumos oficiais (2026-10-16)
 
 Checkpoint antes da fase: tag `checkpoint-pre-resumos-20261016`. Verificado no Chromium headless, local e no Preview, para os 7 produtos:
@@ -223,12 +316,11 @@ Todos passaram:
 
 ### Não verificado / pendente
 
-- Pagamento Sandbox concluído → webhook → livro liberado no Preview (falta `ASAAS_WEBHOOK_TOKEN` e o webhook no Asaas).
-- Leitura com 200 no Preview (o conteúdo ainda não foi carregado no banco remoto).
-- Envio real do e-mail de recuperação (falta o Resend).
-- Production: nada foi ligado nem testado.
-- Conteúdo: algumas traduções de um dos livros "O Amor…" parecem cópias do pt-BR, e Receitas não tem ko-KR nem es-CL prontos.
-- Estorno e chargeback ainda não revogam o acesso.
+- **Produção sem pagamento ativo:** faltam `ASAAS_API_KEY`, `ASAAS_ENVIRONMENT` e `ASAAS_WEBHOOK_TOKEN` em Production e o webhook no painel do Asaas. Nenhuma compra real foi testada.
+- Pagamento Sandbox concluído → webhook → liberação no Preview: falta `ASAAS_WEBHOOK_TOKEN` no Preview.
+- O conteúdo real dos livros ainda não está nos bancos remotos (script da seção 5 + login do wrangler). Até lá, quem comprar vê "conteúdo não encontrado".
+- Envio real do e-mail de recuperação (Resend).
+- Revisão humana das traduções (hoje só pt-BR conta como revisado), e Receitas sem ko-KR/es-CL.
 - Textos novos só em pt-BR.
-- Arquivos antigos da raiz continuam públicos (Pages publica `.`); vale revisar.
-- Não fazer merge em `master` antes do teste ponta a ponta no Sandbox.
+- Remover o usuário de teste de produção quando quiser.
+- O histórico do git ainda contém o documento interno e versões antigas deste arquivo; só reescrevendo o histórico (decisão da Noemi).
