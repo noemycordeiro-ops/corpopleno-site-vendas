@@ -170,7 +170,8 @@
     descEl.textContent = ed.description || "";
     descEl.hidden = !ed.description;
     renderSummary(currentMeta, lang);
-    document.getElementById("cp-book-language").textContent = lang;
+    document.getElementById("cp-book-language").textContent =
+      window.CP_I18N && window.CP_I18N.langName ? window.CP_I18N.langName(lang) : lang;
     document.getElementById("cp-book-pages").textContent =
       currentMeta.pageCount != null ? String(currentMeta.pageCount) : t("book.detail.pages_pending", "A definir");
     document.getElementById("cp-book-price").textContent = currentMeta.price

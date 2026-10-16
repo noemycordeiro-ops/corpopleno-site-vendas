@@ -1,7 +1,7 @@
 # Arquitetura do checkout de livros
 
 > Memória do projeto. Branch: `feature/catalogo-combos-checkout`.
-> Última atualização: 2026-10-16 (Fase 7: lupa mágica de tradução nas capas).
+> Última atualização: 2026-10-16 (Fases 8 e 9: modo de tela, traduções dos produtos, preço por cotação e seletor de idiomas).
 > Este arquivo **não** é publicado no site (`/docs/*` responde 404 por meio de `functions/docs/[[path]].js` e `_routes.json`). Mas **o repositório no GitHub é público**: aqui não entram IDs de banco ou de conta, caminhos de máquinas locais nem instruções de acesso administrativo.
 
 ## 1. Visão geral
@@ -141,6 +141,31 @@ O conteúdo fica na tabela `book_pages`, uma linha por página. O R2 não está 
   - Cada capa ganha uma legenda oculta (`sr-only`) com o texto no idioma atual.
   - Nenhuma imagem foi alterada.
 - **Para revisar:** procure `"revisado": false` nos arquivos. Depois de revisar, troque para `true`. Hoje são as lombadas do Henê 1 e 2 e de Receitas em en-US, ko-KR e es-CL.
+
+## 5d. Modo de tela (`assets/js/view-mode.js`)
+
+- **Opções:** Automático (padrão), Celular, Tablet e Computador/TV. O botão fica ao lado do seletor de idiomas; em larguras efetivas de até 560 px, vai para dentro do menu do celular.
+- **Como funciona:** o script é carregado no `<head>`, depois do CSS, e restaura o modo salvo (`localStorage` `cp_view_mode`) antes da primeira pintura.
+  - Marca `<html data-view>` e reavalia as `@media` de largura já existentes com a largura do modo: 390 px, 820 px ou no mínimo 1280 px.
+  - Celular e Tablet numa tela larga aparecem centralizados na largura do aparelho.
+  - Computador/TV usa largura mínima de 1280 px e fonte maior a partir de 1920 px.
+  - No celular, a viewport assume a largura do modo.
+- **Acessibilidade:** menu com `menuitemradio`, setas, Home, End, Esc e Tab; ícones em SVG inline; rótulos `view.*` nos 5 idiomas. O leitor mantém o próprio "Ajustar leitura".
+
+## 5e. Idiomas, traduções dos produtos e preço
+
+- **Seletor:** só "Português", "English", "한국어" e "Español", sem país nem código.
+  - "Português" usa pt-PT se o navegador preferir pt-PT (`navigator.languages`); senão, pt-BR.
+  - A escolha manual fica salva (`cp_lang`). Internamente continuam os 5 locales. O leitor usa a mesma regra.
+- **Traduções:** os 7 `metadata.json` têm título, subtítulo, descrição e resumo em pt-PT, en-US, ko-KR e es-CL.
+  - São traduções fiéis dos resumos oficiais, com `revisado: false` (`locales[l].revisado` e `summary_revisado`), **a revisar pela Noemi**.
+  - Também foram traduzidos: nomes das coleções, rótulos dos combos, "Voltar aos livros", campos e mensagens do checkout e a legenda da lupa.
+  - O aviso de tradução parcial diz só "português" e não aparece em pt-PT nem quando o produto tem tradução.
+- **Preço:** o oficial é sempre em BRL, e o Asaas cobra em BRL.
+  - Nos cards e na página do livro aparece só símbolo + valor no formato do idioma (`Intl.NumberFormat`, `narrowSymbol`): R$ em pt-BR, € em pt-PT, US$ em en-US, ₩ em ko-KR e CLP em es-CL.
+  - A cotação vem de `GET /api/rates`: open.er-api.com, com reserva no BCE (sem CLP), cache de 6 h e timeout de 4 s. Sem cotação, o site mostra R$.
+  - **O checkout mostra "Valor cobrado: R$ X (em reais, BRL)" antes de confirmar**; o valor convertido nunca é usado na cobrança.
+  - O selo de idioma saiu dos cards.
 
 ## 6. Recuperação de senha
 

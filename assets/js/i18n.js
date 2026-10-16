@@ -130,11 +130,11 @@
       "reader.recipe.favorites.empty": "Nenhuma receita favoritada ainda.",
       "reader.recipe.favorite.add": "Favoritar esta receita",
       "reader.recipe.favorite.remove": "Remover dos favoritos",
-      "reader.lang.pt-BR": "Português — Brasil",
-      "reader.lang.pt-PT": "Português — Portugal",
-      "reader.lang.en-US": "English — United States",
-      "reader.lang.ko-KR": "한국어 — 대한민국",
-      "reader.lang.es-CL": "Español — Chile",
+      "reader.lang.pt-BR": "Português",
+      "reader.lang.pt-PT": "Português",
+      "reader.lang.en-US": "English",
+      "reader.lang.ko-KR": "한국어",
+      "reader.lang.es-CL": "Español",
       "nav.account": "Minha área",
       "nav.login": "Entrar",
       "login.hero.eyebrow": "Acesso à conta",
@@ -210,7 +210,7 @@
       "common.learn_more": "Saiba mais",
       "common.price_unavailable": "Preço indisponível neste mercado.",
       "common.partial_notice":
-        "Esta página ainda está totalmente disponível apenas em Português (Brasil). A tradução completa deste conteúdo está em preparação.",
+        "Esta página ainda está totalmente disponível apenas em português. A tradução completa deste conteúdo está em preparação.",
       "whatsapp.float_label": "Falar pelo WhatsApp com a CorpoPleno",
       "whatsapp.initial_message":
         "Olá! Vim pelo site da CorpoPleno e gostaria de atendimento.",
@@ -606,11 +606,11 @@
       "reader.recipe.favorites.empty": "Ainda sem receitas favoritas.",
       "reader.recipe.favorite.add": "Adicionar aos favoritos",
       "reader.recipe.favorite.remove": "Remover dos favoritos",
-      "reader.lang.pt-BR": "Português — Brasil",
-      "reader.lang.pt-PT": "Português — Portugal",
-      "reader.lang.en-US": "English — United States",
-      "reader.lang.ko-KR": "한국어 — 대한민국",
-      "reader.lang.es-CL": "Español — Chile",
+      "reader.lang.pt-BR": "Português",
+      "reader.lang.pt-PT": "Português",
+      "reader.lang.en-US": "English",
+      "reader.lang.ko-KR": "한국어",
+      "reader.lang.es-CL": "Español",
       "nav.account": "A Minha Área",
       "nav.login": "Entrar",
       "login.hero.eyebrow": "Acesso à conta",
@@ -686,7 +686,7 @@
       "common.learn_more": "Saber mais",
       "common.price_unavailable": "Preço indisponível neste mercado.",
       "common.partial_notice":
-        "Esta página ainda está totalmente disponível apenas em português do Brasil. A tradução completa deste conteúdo está em preparação.",
+        "Esta página ainda está totalmente disponível apenas em português. A tradução completa deste conteúdo está em preparação.",
       "whatsapp.float_label": "Falar através do WhatsApp com a CorpoPleno",
       "whatsapp.initial_message":
         "Olá! Vim através do site da CorpoPleno e gostaria de apoio.",
@@ -1082,11 +1082,11 @@
       "reader.recipe.favorites.empty": "No favorite recipes yet.",
       "reader.recipe.favorite.add": "Add to favorites",
       "reader.recipe.favorite.remove": "Remove from favorites",
-      "reader.lang.pt-BR": "Português — Brasil",
-      "reader.lang.pt-PT": "Português — Portugal",
-      "reader.lang.en-US": "English — United States",
-      "reader.lang.ko-KR": "한국어 — 대한민국",
-      "reader.lang.es-CL": "Español — Chile",
+      "reader.lang.pt-BR": "Português",
+      "reader.lang.pt-PT": "Português",
+      "reader.lang.en-US": "English",
+      "reader.lang.ko-KR": "한국어",
+      "reader.lang.es-CL": "Español",
       "nav.account": "My account",
       "nav.login": "Sign in",
       "login.hero.eyebrow": "Account access",
@@ -1162,7 +1162,7 @@
       "common.learn_more": "Learn more",
       "common.price_unavailable": "Price unavailable in this market.",
       "common.partial_notice":
-        "This page is currently fully available in Brazilian Portuguese only. A complete translation is in progress.",
+        "This page is currently fully available in Portuguese only. A complete translation is in progress.",
       "whatsapp.float_label": "Chat with CorpoPleno on WhatsApp",
       "whatsapp.initial_message":
         "Hello! I came from the CorpoPleno website and would like assistance.",
@@ -1557,11 +1557,11 @@
       "reader.recipe.favorites.empty": "아직 즐겨찾기한 레시피가 없습니다.",
       "reader.recipe.favorite.add": "즐겨찾기에 추가",
       "reader.recipe.favorite.remove": "즐겨찾기에서 제거",
-      "reader.lang.pt-BR": "Português — Brasil",
-      "reader.lang.pt-PT": "Português — Portugal",
-      "reader.lang.en-US": "English — United States",
-      "reader.lang.ko-KR": "한국어 — 대한민국",
-      "reader.lang.es-CL": "Español — Chile",
+      "reader.lang.pt-BR": "Português",
+      "reader.lang.pt-PT": "Português",
+      "reader.lang.en-US": "English",
+      "reader.lang.ko-KR": "한국어",
+      "reader.lang.es-CL": "Español",
       "nav.account": "마이페이지",
       "nav.login": "로그인",
       "login.hero.eyebrow": "계정 접속",
@@ -1637,7 +1637,7 @@
       "common.learn_more": "더 알아보기",
       "common.price_unavailable": "이 시장에서는 가격을 이용할 수 없습니다.",
       "common.partial_notice":
-        "이 페이지는 현재 브라질 포르투갈어로만 전체 내용을 제공합니다. 전체 번역은 준비 중입니다.",
+        "이 페이지는 현재 포르투갈어로만 전체 내용을 제공합니다. 전체 번역은 준비 중입니다.",
       "whatsapp.float_label": "코르포플레노와 왓츠앱으로 상담하기",
       "whatsapp.initial_message":
         "안녕하세요! 코르포플레노 웹사이트를 통해 왔으며, 상담을 받고 싶습니다.",
@@ -2027,11 +2027,11 @@
       "reader.recipe.favorites.empty": "Aún no hay recetas favoritas.",
       "reader.recipe.favorite.add": "Agregar a favoritos",
       "reader.recipe.favorite.remove": "Quitar de favoritos",
-      "reader.lang.pt-BR": "Português — Brasil",
-      "reader.lang.pt-PT": "Português — Portugal",
-      "reader.lang.en-US": "English — United States",
-      "reader.lang.ko-KR": "한국어 — 대한민국",
-      "reader.lang.es-CL": "Español — Chile",
+      "reader.lang.pt-BR": "Português",
+      "reader.lang.pt-PT": "Português",
+      "reader.lang.en-US": "English",
+      "reader.lang.ko-KR": "한국어",
+      "reader.lang.es-CL": "Español",
       "nav.account": "Mi cuenta",
       "nav.login": "Iniciar sesión",
       "login.hero.eyebrow": "Acceso a tu cuenta",
@@ -2107,7 +2107,7 @@
       "common.learn_more": "Saber más",
       "common.price_unavailable": "Precio no disponible en este mercado.",
       "common.partial_notice":
-        "Esta página todavía está disponible por completo solo en portugués de Brasil. La traducción completa está en preparación.",
+        "Esta página todavía está disponible por completo solo en portugués. La traducción completa está en preparación.",
       "whatsapp.float_label": "Hablar con CorpoPleno por WhatsApp",
       "whatsapp.initial_message":
         "¡Hola! Vengo del sitio de CorpoPleno y quisiera recibir atención.",
@@ -2417,6 +2417,24 @@
     return null;
   }
 
+  /* Fase Livros 020 -- o seletor mostra só "Português" (sem país). Ao
+     escolher, usa pt-PT se o navegador preferir pt-PT; senão pt-BR. */
+  function resolvePortuguese() {
+    var nav = global.navigator || {};
+    var langs = nav.languages && nav.languages.length ? nav.languages : [nav.language || ""];
+    for (var i = 0; i < langs.length; i++) {
+      var c = (langs[i] || "").toLowerCase();
+      if (c.indexOf("pt") === 0) return c.indexOf("pt-pt") === 0 ? "pt-PT" : "pt-BR";
+    }
+    return "pt-BR";
+  }
+  function selectValueFor(lang) {
+    return lang === "pt-BR" || lang === "pt-PT" ? "pt" : lang;
+  }
+  function langFromSelect(value) {
+    return value === "pt" ? resolvePortuguese() : value;
+  }
+
   function currentLang() {
     return getStoredLang() || detectBrowserLang() || DEFAULT_LANG;
   }
@@ -2462,7 +2480,8 @@
 
     var notice = document.getElementById("cp-partial-translation-notice");
     if (notice) {
-      if (lang !== "pt-BR" && document.body.getAttribute("data-partial-i18n") === "true") {
+      // Em pt-PT o conteúdo já está em português: o aviso não se aplica.
+      if (lang.indexOf("pt") !== 0 && document.body.getAttribute("data-partial-i18n") === "true") {
         notice.textContent = t("common.partial_notice", lang);
         notice.hidden = false;
       } else {
@@ -2471,8 +2490,8 @@
     }
 
     var select = document.getElementById("cp-lang-select");
-    if (select && select.value !== lang) {
-      select.value = lang;
+    if (select && select.value !== selectValueFor(lang)) {
+      select.value = selectValueFor(lang);
     }
 
     /* Avisa outros módulos (ex.: assets/js/markets.js) de que o idioma/
@@ -2504,7 +2523,7 @@
     var select = document.getElementById("cp-lang-select");
     if (select) {
       select.addEventListener("change", function () {
-        setLang(select.value);
+        setLang(langFromSelect(select.value));
       });
     }
   }
@@ -2516,6 +2535,12 @@
     setLang: setLang,
     currentLang: currentLang,
     init: init,
+    resolvePortuguese: resolvePortuguese,
+    selectValueFor: selectValueFor,
+    langFromSelect: langFromSelect,
+    langName: function (lang) {
+      return { "pt-BR": "Português", "pt-PT": "Português", "en-US": "English", "ko-KR": "한국어", "es-CL": "Español" }[lang] || lang;
+    },
   };
 
   if (document.readyState === "loading") {

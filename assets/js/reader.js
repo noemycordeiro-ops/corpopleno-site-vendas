@@ -269,8 +269,23 @@
     var codes = availableLocales.map(function (l) { return l.locale; });
     var select = document.getElementById("cp-reader-lang-select");
     Array.prototype.slice.call(select.options).forEach(function (opt) {
-      if (codes.indexOf(opt.value) === -1) opt.remove();
+      var existe = opt.value === "pt"
+        ? (codes.indexOf("pt-BR") !== -1 || codes.indexOf("pt-PT") !== -1)
+        : codes.indexOf(opt.value) !== -1;
+      if (!existe) opt.remove();
     });
+  }
+  // Fase Livros 020 -- o seletor mostra só "Português": usa a edição pt-PT
+  // se o navegador preferir pt-PT e ela existir; senão pt-BR (ou a que houver).
+  function resolverPortugues() {
+    var preferida = window.CP_I18N && window.CP_I18N.resolvePortuguese ? window.CP_I18N.resolvePortuguese() : "pt-BR";
+    if (!availableLocales) return preferida;
+    var codes = availableLocales.map(function (l) { return l.locale; });
+    if (codes.indexOf(preferida) !== -1) return preferida;
+    return codes.indexOf("pt-BR") !== -1 ? "pt-BR" : "pt-PT";
+  }
+  function valorDoSeletor(lang) {
+    return lang === "pt-BR" || lang === "pt-PT" ? "pt" : lang;
   }
   function chooseInitialLang(preferida) {
     if (!availableLocales || availableLocales.length === 0) return preferida;
@@ -803,7 +818,7 @@
               var savedPage = loadProgressFor(lang);
               alvoPagina = savedPage != null ? savedPage - 1 : 0;
             }
-            document.getElementById("cp-reader-lang-select").value = lang;
+            document.getElementById("cp-reader-lang-select").value = valorDoSeletor(lang);
             loadEdition(lang, alvoPagina).catch(function () {});
           });
         });
@@ -836,7 +851,7 @@
     });
 
     document.getElementById("cp-reader-lang-select").addEventListener("change", function (e) {
-      switchLanguage(e.target.value);
+      switchLanguage(e.target.value === "pt" ? resolverPortugues() : e.target.value);
     });
 
     document.getElementById("cp-reader-restart").addEventListener("click", function () {
