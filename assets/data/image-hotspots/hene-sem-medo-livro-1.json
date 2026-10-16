@@ -1,0 +1,277 @@
+{
+  "_comment": "Lupa mágica de tradução da capa (Fase Livros 018). Coordenadas em % da imagem original (1024x1536). Traduções com revisado:true vêm dos textos de capa APROVADOS (Fase 006.2); revisado:false = tradução nova, a revisar.",
+  "imagem": "assets/img/livros/hene-sem-medo-livro-1/cover-pt-BR.png",
+  "areas": [
+    {
+      "id": "volume",
+      "x": 49,
+      "y": 10.5,
+      "w": 14,
+      "h": 3,
+      "original": "LIVRO 1",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "LIVRO 1",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "LIVRO 1",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "BOOK 1",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "1권",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "LIBRO 1",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "categoria",
+      "x": 33,
+      "y": 14.5,
+      "w": 47,
+      "h": 5,
+      "original": "MANUAL PARA INICIANTES",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "MANUAL PARA INICIANTES",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "MANUAL PARA INICIANTES",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "BEGINNER'S MANUAL",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "초보자 매뉴얼",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "MANUAL PARA PRINCIPIANTES",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "slogan",
+      "x": 40,
+      "y": 29.5,
+      "w": 45,
+      "h": 3.5,
+      "original": "INTELIGENTE, RESULTADO REAL",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "INTELIGENTE, RESULTADO REAL",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "INTELIGENTE, RESULTADO REAL",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "SMART, REAL RESULTS",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "지능적으로, 진짜 결과로",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "INTELIGENTE, RESULTADO REAL",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "titulo",
+      "x": 30,
+      "y": 34.5,
+      "w": 53,
+      "h": 18.5,
+      "original": "Henê Sem Medo",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "Henê Sem Medo",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "Henê Sem Medo",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "Henê Without Fear",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "Henê, 두려움 없이",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "Henê Sin Miedo",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "subtitulo",
+      "x": 33,
+      "y": 55,
+      "w": 47,
+      "h": 4,
+      "original": "Guia prático para reduzir riscos",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "Guia prático para reduzir riscos",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "Guia prático para reduzir riscos",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "A Practical Guide to Reducing Risks",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "위험을 줄이는 실전 가이드",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "Guía práctica para reducir riesgos",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "selo",
+      "x": 45.5,
+      "y": 60,
+      "w": 22,
+      "h": 15,
+      "original": "Cronograma Capilar 60 dias + Checklist de Segurança",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "Cronograma Capilar 60 dias + Checklist de Segurança",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "Cronograma Capilar de 60 Dias + Checklist de Segurança",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "60-Day Hair Care Schedule + Safety Checklist",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "60일 모발 관리 일정 + 안전 체크리스트",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "Cronograma Capilar de 60 Días + Lista de Verificación de Seguridad",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "faixa",
+      "x": 29,
+      "y": 81,
+      "w": 54,
+      "h": 4.5,
+      "original": "CRONOGRAMA CAPILAR DE 60 DIAS",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "CRONOGRAMA CAPILAR DE 60 DIAS",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "CRONOGRAMA CAPILAR DE 60 DIAS",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "60-DAY HAIR CARE SCHEDULE",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "60일 모발 관리 일정",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "CRONOGRAMA CAPILAR DE 60 DÍAS",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "aviso",
+      "x": 33,
+      "y": 86,
+      "w": 44,
+      "h": 5,
+      "original": "Importante: faça o teste de mecha e siga as orientações do fabricante.",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "Importante: faça o teste de mecha e siga as orientações do fabricante.",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "Importante: faça o teste de mecha e siga as instruções do fabricante.",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "Important: do a strand test and follow the manufacturer's instructions.",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "중요: 스트랜드 테스트를 진행하고 제조사의 안내를 따르세요.",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "Importante: haz la prueba de mechón y sigue las instrucciones del fabricante.",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "lombada",
+      "x": 11,
+      "y": 46,
+      "w": 5.5,
+      "h": 38,
+      "original": "HENÊ SEM MEDO — LIVRO 1",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "HENÊ SEM MEDO — LIVRO 1",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "HENÊ SEM MEDO — LIVRO 1",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "HENÊ WITHOUT FEAR — BOOK 1",
+          "revisado": false
+        },
+        "ko-KR": {
+          "texto": "Henê, 두려움 없이 — 1권",
+          "revisado": false
+        },
+        "es-CL": {
+          "texto": "HENÊ SIN MIEDO — LIBRO 1",
+          "revisado": false
+        }
+      },
+      "nota": "Composição nova do título e do volume aprovados (a revisar em en-US, ko-KR e es-CL)."
+    }
+  ]
+}

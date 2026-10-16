@@ -1,0 +1,307 @@
+{
+  "_comment": "Lupa mágica de tradução da capa (Fase Livros 018). Coordenadas em % da imagem original (1024x1536). Traduções com revisado:true vêm dos textos de capa APROVADOS (Fase 006.2); revisado:false = tradução nova, a revisar.",
+  "imagem": "assets/img/livros/hene-sem-medo-livro-2/cover-pt-BR.png",
+  "areas": [
+    {
+      "id": "volume",
+      "x": 49,
+      "y": 10.5,
+      "w": 14,
+      "h": 3,
+      "original": "LIVRO 2",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "LIVRO 2",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "LIVRO 2",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "BOOK 2",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "2권",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "LIBRO 2",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "categoria",
+      "x": 31,
+      "y": 15,
+      "w": 52,
+      "h": 5,
+      "original": "GUIA DE RECEITAS CAPILARES",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "GUIA DE RECEITAS CAPILARES",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "GUIA DE RECEITAS CAPILARES",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "HAIR CARE RECIPE GUIDE",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "모발 관리 레시피 가이드",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "GUÍA DE RECETAS CAPILARES",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "slogan",
+      "x": 40,
+      "y": 29,
+      "w": 42,
+      "h": 3.5,
+      "original": "INTELIGENTE, RESULTADO REAL",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "INTELIGENTE, RESULTADO REAL",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "INTELIGENTE, RESULTADO REAL",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "SMART, REAL RESULTS",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "지능적으로, 진짜 결과로",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "INTELIGENTE, RESULTADO REAL",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "titulo",
+      "x": 30,
+      "y": 34.5,
+      "w": 53,
+      "h": 18.5,
+      "original": "Henê Sem Medo",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "Henê Sem Medo",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "Henê Sem Medo",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "Henê Without Fear",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "Henê, 두려움 없이",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "Henê Sin Miedo",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "subtitulo",
+      "x": 32,
+      "y": 55,
+      "w": 52,
+      "h": 4,
+      "original": "30 receitas práticas para o cronograma capilar",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "30 receitas práticas para o cronograma capilar",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "30 receitas práticas para o cronograma capilar",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "30 Practical Recipes for Your Hair Care Schedule",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "모발 관리 일정을 위한 실전 레시피 30가지",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "30 recetas prácticas para tu cronograma capilar",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "selo",
+      "x": 45.5,
+      "y": 60,
+      "w": 22,
+      "h": 15,
+      "original": "30 Receitas + Opções Veganas",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "30 Receitas + Opções Veganas",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "30 Receitas + Opções Veganas",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "30 Recipes + Vegan Options",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "30가지 레시피 + 비건 옵션",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "30 Recetas + Opciones Veganas",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "cuidados",
+      "x": 28,
+      "y": 74,
+      "w": 58,
+      "h": 5,
+      "original": "HIDRATAÇÃO · NUTRIÇÃO · RECONSTRUÇÃO · UMECTAÇÃO",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "HIDRATAÇÃO · NUTRIÇÃO · RECONSTRUÇÃO · UMECTAÇÃO",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "HIDRATAÇÃO · NUTRIÇÃO · RECONSTRUÇÃO · UMECTAÇÃO",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "HYDRATION · NOURISHMENT · REPAIR · MOISTURE",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "수분 공급 · 영양 공급 · 손상 복구 · 보습",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "HIDRATACIÓN · NUTRICIÓN · RECONSTRUCCIÓN · HUMECTACIÓN",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "faixa",
+      "x": 27,
+      "y": 85,
+      "w": 57,
+      "h": 4.5,
+      "original": "RECEITAS PARA O CRONOGRAMA CAPILAR",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "RECEITAS PARA O CRONOGRAMA CAPILAR",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "RECEITAS PARA O CRONOGRAMA CAPILAR",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "RECIPES FOR YOUR HAIR CARE SCHEDULE",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "모발 관리 일정을 위한 레시피",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "RECETAS PARA EL CRONOGRAMA CAPILAR",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "aviso",
+      "x": 35,
+      "y": 89,
+      "w": 42,
+      "h": 4.5,
+      "original": "Importante: faça o teste de mecha e de contato antes do uso.",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "Importante: faça o teste de mecha e de contato antes do uso.",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "Importante: faça o teste de mecha e de contacto antes do uso.",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "Important: do a strand test and a patch test before use.",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "중요: 사용 전 스트랜드 테스트와 패치 테스트를 진행하세요.",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "Importante: haz la prueba de mechón y de contacto antes de usar.",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "lombada",
+      "x": 11,
+      "y": 47,
+      "w": 5.5,
+      "h": 38,
+      "original": "HENÊ SEM MEDO — LIVRO 2",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "HENÊ SEM MEDO — LIVRO 2",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "HENÊ SEM MEDO — LIVRO 2",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "HENÊ WITHOUT FEAR — BOOK 2",
+          "revisado": false
+        },
+        "ko-KR": {
+          "texto": "Henê, 두려움 없이 — 2권",
+          "revisado": false
+        },
+        "es-CL": {
+          "texto": "HENÊ SIN MIEDO — LIBRO 2",
+          "revisado": false
+        }
+      },
+      "nota": "Composição nova do título e do volume aprovados (a revisar em en-US, ko-KR e es-CL)."
+    }
+  ]
+}

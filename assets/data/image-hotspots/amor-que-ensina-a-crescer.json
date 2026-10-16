@@ -1,0 +1,66 @@
+{
+  "_comment": "Lupa mágica de tradução da capa (Fase Livros 018). Coordenadas em % da imagem original (1024x1536). Traduções com revisado:true vêm dos textos de capa APROVADOS (Fase 006.2); revisado:false = tradução nova, a revisar.",
+  "imagem": "assets/img/livros/amor-que-ensina-a-crescer/cover-pt-BR.png",
+  "areas": [
+    {
+      "id": "titulo",
+      "x": 21,
+      "y": 14.5,
+      "w": 67,
+      "h": 16,
+      "original": "O Amor que Ensina a Crescer",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "O Amor que Ensina a Crescer",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "O Amor que Ensina a Crescer",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "The Love That Teaches You to Grow",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "자라는 법을 가르치는 사랑",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "El Amor que Enseña a Crecer",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "lombada",
+      "x": 11,
+      "y": 37,
+      "w": 4.5,
+      "h": 17,
+      "original": "VOLUME 2",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "VOLUME 2",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "VOLUME 2",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "VOLUME 2",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "2권",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "VOLUMEN 2",
+          "revisado": true
+        }
+      }
+    }
+  ]
+}

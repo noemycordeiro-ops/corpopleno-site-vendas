@@ -1,0 +1,66 @@
+{
+  "_comment": "Lupa mágica de tradução da capa (Fase Livros 018). Coordenadas em % da imagem original (1024x1536). Traduções com revisado:true vêm dos textos de capa APROVADOS (Fase 006.2); revisado:false = tradução nova, a revisar.",
+  "imagem": "assets/img/livros/amor-que-aprendeu-a-ficar/cover-pt-BR.png",
+  "areas": [
+    {
+      "id": "titulo",
+      "x": 22,
+      "y": 15,
+      "w": 66,
+      "h": 16,
+      "original": "O Amor que Aprendeu a Ficar",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "O Amor que Aprendeu a Ficar",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "O Amor que Aprendeu a Ficar",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "The Love That Learned to Stay",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "머무는 법을 배운 사랑",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "El Amor que Aprendió a Quedarse",
+          "revisado": true
+        }
+      }
+    },
+    {
+      "id": "lombada",
+      "x": 11,
+      "y": 37,
+      "w": 4.5,
+      "h": 17,
+      "original": "VOLUME 1",
+      "traducoes": {
+        "pt-BR": {
+          "texto": "VOLUME 1",
+          "revisado": true
+        },
+        "pt-PT": {
+          "texto": "VOLUME 1",
+          "revisado": true
+        },
+        "en-US": {
+          "texto": "VOLUME 1",
+          "revisado": true
+        },
+        "ko-KR": {
+          "texto": "1권",
+          "revisado": true
+        },
+        "es-CL": {
+          "texto": "VOLUMEN 1",
+          "revisado": true
+        }
+      }
+    }
+  ]
+}
