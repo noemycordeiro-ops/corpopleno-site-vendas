@@ -7,7 +7,7 @@
   <meta name="description" content="Detalhes do livro — Biblioteca digital CorpoPleno." />
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
-  <link rel="stylesheet" href="assets/css/books.css?v=20261015a" />
+  <link rel="stylesheet" href="assets/css/books.css?v=20261016a" />
 </head>
 <body data-partial-i18n="true">
   <a class="skip-link" href="#conteudo-principal" data-i18n="skip_link">Pular para o conteúdo principal</a>
@@ -47,7 +47,7 @@
 
   <main id="conteudo-principal">
     <div class="container" style="padding-top: 24px;">
-      <a class="book-detail__back" href="livros.html" data-i18n="book.detail.back_to_catalog">← Voltar para Livros</a>
+      <a class="book-detail__back" href="produtos.html#livros">← Voltar aos livros</a>
     </div>
 
     <div class="container" id="cp-partial-translation-notice-wrap">
@@ -61,6 +61,7 @@
           <h1 id="cp-book-title"></h1>
           <p class="book-detail__subtitle" id="cp-book-subtitle"></p>
           <p class="book-detail__description" id="cp-book-description"></p>
+          <div class="book-detail__summary" id="cp-book-summary" hidden></div>
 
           <dl class="book-detail__facts">
             <div>
@@ -175,7 +176,7 @@
     <section class="section" id="cp-book-detail-not-found" hidden>
       <div class="container" style="text-align: center;">
         <p class="notice notice-warning" data-i18n="book.detail.not_found">Livro não encontrado.</p>
-        <a class="btn btn-secondary" href="livros.html" data-i18n="book.detail.back_to_catalog">← Voltar para Livros</a>
+        <a class="btn btn-secondary" href="produtos.html#livros">← Voltar aos livros</a>
       </div>
     </section>
   </main>
@@ -233,6 +234,6 @@
   <script src="assets/js/main.js?v=20260925c"></script>
   <script src="assets/js/books-data.js?v=20261015a"></script>
   <script src="assets/js/book-cover.js?v=20261015a"></script>
-  <script src="assets/js/book-detail.js?v=20261015a"></script>
+  <script src="assets/js/book-detail.js?v=20261016a"></script>
 </body>
 </html>

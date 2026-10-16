@@ -32,5 +32,8 @@
       "subtitle": "Volumes 1 e 2 — O Amor que Aprende e Ensina",
       "description": "Adquira os dois volumes da coleção Histórias de Aprendizado Familiar com desconto. Histórias de transformação pessoal e relacionamento. Ganhe acesso aos dois títulos com um único pagamento."
     }
+  },
+  "combo_item_labels": {
+    "pt-BR": ["Volume 1 — O Amor que Aprendeu a Ficar", "Volume 2 — O Amor que Ensina a Crescer"]
   }
 }

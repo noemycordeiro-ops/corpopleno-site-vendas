@@ -38,6 +38,114 @@
   var currentMeta = null;
   var currentItem = null;
 
+  /* ---------------------------------------------------------------------
+     Fase Livros 016 (2026-10-16) — resumo comercial oficial do livro
+     (metadata.json, campo summary[idioma], texto literal aprovado).
+     Markdown SIMPLES convertido para DOM com createElement/textContent:
+     parágrafos (linha em branco), listas "- ", **negrito**, *itálico*.
+     Nunca usa innerHTML -- qualquer outro caractere vira texto puro.
+     Combos mostram o resumo de cada livro do combo, com subtítulo.
+     --------------------------------------------------------------------- */
+  var summaryCache = {};
+  var summaryGeneration = 0;
+
+  function appendInline(parent, text) {
+    var re = /\*\*([^*]+)\*\*|\*([^*]+)\*/g;
+    var last = 0;
+    var m;
+    while ((m = re.exec(text)) !== null) {
+      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var node = document.createElement(m[1] != null ? "strong" : "em");
+      node.textContent = m[1] != null ? m[1] : m[2];
+      parent.appendChild(node);
+      last = re.lastIndex;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+  }
+
+  function renderSimpleMarkdown(md, container) {
+    var blocks = String(md || "").replace(/\r\n/g, "\n").split(/\n\s*\n/);
+    blocks.forEach(function (block) {
+      var lines = block.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
+      if (lines.length === 0) return;
+      if (lines.every(function (l) { return /^- /.test(l); })) {
+        var ul = document.createElement("ul");
+        ul.className = "book-summary__list";
+        lines.forEach(function (l) {
+          var li = document.createElement("li");
+          appendInline(li, l.slice(2));
+          ul.appendChild(li);
+        });
+        container.appendChild(ul);
+        return;
+      }
+      var p = document.createElement("p");
+      var joined = lines.join("\n");
+      if (/^\*[^*][\s\S]*[^*]\*$/.test(joined)) {
+        p.className = "book-summary__notice"; // aviso de segurança/legal em itálico
+      } else if (/^\*\*[\s\S]+\*\*$/.test(joined)) {
+        p.className = "book-summary__lead";
+      } else if (/^✅/.test(joined)) {
+        p.className = "book-summary__check";
+      }
+      lines.forEach(function (l, i) {
+        if (i > 0) p.appendChild(document.createElement("br"));
+        appendInline(p, l);
+      });
+      container.appendChild(p);
+    });
+  }
+
+  function summaryOf(meta, lang) {
+    if (!meta || !meta.summary) return null;
+    return meta.summary[lang] || meta.summary["pt-BR"] || null;
+  }
+
+  function loadMeta(bookId) {
+    if (summaryCache[bookId]) return Promise.resolve(summaryCache[bookId]);
+    return fetch("assets/books/" + encodeURIComponent(bookId) + "/metadata.json")
+      .then(function (res) {
+        if (!res.ok) throw new Error("metadata_fetch_failed");
+        return res.json();
+      })
+      .then(function (meta) { summaryCache[bookId] = meta; return meta; });
+  }
+
+  function renderSummary(meta, lang) {
+    var box = document.getElementById("cp-book-summary");
+    if (!box) return;
+    var myGen = ++summaryGeneration;
+    box.textContent = "";
+    box.hidden = true;
+
+    var own = summaryOf(meta, lang);
+    if (own) {
+      renderSimpleMarkdown(own, box);
+      box.hidden = false;
+      return;
+    }
+    var items = Array.isArray(meta.combo_items) ? meta.combo_items : [];
+    if (items.length === 0) return;
+    Promise.all(items.map(function (id) { return loadMeta(id).catch(function () { return null; }); }))
+      .then(function (metas) {
+        if (myGen !== summaryGeneration) return;
+        var rotulos = meta.combo_item_labels ? (meta.combo_item_labels[lang] || meta.combo_item_labels["pt-BR"] || []) : [];
+        metas.forEach(function (itemMeta, idx) {
+          var texto = summaryOf(itemMeta, lang);
+          if (!texto) return;
+          var section = document.createElement("section");
+          section.className = "book-summary__part";
+          var h2 = document.createElement("h2");
+          h2.className = "book-summary__part-title";
+          h2.textContent = rotulos[idx] || localeOf(itemMeta, lang).title;
+          section.appendChild(h2);
+          renderSimpleMarkdown(texto, section);
+          box.appendChild(section);
+        });
+        box.hidden = box.childNodes.length === 0;
+      });
+  }
+
   function render() {
     if (!currentMeta) return;
     var lang = currentLang();
@@ -58,7 +166,10 @@
 
     document.getElementById("cp-book-title").textContent = ed.title;
     document.getElementById("cp-book-subtitle").textContent = ed.subtitle;
-    document.getElementById("cp-book-description").textContent = ed.description;
+    var descEl = document.getElementById("cp-book-description");
+    descEl.textContent = ed.description || "";
+    descEl.hidden = !ed.description;
+    renderSummary(currentMeta, lang);
     document.getElementById("cp-book-language").textContent = lang;
     document.getElementById("cp-book-pages").textContent =
       currentMeta.pageCount != null ? String(currentMeta.pageCount) : t("book.detail.pages_pending", "A definir");

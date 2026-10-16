@@ -45,6 +45,15 @@
         });
       });
     });
+
+    // Fase Livros 016 -- "Voltar aos livros" (livro.html) chega com
+    // #livros: já abre a aba Livros e rola até a seção de livros.
+    if (window.location.hash === "#livros") {
+      var chipLivros = bar.querySelector('.filter-chip[data-filter="livros"]');
+      if (chipLivros) chipLivros.click();
+      var secao = document.getElementById("cp-books-section");
+      if (secao && secao.scrollIntoView) secao.scrollIntoView();
+    }
   }
 
   function setupYear() {

@@ -32,5 +32,8 @@
       "subtitle": "Livros 1 e 2 — Guias de Cuidado Capilar",
       "description": "Adquira os dois livros da coleção Henê Sem Medo com desconto promocional. Inclui cronogramas capilares de 60 dias, checklists de segurança e orientações completas de cuidado. Ganhe acesso aos dois títulos com um único pagamento."
     }
+  },
+  "combo_item_labels": {
+    "pt-BR": ["Livro 1 — Henê Sem Medo", "Livro 2 — Henê Sem Medo"]
   }
 }

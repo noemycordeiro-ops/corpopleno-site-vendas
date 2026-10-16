@@ -279,6 +279,7 @@
   }
   .book-detail__cover-wrap {
     position: static;
+    width: 100%; /* Fase 016: sem isto a capa de combo (só imagens absolutas) encolhia a 0 px */
     max-width: 260px;
     margin: 0 auto;
   }
@@ -962,4 +963,45 @@
     padding: 40px;
     font-size: 1.1rem;
   }
+}
+
+/* Fase Livros 016 -- resumo comercial oficial em livro.html. */
+.book-detail__summary {
+  margin: 18px 0 24px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--cp-text, #1f2937);
+  overflow-wrap: anywhere;
+}
+.book-detail__summary p {
+  margin: 0 0 12px;
+}
+.book-summary__lead {
+  font-size: 1.05rem;
+  margin-top: 18px !important;
+}
+.book-summary__check {
+  padding-left: 4px;
+}
+.book-summary__list {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+.book-summary__list li {
+  margin-bottom: 6px;
+}
+.book-summary__notice {
+  font-size: 0.9rem;
+  color: var(--cp-text-soft, #475569);
+  border-left: 3px solid var(--cp-border, #e2e8f0);
+  padding-left: 12px;
+}
+.book-summary__part + .book-summary__part {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--cp-border, #e2e8f0);
+}
+.book-summary__part-title {
+  font-size: 1.15rem;
+  margin: 0 0 12px;
 }

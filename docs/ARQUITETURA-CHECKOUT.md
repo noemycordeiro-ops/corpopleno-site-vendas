@@ -1,7 +1,7 @@
 # Arquitetura do checkout de livros
 
 > Memória do projeto. Branch: `feature/catalogo-combos-checkout`.
-> Última atualização: 2026-10-15 (Fase 3: Preview ligado ao D1 e testado).
+> Última atualização: 2026-10-16 (Fase 4: resumos oficiais em "Conhecer o livro").
 > Este arquivo **não** é publicado no site (`/docs/*` responde 404 por meio de `functions/docs/[[path]].js` e `_routes.json`). Mas **o repositório no GitHub é público**: aqui não entram IDs de banco ou de conta, caminhos de máquinas locais nem instruções de acesso administrativo.
 
 ## 1. Visão geral
@@ -107,6 +107,19 @@ O conteúdo fica na tabela `book_pages`, uma linha por página. O R2 não está 
 - O link usa o fragmento da URL (`#token=`), que o navegador não envia ao servidor. O script da página lê o token e o apaga da barra de endereço antes de qualquer outro script. Essas páginas não carregam o pixel da Meta.
 - **E-mail:** o envio usa o Resend. Sem `RESEND_API_KEY` e `EMAIL_FROM`, nada é enviado e a cliente não recebe o link.
 
+## 6a. Página "Conhecer o livro" (resumos oficiais)
+
+- Uma única página, `livro.html?id=<produto>`, renderizada por `assets/js/book-detail.js`. Não há páginas duplicadas.
+- **Fonte:** o campo `summary["pt-BR"]` do `metadata.json` de cada livro. São os 5 resumos comerciais oficiais, copiados **literalmente** por script, sem redigitação; o teste compara com o texto original.
+- **Combos:** o metadata do combo tem `combo_items` e `combo_item_labels`.
+  - `hene-sem-medo-combo` mostra "Livro 1 — …" e "Livro 2 — …".
+  - `romance-combo` mostra "Volume 1 — …" e "Volume 2 — …".
+  - Cada página tem um único botão Comprar.
+- **Renderização segura:** um markdown simples (parágrafos, listas `- `, `**negrito**`, `*itálico*`) é convertido para DOM com `createElement`/`textContent`, nunca `innerHTML`. Parágrafos inteiros em itálico (avisos de segurança) ganham destaque próprio.
+- **"← Voltar aos livros":** leva a `produtos.html#livros`, que abre a aba Livros (`main.js`).
+- Nenhum conteúdo integral dos livros é exposto; só o resumo comercial.
+- Correção de layout no celular (abaixo de 900 px): a capa sobreposta do combo encolhia para 0 px na página do livro. Foi corrigida só a largura do contêiner da capa; as imagens não mudaram.
+
 ## 7. Banco D1 (binding `DB`)
 
 | Tabela | Conteúdo |
@@ -181,6 +194,20 @@ O diagnóstico `GET /api/health` (só no Preview) lista o que falta, mostrando a
 Os 7 cards aparecem em Produtos: 5 livros e 2 combos, com as capas sobrepostas e os preços R$ 39,90 · 39,90 · 70,00 · 29,90 · 29,90 · 50,00 · 200,00.
 
 **Causa de cada 503:** só a falta de `ASAAS_WEBHOOK_TOKEN` (webhook) e de `ADMIN_API_TOKEN` (consulta administrativa). Nenhum 500.
+
+### Fase 4 — resumos oficiais (2026-10-16)
+
+Checkpoint antes da fase: tag `checkpoint-pre-resumos-20261016`. Verificado no Chromium headless, local e no Preview, para os 7 produtos:
+
+- o texto literal do resumo certo (ou os 2 do combo, com subtítulos);
+- o título;
+- a capa original;
+- o preço;
+- um único botão Comprar;
+- o link "Voltar aos livros";
+- **nenhuma mensagem no console**.
+
+Os preços continuam R$ 39,90 · 39,90 · 70,00 · 29,90 · 29,90 · 50,00 · 200,00. `produtos.html#livros` abre com a aba Livros selecionada.
 
 ### Fases anteriores (testes locais com D1 local e stub do Asaas)
 
