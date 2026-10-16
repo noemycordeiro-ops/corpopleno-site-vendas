@@ -74,6 +74,13 @@
   // nunca usado para salvar/ler progresso de verdade -- sempre
   // substituído antes disso por checkEntitlement() (ver init()).
   var readerSubjectKey = "SEM_SESSAO_RESOLVIDA";
+  // Fase Livros 017 -- estado novo do leitor.
+  var theme = "light";
+  var watermarkCode = null;        // código curto do cliente (nunca e-mail)
+  var availableLocales = null;     // [{locale, pages, reviewed}] vindos do servidor
+  var serverProgress = null;       // progresso salvo no D1
+  var pendingBlockMarker = null;   // marcador a restaurar após renderizar
+  var serverSaveTimer = null;
 
   function getOrCreateDeviceId() {
     try {
@@ -123,6 +130,7 @@
           readerSubjectKey = typeof dados.readerSubjectKey === "string" && dados.readerSubjectKey
             ? dados.readerSubjectKey
             : "SUBJECT_KEY_AUSENTE";
+          watermarkCode = typeof dados.watermark === "string" ? dados.watermark : null;
           return { granted: true, reason: "REAL_ENTITLEMENT" };
         }
         return { granted: false, reason: "ACCESS_DENIED" };
@@ -185,6 +193,11 @@
       fontIndex = DEFAULT_FONT_INDEX;
     }
     try {
+      theme = window.localStorage.getItem(storageKey("theme")) === "dark" ? "dark" : "light";
+    } catch (e) {
+      theme = "light";
+    }
+    try {
       var layout = window.localStorage.getItem(storageKey("page_layout_mode"));
       pageLayoutMode = (layout === "DOUBLE" || layout === "SINGLE") ? layout : "AUTO";
     } catch (e) {
@@ -196,9 +209,126 @@
       window.localStorage.setItem(storageKey("device_mode"), deviceMode);
       window.localStorage.setItem(storageKey("font_index"), String(fontIndex));
       window.localStorage.setItem(storageKey("page_layout_mode"), pageLayoutMode);
+      window.localStorage.setItem(storageKey("theme"), theme);
     } catch (e) {
       /* segue sem persistir */
     }
+    scheduleServerSave();
+  }
+
+  /* ---- Fase Livros 017 -- progresso e preferências no servidor (D1) ----
+     Por cliente + livro: idioma, página, marcador estável do bloco no topo
+     da tela ("p<página>-b<bloco>") e preferências. Gravação com espera de
+     1,5 s para não gerar uma chamada a cada clique. */
+  function isTestFixtureMode() {
+    return !!(meta && meta.internalTestOnly === true && qaPreview);
+  }
+  function currentPrefs() {
+    return { fontIndex: fontIndex, theme: theme, deviceMode: deviceMode, pageLayoutMode: pageLayoutMode };
+  }
+  function currentBlockMarker() {
+    var blocks = document.querySelectorAll("#cp-reader-page-content [data-block]");
+    for (var i = 0; i < blocks.length; i++) {
+      if (blocks[i].getBoundingClientRect().bottom > 80) return blocks[i].getAttribute("data-block");
+    }
+    return blocks.length ? blocks[0].getAttribute("data-block") : null;
+  }
+  function scheduleServerSave() {
+    if (!pages || isTestFixtureMode()) return;
+    window.clearTimeout(serverSaveTimer);
+    serverSaveTimer = window.setTimeout(function () {
+      fetch(apiBase() + "/api/books/" + encodeURIComponent(bookId) + "/progress", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ locale: readingLang, pageIndex: pageIndex, blockMarker: currentBlockMarker(), prefs: currentPrefs() }),
+      }).catch(function () { /* sem rede: o progresso local continua valendo */ });
+    }, 1500);
+  }
+  function fetchServerState() {
+    if (isTestFixtureMode()) return Promise.resolve();
+    var base = apiBase() + "/api/books/" + encodeURIComponent(bookId);
+    return Promise.all([
+      fetch(base + "/content", { credentials: "include" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+      fetch(base + "/progress", { credentials: "include" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+    ]).then(function (res) {
+      availableLocales = res[0] && Array.isArray(res[0].locales) ? res[0].locales : null;
+      serverProgress = res[1] && res[1].progress ? res[1].progress : null;
+      if (serverProgress && serverProgress.prefs) {
+        var pr = serverProgress.prefs;
+        if (typeof pr.fontIndex === "number") fontIndex = Math.max(0, Math.min(FONT_SCALES.length - 1, pr.fontIndex));
+        if (pr.theme === "dark" || pr.theme === "light") theme = pr.theme;
+        if (pr.deviceMode) deviceMode = pr.deviceMode;
+        if (pr.pageLayoutMode) pageLayoutMode = pr.pageLayoutMode;
+      }
+    });
+  }
+  // Só os idiomas com conteúdo real ficam no seletor.
+  function applyAvailableLocales() {
+    if (!availableLocales) return;
+    var codes = availableLocales.map(function (l) { return l.locale; });
+    var select = document.getElementById("cp-reader-lang-select");
+    Array.prototype.slice.call(select.options).forEach(function (opt) {
+      if (codes.indexOf(opt.value) === -1) opt.remove();
+    });
+  }
+  function chooseInitialLang(preferida) {
+    if (!availableLocales || availableLocales.length === 0) return preferida;
+    var codes = availableLocales.map(function (l) { return l.locale; });
+    if (serverProgress && codes.indexOf(serverProgress.locale) !== -1) return serverProgress.locale;
+    if (codes.indexOf(preferida) !== -1) return preferida;
+    if (codes.indexOf("pt-BR") !== -1) return "pt-BR";
+    return codes[0];
+  }
+  function updateTranslationBadge() {
+    var badge = document.getElementById("cp-reader-translation-badge");
+    if (!badge) return;
+    var info = availableLocales ? availableLocales.filter(function (l) { return l.locale === readingLang; })[0] : null;
+    badge.hidden = !(info && info.reviewed === false);
+  }
+  function applyTheme() {
+    document.body.classList.toggle("reader-theme-dark", theme === "dark");
+    var btn = document.getElementById("cp-reader-theme-btn");
+    if (btn) {
+      btn.setAttribute("aria-pressed", String(theme === "dark"));
+      btn.setAttribute("aria-label", theme === "dark" ? "Modo claro" : "Modo escuro");
+      btn.firstElementChild.textContent = theme === "dark" ? "☀️" : "🌙";
+    }
+  }
+  function applyWatermark() {
+    var wm = document.getElementById("cp-reader-watermark");
+    if (!wm) return;
+    wm.textContent = "";
+    if (!watermarkCode) return;
+    for (var i = 0; i < 18; i++) {
+      var span = document.createElement("span");
+      span.textContent = "CorpoPleno · " + watermarkCode;
+      wm.appendChild(span);
+    }
+  }
+  // Sumário: primeiro título de cada página (sem repetir títulos seguidos).
+  function buildToc() {
+    var list = document.getElementById("cp-reader-toc-list");
+    if (!list || !pages) return;
+    list.textContent = "";
+    var anterior = null;
+    pages.forEach(function (pg, idx) {
+      var h = (pg.blocks || []).filter(function (b) { return b.type === "heading" && b.text; })[0];
+      if (!h || h.text === anterior) return;
+      anterior = h.text;
+      var li = document.createElement("li");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "reader-search-result";
+      btn.textContent = h.text + " — pág. " + (idx + 1);
+      btn.addEventListener("click", function () {
+        goToPage(idx);
+        document.getElementById("cp-reader-toc-panel").hidden = true;
+        document.getElementById("cp-reader-toc-btn").setAttribute("aria-expanded", "false");
+      });
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
   }
 
   /* ---- Modo de dispositivo / tamanho de fonte --------------------------- */
@@ -448,8 +578,11 @@
     container.innerHTML = "";
     var pageData = pages[pageIndex];
     if (!pageData) return;
-    pageData.blocks.forEach(function (block) {
-      container.appendChild(renderBlock(block));
+    var numeroPagina = typeof pageData.page === "number" ? pageData.page : pageIndex + 1;
+    pageData.blocks.forEach(function (block, bi) {
+      var nodo = renderBlock(block);
+      if (nodo && nodo.setAttribute) nodo.setAttribute("data-block", "p" + numeroPagina + "-b" + bi);
+      container.appendChild(nodo);
     });
 
     /* Fase CorpoPleno Livros 013 -- página direita ("duas páginas lado a
@@ -481,6 +614,14 @@
     document.getElementById("cp-reader-next").disabled = pageIndex >= pages.length - 1;
 
     saveProgress();
+
+    // Fase Livros 017 -- volta ao bloco salvo (se houver) ou ao topo.
+    if (pendingBlockMarker) {
+      var alvo = container.querySelector('[data-block="' + pendingBlockMarker.replace(/[^a-z0-9-]/gi, "") + '"]');
+      pendingBlockMarker = null;
+      if (alvo && alvo.scrollIntoView) alvo.scrollIntoView({ block: "start" });
+    }
+    scheduleServerSave();
 
     /* Fase CorpoPleno Livros 012 -- evento aditivo, nenhum consumidor
        existente escuta isto. Permite a um módulo externo (reader-recipes.js)
@@ -573,12 +714,15 @@
         document.getElementById("cp-reader-title").textContent = ed.title;
         document.title = ed.title + " — CorpoPleno";
 
+        updateTranslationBadge();
+        buildToc();
         renderPage();
       });
   }
 
   function switchLanguage(lang) {
     if (SUPPORTED_LANGS.indexOf(lang) === -1) return;
+    if (availableLocales && !availableLocales.some(function (l) { return l.locale === lang; })) return;
     if (window.CP_I18N && typeof window.CP_I18N.setLang === "function") {
       window.CP_I18N.setLang(lang);
     }
@@ -642,14 +786,26 @@
           }
 
           loadPreferences();
-          applyDeviceMode();
-          applyFontScale();
-          applyPageLayoutMode();
+          return fetchServerState().then(function () {
+            applyDeviceMode();
+            applyFontScale();
+            applyPageLayoutMode();
+            applyTheme();
+            applyWatermark();
+            applyAvailableLocales();
 
-          var lang = currentLang();
-          var savedPage = loadProgressFor(lang);
-          document.getElementById("cp-reader-lang-select").value = lang;
-          loadEdition(lang, savedPage != null ? savedPage - 1 : 0).catch(function () {});
+            var lang = chooseInitialLang(currentLang());
+            var alvoPagina;
+            if (serverProgress && serverProgress.locale === lang) {
+              alvoPagina = serverProgress.pageIndex;
+              pendingBlockMarker = serverProgress.blockMarker || null;
+            } else {
+              var savedPage = loadProgressFor(lang);
+              alvoPagina = savedPage != null ? savedPage - 1 : 0;
+            }
+            document.getElementById("cp-reader-lang-select").value = lang;
+            loadEdition(lang, alvoPagina).catch(function () {});
+          });
         });
       })
       .catch(showNotFound);
@@ -782,10 +938,62 @@
       var mod = e.ctrlKey || e.metaKey;
       if (!mod) return;
       var k = e.key.toLowerCase();
-      if (k === "c" || k === "x" || k === "v" || k === "p") {
+      // Fase Livros 017 -- campos de digitação (ex.: busca de receitas)
+      // continuam podendo copiar/colar; o bloqueio vale para a leitura.
+      var tag = (e.target && e.target.tagName) || "";
+      var emCampo = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+      if (k === "p" || (!emCampo && (k === "c" || k === "x" || k === "a"))) {
         e.preventDefault();
       }
     });
+
+    /* Fase Livros 017 -- área de leitura: sem menu de contexto, cópia,
+       recorte nem arrastar. Captura de tela NÃO pode ser impedida por um
+       site; a marca d'água com o código do cliente é a dissuasão. */
+    var areaLeitura = document.getElementById("cp-reader-pages-wrap");
+    ["contextmenu", "copy", "cut", "dragstart", "selectstart"].forEach(function (evt) {
+      areaLeitura.addEventListener(evt, function (e) { e.preventDefault(); });
+    });
+
+    /* Fase Livros 017 -- swipe (celular/tablet): deslizar para o lado
+       troca de página; deslizar mais na vertical continua rolando. */
+    var toqueX = null, toqueY = null;
+    areaLeitura.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) return;
+      toqueX = e.touches[0].clientX;
+      toqueY = e.touches[0].clientY;
+    }, { passive: true });
+    areaLeitura.addEventListener("touchend", function (e) {
+      if (toqueX === null) return;
+      var dx = e.changedTouches[0].clientX - toqueX;
+      var dy = e.changedTouches[0].clientY - toqueY;
+      toqueX = toqueY = null;
+      if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      if (dx < 0) goNext(); else goPrev();
+    }, { passive: true });
+
+    /* Fase Livros 017 -- tema claro/escuro e sumário. */
+    document.getElementById("cp-reader-theme-btn").addEventListener("click", function () {
+      theme = theme === "dark" ? "light" : "dark";
+      applyTheme();
+      savePreferences();
+    });
+    var tocBtn = document.getElementById("cp-reader-toc-btn");
+    var tocPanel = document.getElementById("cp-reader-toc-panel");
+    tocBtn.addEventListener("click", function () {
+      var abrir = tocPanel.hidden;
+      tocPanel.hidden = !abrir;
+      tocBtn.setAttribute("aria-expanded", String(abrir));
+    });
+    document.addEventListener("click", function (e) {
+      if (!tocPanel.hidden && !tocPanel.contains(e.target) && !tocBtn.contains(e.target)) {
+        tocPanel.hidden = true;
+        tocBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Salva o ponto de leitura também ao rolar a página (celular).
+    window.addEventListener("scroll", function () { if (pages) scheduleServerSave(); }, { passive: true });
 
     var readerMain = document.getElementById("conteudo-principal");
     readerMain.addEventListener("paste", function (e) {

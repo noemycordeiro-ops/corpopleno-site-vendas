@@ -85,6 +85,18 @@ const SCHEMA = [
      used_at INTEGER
    )`,
   `CREATE INDEX IF NOT EXISTS password_resets_user ON password_resets(user_id)`,
+  // Progresso de leitura por cliente + livro (último ponto lido, idioma e
+  // preferências de leitura). block_marker = "p<página>-b<bloco>".
+  `CREATE TABLE IF NOT EXISTS reading_progress (
+     user_id TEXT NOT NULL,
+     book_id TEXT NOT NULL,
+     locale TEXT NOT NULL,
+     page_index INTEGER NOT NULL,
+     block_marker TEXT,
+     prefs TEXT,
+     updated_at INTEGER NOT NULL,
+     PRIMARY KEY (user_id, book_id)
+   )`,
   `CREATE TABLE IF NOT EXISTS webhook_events (
      event_id TEXT PRIMARY KEY,
      event_type TEXT,

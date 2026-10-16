@@ -4,6 +4,7 @@
     200 {ok:true, pages:[...]}
     401 NAO_AUTENTICADO | 403 ACESSO_NEGADO (sem compra ou livro inexistente)
     404 CONTEUDO_NAO_ENCONTRADO (idioma sem conteúdo carregado)
+    429 MUITAS_REQUISICOES (mais de 60 leituras em 10 min)
   Só serve o conteúdo se a cliente tiver acesso registrado no D1
   (entitlements). O conteúdo vive na tabela book_pages, nunca em arquivo
   público.
@@ -11,9 +12,9 @@
 import { json, methodNotAllowed } from "../../../../_lib/http.js";
 import { getDb } from "../../../../_lib/db.js";
 import { getSessionUser } from "../../../../_lib/auth.js";
+import { hasAccess, contentRateLimited, READER_LOCALES } from "../../../../_lib/reading.js";
 
-const LOCALES = new Set(["pt-BR", "pt-PT", "en-US", "ko-KR", "es-CL"]);
-const BOOK_ID_REGEX = /^[a-z0-9-]{1,100}$/;
+const LOCALES = new Set(READER_LOCALES);
 const PRIVATE = { "Cache-Control": "private, no-store" };
 
 export async function onRequest({ request, env, params }) {
@@ -26,14 +27,9 @@ export async function onRequest({ request, env, params }) {
 
   const bookId = String(params.bookId || "");
   const locale = String(params.locale || "");
-  if (!BOOK_ID_REGEX.test(bookId)) return json(403, { ok: false, erro: "ACESSO_NEGADO" });
-
-  const acesso = await db
-    .prepare("SELECT 1 AS ok FROM entitlements WHERE user_id = ? AND book_id = ?")
-    .bind(user.id, bookId)
-    .first();
   // Mesma resposta para "sem compra" e "livro inexistente".
-  if (!acesso) return json(403, { ok: false, erro: "ACESSO_NEGADO" });
+  if (!(await hasAccess(db, user.id, bookId))) return json(403, { ok: false, erro: "ACESSO_NEGADO" });
+  if (await contentRateLimited(db, user.id)) return json(429, { ok: false, erro: "MUITAS_REQUISICOES" });
 
   if (!LOCALES.has(locale)) return json(404, { ok: false, erro: "CONTEUDO_NAO_ENCONTRADO" });
 

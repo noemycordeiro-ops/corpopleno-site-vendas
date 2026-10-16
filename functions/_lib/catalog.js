@@ -13,6 +13,20 @@ export const CATALOG = {
   "romance-combo": { priceCents: 5000, title: "O Amor que Aprendeu a Ficar + O Amor que Ensina a Crescer (combo)", items: ["amor-que-aprendeu-a-ficar", "amor-que-ensina-a-crescer"], maxInstallments: 1 },
 };
 
+/*
+  Idiomas cujo CONTEÚDO (não só a capa/título) foi revisado por pessoa.
+  Os demais idiomas que existirem no banco aparecem no leitor com o selo
+  "Tradução não revisada". Para marcar um idioma como revisado, inclua-o
+  aqui. Hoje só o original em pt-BR está confirmado.
+*/
+export const REVIEWED_LOCALES = {
+  "hene-sem-medo-livro-1": ["pt-BR"],
+  "hene-sem-medo-livro-2": ["pt-BR"],
+  "amor-que-aprendeu-a-ficar": ["pt-BR"],
+  "amor-que-ensina-a-crescer": ["pt-BR"],
+  "receitas-corpopleno": ["pt-BR"],
+};
+
 export function getProduct(id) {
   return Object.prototype.hasOwnProperty.call(CATALOG, id) ? CATALOG[id] : null;
 }

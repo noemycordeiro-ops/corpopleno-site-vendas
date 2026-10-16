@@ -2,7 +2,7 @@
   GET /api/auth/me
   Contrato (main.js, account-home.js, books-account.js, book-detail.js):
     logado     -> 200 {autenticado:true, nome, email, temDocumento}
-    não logado -> 401 {autenticado:false}
+    não logado -> 200 {autenticado:false}
 */
 import { json, methodNotAllowed } from "../../_lib/http.js";
 import { getDb } from "../../_lib/db.js";
@@ -13,7 +13,9 @@ export async function onRequest({ request, env }) {
   const db = await getDb(env);
   if (!db) return json(503, { autenticado: false, erro: "BANCO_NAO_CONFIGURADO" });
   const user = await getSessionUser(db, request);
-  if (!user) return json(401, { autenticado: false });
+  // 200 (e não 401) para visitante sem login: é um estado normal, e um 401
+  // aparece como erro no console do navegador em todas as páginas.
+  if (!user) return json(200, { autenticado: false });
   return json(200, {
     autenticado: true,
     nome: user.name || "",

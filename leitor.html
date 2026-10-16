@@ -7,7 +7,7 @@
   <meta name="description" content="Leitor digital CorpoPleno." />
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
-  <link rel="stylesheet" href="assets/css/books.css?v=20261015a" />
+  <link rel="stylesheet" href="assets/css/books.css?v=20261016c" />
 </head>
 <body data-partial-i18n="true" class="reader-body">
 
@@ -16,6 +16,13 @@
     <div class="reader-topbar__actions">
       <button type="button" class="reader-icon-btn" id="cp-reader-adjust-btn" data-i18n-aria-label="reader.adjust.button_label" aria-label="Ajustar leitura" aria-haspopup="true" aria-expanded="false" aria-controls="cp-reader-adjust-panel">
         <span aria-hidden="true">🖥️</span>
+      </button>
+      <!-- Fase Livros 017 -- sumário e tema claro/escuro. -->
+      <button type="button" class="reader-icon-btn" id="cp-reader-toc-btn" aria-label="Sumário" aria-haspopup="true" aria-expanded="false" aria-controls="cp-reader-toc-panel">
+        <span aria-hidden="true">📑</span>
+      </button>
+      <button type="button" class="reader-icon-btn" id="cp-reader-theme-btn" aria-label="Modo escuro" aria-pressed="false">
+        <span aria-hidden="true">🌙</span>
       </button>
       <button type="button" class="reader-icon-btn" id="cp-reader-fullscreen-btn" aria-label="Expandir leitura" data-i18n-aria-label="reader.fullscreen.enter">
         <span aria-hidden="true">⛶</span>
@@ -52,6 +59,12 @@
     <h2 data-i18n="reader.recipe.favorites.title">Receitas favoritas</h2>
     <p class="reader-search-empty" id="cp-reader-favorites-empty" data-i18n="reader.recipe.favorites.empty" hidden>Nenhuma receita favoritada ainda.</p>
     <ul class="reader-search-results" id="cp-reader-favorites-results"></ul>
+  </div>
+
+  <!-- Fase Livros 017 -- sumário (gerado dos títulos das páginas). -->
+  <div class="reader-adjust-panel reader-toc-panel" id="cp-reader-toc-panel" hidden>
+    <h2>Sumário</h2>
+    <ul class="reader-search-results" id="cp-reader-toc-list"></ul>
   </div>
 
   <!-- Painel "Ajustar leitura" — nunca usa termos técnicos (viewport/breakpoint). -->
@@ -94,7 +107,7 @@
     <!-- Estado: livro não encontrado -->
     <section class="reader-access-denied" id="cp-reader-not-found" hidden>
       <h1 data-i18n="book.detail.not_found">Livro não encontrado.</h1>
-      <a class="btn btn-secondary" href="livros.html" data-i18n="book.detail.back_to_catalog">← Voltar para Livros</a>
+      <a class="btn btn-secondary" href="produtos.html#livros">← Voltar aos livros</a>
     </section>
 
     <!-- Estado: leitor liberado -->
@@ -106,6 +119,7 @@
       <div class="reader-book-strip">
         <div class="reader-book-strip__cover-slot" id="cp-reader-cover-slot"></div>
         <div class="reader-book-strip__title" id="cp-reader-title"></div>
+        <span class="reader-translation-badge" id="cp-reader-translation-badge" hidden>Tradução não revisada</span>
       </div>
 
       <!-- Fase CorpoPleno Livros 013 -- #cp-reader-page-content continua a
@@ -116,6 +130,7 @@
            páginas" (reader.js controla hidden; books.css só vira grid de
            2 colunas a partir de 960px de largura real). -->
       <div class="reader-pages-wrap" id="cp-reader-pages-wrap">
+        <div class="reader-watermark" id="cp-reader-watermark" aria-hidden="true"></div>
         <article class="reader-page" id="cp-reader-page-content" aria-live="polite"></article>
         <article class="reader-page" id="cp-reader-page-content-right" aria-live="polite" hidden></article>
       </div>
@@ -145,7 +160,7 @@
   <script src="assets/js/main.js?v=20260925c"></script>
   <script src="assets/js/books-data.js?v=20261015a"></script>
   <script src="assets/js/book-cover.js?v=20261015a"></script>
-  <script src="assets/js/reader.js?v=20261002a"></script>
+  <script src="assets/js/reader.js?v=20261016a"></script>
   <script src="assets/js/recipe-search-synonyms.js?v=20261005a"></script>
   <script src="assets/js/reader-recipes.js?v=20261005a"></script>
 </body>

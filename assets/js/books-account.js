@@ -54,13 +54,14 @@
     article.className = "card book-card";
     article.setAttribute("data-book-id", livro.bookId);
 
-    var cover = document.createElement("img");
-    cover.className = "book-card__cover";
-    cover.src = ed.cover;
-    cover.alt = ed.title;
-    cover.loading = "lazy";
-    cover.width = 400;
-    cover.height = 600;
+    // Fase Livros 017 -- capa pela mesma lógica do catálogo (book-cover.js);
+    // antes usava ed.cover, campo que não existe no metadata.json.
+    var cover = window.CP_BOOK_COVER
+      ? window.CP_BOOK_COVER.construirElementoCover(meta.cover, lang, {
+          className: "book-card__cover", placeholderClassName: "book-card__cover--placeholder",
+          alt: ed.title, loading: "lazy", width: 400, height: 600,
+        })
+      : document.createElement("div");
     article.appendChild(cover);
 
     var body = document.createElement("div");
@@ -74,8 +75,14 @@
     var readBtn = document.createElement("a");
     readBtn.className = "btn btn-primary";
     readBtn.href = "leitor.html?id=" + encodeURIComponent(livro.bookId);
-    readBtn.setAttribute("data-i18n", "books.account.read_now");
-    readBtn.textContent = t("books.account.read_now", "Ler agora");
+    // Fase Livros 017 -- com progresso salvo no servidor, o botão vira
+    // "Continuar leitura (pág. N)"; o leitor reabre no ponto salvo.
+    if (livro.progress && typeof livro.progress.page === "number" && livro.progress.page > 1) {
+      readBtn.textContent = "Continuar leitura (pág. " + livro.progress.page + ")";
+    } else {
+      readBtn.setAttribute("data-i18n", "books.account.read_now");
+      readBtn.textContent = t("books.account.read_now", "Ler agora");
+    }
     body.appendChild(readBtn);
 
     article.appendChild(body);

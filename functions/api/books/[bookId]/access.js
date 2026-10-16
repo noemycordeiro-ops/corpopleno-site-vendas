@@ -6,6 +6,7 @@
 import { json, methodNotAllowed } from "../../../_lib/http.js";
 import { getDb } from "../../../_lib/db.js";
 import { getSessionUser, sha256Hex } from "../../../_lib/auth.js";
+import { customerCode } from "../../../_lib/reading.js";
 
 export async function onRequest({ request, env, params }) {
   if (request.method !== "GET") return methodNotAllowed();
@@ -21,5 +22,7 @@ export async function onRequest({ request, env, params }) {
   return json(200, {
     allowReading: true,
     readerSubjectKey: (await sha256Hex("reader:" + user.id)).slice(0, 32),
+    // Marca d'água discreta do leitor: código curto do cliente, nunca o e-mail.
+    watermark: await customerCode(user.id),
   });
 }
