@@ -3,11 +3,15 @@
   "book_id": "receitas-corpopleno",
   "price": {
     "_comment": "Preço aprovado por Noemi em 2026-10-09: R$ 200,00 à vista no PIX; no cartão, 4x de R$ 50,00 sem juros (mesmo total de R$ 200,00; parcelamento é apresentação comercial -- não há installmentCount sendo enviado a nenhuma API ainda). FONTE DE VERDADE COMERCIAL continua sendo a Oferta no Cordex (server/funil_vendas_data/ofertas.json); este campo é só para EXIBIÇÃO no site.",
-    "amount": 200.00,
+    "amount": 200.0,
     "currency": "BRL",
     "priceVersion": "launch-2026-10-09",
     "installments": {
-      "card": { "count": 4, "value": 50.00, "interestFree": true }
+      "card": {
+        "count": 4,
+        "value": 50.0,
+        "interestFree": true
+      }
     },
     "display": {
       "pt-BR": "R$ 200,00 no PIX ou 4x de R$ 50,00 sem juros no cartão",
@@ -97,21 +101,46 @@
   "locales": {
     "pt-BR": {
       "title": "Livro de Receitas CorpoPleno",
-      "subtitle": null,
-      "description": null
-    },
-    "en-US": {
-      "title": "CorpoPleno Cookbook",
-      "subtitle": null,
-      "description": null
+      "subtitle": "Receitas e cardápios para organizar 30 dias",
+      "description": null,
+      "subtitleRevisado": true
     },
     "pt-PT": {
       "title": "Livro de Receitas CorpoPleno",
-      "subtitle": null,
-      "description": null
+      "subtitle": "Receitas e ementas para organizar 30 dias",
+      "description": null,
+      "revisado": false
+    },
+    "en-US": {
+      "title": "CorpoPleno Cookbook",
+      "subtitle": "Recipes and menus to organize 30 days",
+      "description": null,
+      "revisado": false
+    },
+    "ko-KR": {
+      "title": "CorpoPleno 레시피북",
+      "subtitle": "30일을 계획하는 레시피와 식단",
+      "description": null,
+      "revisado": false
+    },
+    "es-CL": {
+      "title": "Libro de Recetas CorpoPleno",
+      "subtitle": "Recetas y menús para organizar 30 días",
+      "description": null,
+      "revisado": false
     }
   },
   "summary": {
-    "pt-BR": "🥗 CANSADO DE NÃO SABER O QUE PREPARAR PARA COMER TODOS OS DIAS?\n\n✨ Imagine abrir um livro e encontrar receitas deliciosas, sugestões de refeições organizadas e ideias para trazer mais variedade à sua alimentação!\n\nCom o Livro de Receitas CorpoPleno, você descobre que comer bem não precisa ser complicado, repetitivo ou sem sabor.\n\n**📖 Um guia culinário completo com:**\n\n✅ 228 receitas e 371 preparações, incluindo variações para diferentes preferências.\n\n✅ 12 cardápios organizados de 30 dias, para facilitar o planejamento das refeições.\n\n✅ Opções vegetarianas, veganas e sem lactose.\n\n✅ Sugestões para pessoas com diabetes, gestantes e lactantes, que podem ser adaptadas com acompanhamento profissional.\n\n✅ Preparações para introdução alimentar infantil, respeitando cada fase do desenvolvimento.\n\n✅ Receitas para quem busca organização alimentar, incluindo opções fitness e para planejamento do emagrecimento.\n\n✅ Ideias de marmitas congeladas para uma rotina mais prática.\n\n✅ Cafés da manhã, almoços, jantares, lanches, saladas, bebidas e sobremesas.\n\n💚 MAIS ORGANIZAÇÃO NA COZINHA. MAIS VARIEDADE NO PRATO. MAIS PRATICIDADE NA SUA ROTINA!\n\nO CorpoPleno reúne receitas caseiras, orientações de preparo e sugestões de cardápios em um só lugar, ajudando você a planejar suas refeições com mais facilidade.\n\n🌈 Seja para variar o cardápio da família, conhecer novas preparações ou organizar melhor sua semana, este livro pode ser seu aliado na cozinha.\n\n📚 CORPOPLENO — RECEITAS E CARDÁPIOS PARA ORGANIZAR 30 DIAS\n\n✨ Porque cuidar da alimentação começa com pequenas escolhas que cabem na vida real.\n\n🛒 GARANTA SEU EXEMPLAR E LEVE MAIS SABOR, VARIEDADE E ORGANIZAÇÃO PARA SUA MESA!"
+    "pt-BR": "🥗 CANSADO DE NÃO SABER O QUE PREPARAR PARA COMER TODOS OS DIAS?\n\n✨ Imagine abrir um livro e encontrar receitas deliciosas, sugestões de refeições organizadas e ideias para trazer mais variedade à sua alimentação!\n\nCom o Livro de Receitas CorpoPleno, você descobre que comer bem não precisa ser complicado, repetitivo ou sem sabor.\n\n**📖 Um guia culinário completo com:**\n\n✅ 228 receitas e 371 preparações, incluindo variações para diferentes preferências.\n\n✅ 12 cardápios organizados de 30 dias, para facilitar o planejamento das refeições.\n\n✅ Opções vegetarianas, veganas e sem lactose.\n\n✅ Sugestões para pessoas com diabetes, gestantes e lactantes, que podem ser adaptadas com acompanhamento profissional.\n\n✅ Preparações para introdução alimentar infantil, respeitando cada fase do desenvolvimento.\n\n✅ Receitas para quem busca organização alimentar, incluindo opções fitness e para planejamento do emagrecimento.\n\n✅ Ideias de marmitas congeladas para uma rotina mais prática.\n\n✅ Cafés da manhã, almoços, jantares, lanches, saladas, bebidas e sobremesas.\n\n💚 MAIS ORGANIZAÇÃO NA COZINHA. MAIS VARIEDADE NO PRATO. MAIS PRATICIDADE NA SUA ROTINA!\n\nO CorpoPleno reúne receitas caseiras, orientações de preparo e sugestões de cardápios em um só lugar, ajudando você a planejar suas refeições com mais facilidade.\n\n🌈 Seja para variar o cardápio da família, conhecer novas preparações ou organizar melhor sua semana, este livro pode ser seu aliado na cozinha.\n\n📚 CORPOPLENO — RECEITAS E CARDÁPIOS PARA ORGANIZAR 30 DIAS\n\n✨ Porque cuidar da alimentação começa com pequenas escolhas que cabem na vida real.\n\n🛒 GARANTA SEU EXEMPLAR E LEVE MAIS SABOR, VARIEDADE E ORGANIZAÇÃO PARA SUA MESA!",
+    "pt-PT": "🥗 CANSADO DE NÃO SABER O QUE PREPARAR PARA COMER TODOS OS DIAS?\n\n✨ Imagine abrir um livro e encontrar receitas deliciosas, sugestões de refeições organizadas e ideias para trazer mais variedade à sua alimentação!\n\nCom o Livro de Receitas CorpoPleno, descobre que comer bem não tem de ser complicado, repetitivo nem sem sabor.\n\n**📖 Um guia culinário completo com:**\n\n✅ 228 receitas e 371 preparações, incluindo variações para diferentes preferências.\n\n✅ 12 ementas organizadas de 30 dias, para facilitar o planeamento das refeições.\n\n✅ Opções vegetarianas, veganas e sem lactose.\n\n✅ Sugestões para pessoas com diabetes, grávidas e lactantes, que podem ser adaptadas com acompanhamento profissional.\n\n✅ Preparações para a diversificação alimentar infantil, respeitando cada fase do desenvolvimento.\n\n✅ Receitas para quem procura organização alimentar, incluindo opções fitness e para o planeamento do emagrecimento.\n\n✅ Ideias de refeições congeladas para levar, para uma rotina mais prática.\n\n✅ Pequenos-almoços, almoços, jantares, lanches, saladas, bebidas e sobremesas.\n\n💚 MAIS ORGANIZAÇÃO NA COZINHA. MAIS VARIEDADE NO PRATO. MAIS PRATICIDADE NA SUA ROTINA!\n\nO CorpoPleno reúne receitas caseiras, orientações de preparação e sugestões de ementas num só lugar, ajudando-o a planear as suas refeições com mais facilidade.\n\n🌈 Seja para variar a ementa da família, conhecer novas preparações ou organizar melhor a sua semana, este livro pode ser o seu aliado na cozinha.\n\n📚 CORPOPLENO — RECEITAS E EMENTAS PARA ORGANIZAR 30 DIAS\n\n✨ Porque cuidar da alimentação começa com pequenas escolhas que cabem na vida real.\n\n🛒 GARANTA O SEU EXEMPLAR E LEVE MAIS SABOR, VARIEDADE E ORGANIZAÇÃO PARA A SUA MESA!",
+    "en-US": "🥗 TIRED OF NOT KNOWING WHAT TO MAKE TO EAT EVERY DAY?\n\n✨ Imagine opening a book and finding delicious recipes, organized meal suggestions and ideas to bring more variety to your diet!\n\nWith the CorpoPleno Cookbook, you'll discover that eating well doesn't have to be complicated, repetitive or tasteless.\n\n**📖 A complete culinary guide with:**\n\n✅ 228 recipes and 371 preparations, including variations for different preferences.\n\n✅ 12 organized 30-day menus to make meal planning easier.\n\n✅ Vegetarian, vegan and lactose-free options.\n\n✅ Suggestions for people with diabetes, pregnant and breastfeeding women, which can be adapted with professional supervision.\n\n✅ Preparations for introducing solid foods to babies, respecting each stage of development.\n\n✅ Recipes for those seeking an organized diet, including fitness options and options for weight-loss planning.\n\n✅ Frozen packed-meal ideas for a more practical routine.\n\n✅ Breakfasts, lunches, dinners, snacks, salads, drinks and desserts.\n\n💚 MORE ORGANIZATION IN THE KITCHEN. MORE VARIETY ON YOUR PLATE. MORE CONVENIENCE IN YOUR ROUTINE!\n\nCorpoPleno brings together homemade recipes, preparation instructions and menu suggestions in one place, helping you plan your meals more easily.\n\n🌈 Whether you want to vary your family's menu, try new preparations or better organize your week, this book can be your ally in the kitchen.\n\n📚 CORPOPLENO — RECIPES AND MENUS TO ORGANIZE 30 DAYS\n\n✨ Because taking care of your diet starts with small choices that fit into real life.\n\n🛒 GET YOUR COPY AND BRING MORE FLAVOR, VARIETY AND ORGANIZATION TO YOUR TABLE!",
+    "ko-KR": "🥗 매일 무엇을 만들어 먹어야 할지 몰라 지치셨나요?\n\n✨ 책을 펼치면 맛있는 레시피, 체계적인 식사 제안, 식단에 다양함을 더해 줄 아이디어가 가득하다고 상상해 보세요!\n\n「CorpoPleno 레시피북」과 함께라면 잘 먹는 것이 복잡하거나 단조롭거나 맛없을 필요가 없다는 것을 알게 됩니다.\n\n**📖 완벽한 요리 가이드 구성:**\n\n✅ 다양한 취향을 위한 변형을 포함한 228가지 레시피와 371가지 요리.\n\n✅ 식사 계획을 쉽게 해 주는 30일 식단표 12가지.\n\n✅ 채식, 비건, 유당 제외 옵션.\n\n✅ 당뇨가 있는 분, 임신부, 수유부를 위한 제안 — 전문가의 지도에 따라 조정할 수 있습니다.\n\n✅ 각 발달 단계를 존중하는 아기 이유식 메뉴.\n\n✅ 식단 관리를 원하는 분을 위한 레시피, 피트니스 메뉴와 체중 감량 계획용 메뉴 포함.\n\n✅ 더 실용적인 일상을 위한 냉동 도시락 아이디어.\n\n✅ 아침, 점심, 저녁, 간식, 샐러드, 음료, 디저트.\n\n💚 주방은 더 체계적으로. 식탁은 더 다양하게. 일상은 더 편리하게!\n\nCorpoPleno는 집밥 레시피, 조리 안내, 식단 제안을 한곳에 모아 식사 계획을 더 쉽게 세울 수 있도록 돕습니다.\n\n🌈 가족의 식단에 변화를 주거나, 새로운 요리를 시도하거나, 한 주를 더 잘 계획하고 싶을 때 이 책이 주방의 든든한 동반자가 되어 줄 것입니다.\n\n📚 CORPOPLENO — 30일을 계획하는 레시피와 식단\n\n✨ 건강한 식생활은 실제 삶에 맞는 작은 선택에서 시작되기 때문입니다.\n\n🛒 지금 책을 만나 식탁에 더 많은 맛과 다양함, 체계를 더하세요!",
+    "es-CL": "🥗 ¿CANSADO DE NO SABER QUÉ PREPARAR PARA COMER TODOS LOS DÍAS?\n\n✨ ¡Imagina abrir un libro y encontrar recetas deliciosas, sugerencias de comidas organizadas e ideas para darle más variedad a tu alimentación!\n\nCon el Libro de Recetas CorpoPleno, descubres que comer bien no tiene por qué ser complicado, repetitivo ni sin sabor.\n\n**📖 Una guía culinaria completa con:**\n\n✅ 228 recetas y 371 preparaciones, incluidas variaciones para distintas preferencias.\n\n✅ 12 menús organizados de 30 días, para facilitar la planificación de las comidas.\n\n✅ Opciones vegetarianas, veganas y sin lactosa.\n\n✅ Sugerencias para personas con diabetes, embarazadas y mujeres en período de lactancia, que pueden adaptarse con acompañamiento profesional.\n\n✅ Preparaciones para la introducción alimentaria infantil, respetando cada etapa del desarrollo.\n\n✅ Recetas para quienes buscan organizar su alimentación, incluidas opciones fitness y para planificar la baja de peso.\n\n✅ Ideas de colaciones congeladas para una rutina más práctica.\n\n✅ Desayunos, almuerzos, cenas, onces, ensaladas, bebidas y postres.\n\n💚 MÁS ORGANIZACIÓN EN LA COCINA. MÁS VARIEDAD EN EL PLATO. ¡MÁS PRACTICIDAD EN TU RUTINA!\n\nCorpoPleno reúne recetas caseras, indicaciones de preparación y sugerencias de menús en un solo lugar, ayudándote a planificar tus comidas con más facilidad.\n\n🌈 Ya sea para variar el menú de la familia, conocer nuevas preparaciones u organizar mejor tu semana, este libro puede ser tu aliado en la cocina.\n\n📚 CORPOPLENO — RECETAS Y MENÚS PARA ORGANIZAR 30 DÍAS\n\n✨ Porque cuidar la alimentación comienza con pequeñas decisiones que caben en la vida real.\n\n🛒 ¡ASEGURA TU EJEMPLAR Y LLEVA MÁS SABOR, VARIEDAD Y ORGANIZACIÓN A TU MESA!"
+  },
+  "summary_revisado": {
+    "pt-PT": false,
+    "en-US": false,
+    "ko-KR": false,
+    "es-CL": false
   }
 }

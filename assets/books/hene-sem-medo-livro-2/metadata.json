@@ -2,7 +2,7 @@
   "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções editoriais das Fases 006.1 APROVADAS por Noemi. Decisão final: título comercial em en-US é 'Henê Without Fear' ('Fearless Henê' foi proposto e EXPLICITAMENTE REJEITADO -- nunca usar), consistente com hene-sem-medo-livro-1. ko-KR final usa a vírgula: 'Henê, 두려움 없이'; versão compacta '모발 관리 레시피 30가지' explicitamente aprovada para o subtítulo quando o espaço da capa exigir. textStatus='APPROVED' em todos os 5 idiomas. 'receitas' aqui é SEMPRE capilar, nunca culinário -- mantido explícito em category/subtitle. Nenhuma arte nova gerada.",
   "book_id": "hene-sem-medo-livro-2",
   "price": {
-    "amount": 39.90,
+    "amount": 39.9,
     "currency": "BRL",
     "priceVersion": "launch-2026-10",
     "display": {
@@ -119,11 +119,46 @@
   "locales": {
     "pt-BR": {
       "title": "Henê Sem Medo — Livro 2",
-      "subtitle": null,
-      "description": null
+      "subtitle": "30 receitas práticas para o cronograma capilar",
+      "description": null,
+      "subtitleRevisado": true
+    },
+    "pt-PT": {
+      "title": "Henê Sem Medo — Livro 2",
+      "subtitle": "30 receitas práticas para o cronograma capilar",
+      "description": null,
+      "revisado": false
+    },
+    "en-US": {
+      "title": "Henê Without Fear — Book 2",
+      "subtitle": "30 Practical Recipes for Your Hair Care Schedule",
+      "description": null,
+      "revisado": false
+    },
+    "ko-KR": {
+      "title": "Henê, 두려움 없이 — 2권",
+      "subtitle": "모발 관리 일정을 위한 실전 레시피 30가지",
+      "description": null,
+      "revisado": false
+    },
+    "es-CL": {
+      "title": "Henê Sin Miedo — Libro 2",
+      "subtitle": "30 recetas prácticas para tu cronograma capilar",
+      "description": null,
+      "revisado": false
     }
   },
   "summary": {
-    "pt-BR": "Você usa henê e fica em dúvida sobre como hidratar, nutrir e cuidar dos seus cabelos sem exagerar nos produtos?\n\nO Henê Sem Medo – Livro 2, da CorpoPleno, foi criado para ajudar você a transformar dúvidas em escolhas práticas e organizar seus cuidados capilares com mais confiança.\n\nSão 30 opções de preparações e finalizações, distribuídas entre cinco etapas essenciais do cronograma capilar:\n\n✅ Hidratação / Nutrição / Reconstrução\n\n**O que você vai aprender?**\n\n- Como preparar pequenas quantidades, evitando desperdícios.\n- Quando utilizar cada opção dentro do cronograma de 60 dias.\n- Como diferenciar hidratação, nutrição e reconstrução.\n- Quais cuidados observar ao escolher produtos para cabelos com henê.\n- Como construir uma rotina mais prática, sem misturar ingredientes ao henê ou alterar cosméticos prontos.\n\nMais cuidado. Menos dúvida. Mais praticidade...\n\nVocê não precisa de dezenas de produtos para cuidar do seu cabelo henezado.\n\nAprenda a cuidar dos seus cabelos sem improvisos, com orientação, organização e consciência!\n\nAdquira agora o Henê Sem Medo – Livro 2 e descubra 30 opções para complementar sua rotina capilar.\n\n*Material educativo complementar ao Livro 1. Não elimina riscos nem substitui o rótulo do produto ou a orientação de um profissional habilitado. Os resultados variam conforme as características dos fios.*"
+    "pt-BR": "Você usa henê e fica em dúvida sobre como hidratar, nutrir e cuidar dos seus cabelos sem exagerar nos produtos?\n\nO Henê Sem Medo – Livro 2, da CorpoPleno, foi criado para ajudar você a transformar dúvidas em escolhas práticas e organizar seus cuidados capilares com mais confiança.\n\nSão 30 opções de preparações e finalizações, distribuídas entre cinco etapas essenciais do cronograma capilar:\n\n✅ Hidratação / Nutrição / Reconstrução\n\n**O que você vai aprender?**\n\n- Como preparar pequenas quantidades, evitando desperdícios.\n- Quando utilizar cada opção dentro do cronograma de 60 dias.\n- Como diferenciar hidratação, nutrição e reconstrução.\n- Quais cuidados observar ao escolher produtos para cabelos com henê.\n- Como construir uma rotina mais prática, sem misturar ingredientes ao henê ou alterar cosméticos prontos.\n\nMais cuidado. Menos dúvida. Mais praticidade...\n\nVocê não precisa de dezenas de produtos para cuidar do seu cabelo henezado.\n\nAprenda a cuidar dos seus cabelos sem improvisos, com orientação, organização e consciência!\n\nAdquira agora o Henê Sem Medo – Livro 2 e descubra 30 opções para complementar sua rotina capilar.\n\n*Material educativo complementar ao Livro 1. Não elimina riscos nem substitui o rótulo do produto ou a orientação de um profissional habilitado. Os resultados variam conforme as características dos fios.*",
+    "pt-PT": "Usa henê e fica com dúvidas sobre como hidratar, nutrir e cuidar do seu cabelo sem exagerar nos produtos?\n\nO Henê Sem Medo – Livro 2, da CorpoPleno, foi criado para o ajudar a transformar dúvidas em escolhas práticas e a organizar os seus cuidados capilares com mais confiança.\n\nSão 30 opções de preparações e finalizações, distribuídas por cinco etapas essenciais do cronograma capilar:\n\n✅ Hidratação / Nutrição / Reconstrução\n\n**O que vai aprender?**\n\n- Como preparar pequenas quantidades, evitando desperdícios.\n- Quando utilizar cada opção dentro do cronograma de 60 dias.\n- Como distinguir hidratação, nutrição e reconstrução.\n- Que cuidados ter ao escolher produtos para cabelo com henê.\n- Como construir uma rotina mais prática, sem misturar ingredientes no henê nem alterar cosméticos prontos.\n\nMais cuidado. Menos dúvidas. Mais praticidade...\n\nNão precisa de dezenas de produtos para cuidar do seu cabelo com henê.\n\nAprenda a cuidar do seu cabelo sem improvisos, com orientação, organização e consciência!\n\nAdquira já o Henê Sem Medo – Livro 2 e descubra 30 opções para complementar a sua rotina capilar.\n\n*Material educativo complementar ao Livro 1. Não elimina riscos nem substitui o rótulo do produto ou a orientação de um profissional habilitado. Os resultados variam consoante as características do cabelo.*",
+    "en-US": "Do you use henê and wonder how to hydrate, nourish and care for your hair without overdoing it with products?\n\nHenê Without Fear – Book 2, by CorpoPleno, was created to help you turn doubts into practical choices and organize your hair care with more confidence.\n\nIt offers 30 preparation and finishing options, spread across five essential stages of the hair care schedule:\n\n✅ Hydration / Nourishment / Repair\n\n**What will you learn?**\n\n- How to prepare small amounts, avoiding waste.\n- When to use each option within the 60-day schedule.\n- How to tell hydration, nourishment and repair apart.\n- What to watch for when choosing products for hair treated with henê.\n- How to build a more practical routine without mixing ingredients into henê or altering ready-made cosmetics.\n\nMore care. Less doubt. More convenience...\n\nYou don't need dozens of products to care for your henê-treated hair.\n\nLearn to care for your hair without improvising, with guidance, organization and awareness!\n\nGet Henê Without Fear – Book 2 now and discover 30 options to complement your hair care routine.\n\n*Educational material that complements Book 1. It does not eliminate risks or replace the product label or the guidance of a qualified professional. Results vary according to the characteristics of your hair.*",
+    "ko-KR": "Henê를 사용하면서 제품을 과하게 쓰지 않고 모발에 수분과 영양을 주며 관리하는 방법이 궁금하신가요?\n\nCorpoPleno의 「Henê, 두려움 없이 – 2권」은 의문을 실용적인 선택으로 바꾸고, 더 자신 있게 모발 관리를 체계화할 수 있도록 돕기 위해 만들어졌습니다.\n\n모발 관리 일정의 다섯 가지 핵심 단계에 걸친 30가지 준비 및 마무리 옵션을 담았습니다:\n\n✅ 수분 공급 / 영양 공급 / 손상 복구\n\n**무엇을 배우게 될까요?**\n\n- 낭비 없이 소량만 준비하는 방법.\n- 60일 일정 안에서 각 옵션을 언제 사용하는지.\n- 수분 공급, 영양 공급, 손상 복구를 구분하는 방법.\n- Henê 모발용 제품을 고를 때 주의할 점.\n- Henê에 재료를 섞거나 완제품 화장품을 변형하지 않고 더 실용적인 루틴을 만드는 방법.\n\n더 많은 관리. 더 적은 고민. 더 큰 편리함...\n\nHenê로 관리한 모발을 위해 수십 가지 제품이 필요하지 않습니다.\n\n즉흥적인 방법 대신 안내와 체계, 그리고 올바른 인식으로 모발을 관리하는 법을 배워 보세요!\n\n지금 「Henê, 두려움 없이 – 2권」을 만나 모발 관리 루틴을 보완할 30가지 옵션을 발견하세요.\n\n*1권을 보완하는 교육용 자료입니다. 위험을 없애 주지 않으며, 제품 라벨이나 자격을 갖춘 전문가의 안내를 대신하지 않습니다. 결과는 모발의 특성에 따라 다릅니다.*",
+    "es-CL": "¿Usas henê y tienes dudas sobre cómo hidratar, nutrir y cuidar tu cabello sin exagerar con los productos?\n\nHenê Sin Miedo – Libro 2, de CorpoPleno, fue creado para ayudarte a transformar tus dudas en elecciones prácticas y organizar el cuidado de tu cabello con más confianza.\n\nSon 30 opciones de preparaciones y terminaciones, distribuidas en cinco etapas esenciales del cronograma capilar:\n\n✅ Hidratación / Nutrición / Reconstrucción\n\n**¿Qué vas a aprender?**\n\n- Cómo preparar pequeñas cantidades, evitando desperdicios.\n- Cuándo usar cada opción dentro del cronograma de 60 días.\n- Cómo diferenciar hidratación, nutrición y reconstrucción.\n- Qué cuidados tener al elegir productos para cabello con henê.\n- Cómo construir una rutina más práctica, sin mezclar ingredientes con el henê ni alterar cosméticos listos.\n\nMás cuidado. Menos dudas. Más practicidad...\n\nNo necesitas decenas de productos para cuidar tu cabello con henê.\n\n¡Aprende a cuidar tu cabello sin improvisar, con orientación, organización y conciencia!\n\nAdquiere ahora Henê Sin Miedo – Libro 2 y descubre 30 opciones para complementar tu rutina capilar.\n\n*Material educativo complementario al Libro 1. No elimina riesgos ni reemplaza la etiqueta del producto ni la orientación de un profesional calificado. Los resultados varían según las características del cabello.*"
+  },
+  "summary_revisado": {
+    "pt-PT": false,
+    "en-US": false,
+    "ko-KR": false,
+    "es-CL": false
   }
 }

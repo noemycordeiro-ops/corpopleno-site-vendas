@@ -1,5 +1,5 @@
 {
-  "_comment": "Combo (Fase Livros 015, 2026-10-15): capa = as capas ORIGINAIS dos 2 livros sobrepostas via CSS (book-cover.js mode 'combo'), nenhuma imagem nova. Preço exibido em BRL, igual aos livros avulsos; o valor cobrado vem SEMPRE do servidor (functions/_lib/catalog.js). Só pt-BR: as traduções geradas antes usavam nomes não aprovados ('Hené', 'Henna Sin Miedo') -- os outros idiomas caem no pt-BR até haver tradução aprovada.",
+  "_comment": "Combo: capa = as capas ORIGINAIS dos 2 livros sobrepostas via CSS (book-cover.js mode 'combo'), nenhuma imagem nova. O valor cobrado vem SEMPRE do servidor (functions/_lib/catalog.js), em BRL. Fase Livros 020 (2026-10-16): textos em pt-PT, en-US, ko-KR e es-CL com revisado:false, a revisar pela Noemi; nomes oficiais aprovados (Henê Without Fear / Henê Sin Miedo / Henê, 두려움 없이).",
   "book_id": "romance-combo",
   "internalTestOnly": false,
   "is_combo": true,
@@ -31,9 +31,52 @@
       "title": "Histórias de Aprendizado Familiar — Coleção Completa",
       "subtitle": "Volumes 1 e 2 — O Amor que Aprende e Ensina",
       "description": "Adquira os dois volumes da coleção Histórias de Aprendizado Familiar com desconto. Histórias de transformação pessoal e relacionamento. Ganhe acesso aos dois títulos com um único pagamento."
+    },
+    "pt-PT": {
+      "title": "Histórias de Aprendizagem Familiar — Coleção Completa",
+      "subtitle": "Volumes 1 e 2 — O Amor que Aprende e Ensina",
+      "description": "Adquira os dois volumes da coleção Histórias de Aprendizagem Familiar com desconto. Histórias de transformação pessoal e de relação. Obtenha acesso aos dois títulos com um único pagamento.",
+      "revisado": false
+    },
+    "en-US": {
+      "title": "Family Learning Stories — Complete Collection",
+      "subtitle": "Volumes 1 and 2 — The Love That Learns and Teaches",
+      "description": "Get both volumes of the Family Learning Stories collection at a discount. Stories of personal transformation and relationships. Get access to both titles with a single payment.",
+      "revisado": false
+    },
+    "ko-KR": {
+      "title": "가족이 함께 배우는 이야기 — 전체 컬렉션",
+      "subtitle": "1권과 2권 — 배우고 가르치는 사랑",
+      "description": "가족이 함께 배우는 이야기 컬렉션의 두 권을 할인가로 만나 보세요. 개인의 변화와 관계에 관한 이야기입니다. 한 번의 결제로 두 권 모두 이용할 수 있습니다.",
+      "revisado": false
+    },
+    "es-CL": {
+      "title": "Historias de Aprendizaje Familiar — Colección Completa",
+      "subtitle": "Volúmenes 1 y 2 — El Amor que Aprende y Enseña",
+      "description": "Adquiere los dos volúmenes de la colección Historias de Aprendizaje Familiar con descuento. Historias de transformación personal y de relaciones. Obtén acceso a ambos títulos con un solo pago.",
+      "revisado": false
     }
   },
   "combo_item_labels": {
-    "pt-BR": ["Volume 1 — O Amor que Aprendeu a Ficar", "Volume 2 — O Amor que Ensina a Crescer"]
+    "pt-BR": [
+      "Volume 1 — O Amor que Aprendeu a Ficar",
+      "Volume 2 — O Amor que Ensina a Crescer"
+    ],
+    "pt-PT": [
+      "Volume 1 — O Amor que Aprendeu a Ficar",
+      "Volume 2 — O Amor que Ensina a Crescer"
+    ],
+    "en-US": [
+      "Volume 1 — The Love That Learned to Stay",
+      "Volume 2 — The Love That Teaches You to Grow"
+    ],
+    "ko-KR": [
+      "1권 — 머무는 법을 배운 사랑",
+      "2권 — 자라는 법을 가르치는 사랑"
+    ],
+    "es-CL": [
+      "Volumen 1 — El Amor que Aprendió a Quedarse",
+      "Volumen 2 — El Amor que Enseña a Crecer"
+    ]
   }
 }

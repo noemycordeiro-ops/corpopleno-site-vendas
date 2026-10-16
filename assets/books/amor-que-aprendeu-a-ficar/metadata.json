@@ -2,7 +2,7 @@
   "_comment": "Fase CorpoPleno Livros 008 (2026-10-04) -- preço de lançamento aprovado por Noemi (R$ 29,90). FONTE DE VERDADE COMERCIAL para o checkout é a Oferta no Cordex (server/oferta_checkout.js, funil_vendas_data/ofertas.json -- lida por GET /api/books/:bookId/checkout-info e usada de verdade por POST /api/books/:bookId/checkout); este campo 'price' aqui é só para EXIBIÇÃO ao cliente no site (livro.html/books-render.js) -- os dois ficam deliberadamente em repositórios/deployments separados (nunca fundidos, regra de arquitetura), por isso o mesmo número aprovado é espelhado nos dois, nunca derivado automaticamente de um para o outro. priceVersion='launch-2026-10' é o snapshot usado em customers.contracts.price_version no momento da compra.",
   "book_id": "amor-que-aprendeu-a-ficar",
   "price": {
-    "amount": 29.90,
+    "amount": 29.9,
     "currency": "BRL",
     "priceVersion": "launch-2026-10",
     "display": {
@@ -95,9 +95,43 @@
       "title": "O Amor que Aprendeu a Ficar",
       "subtitle": "Natasha e Pierry na construção de um lar",
       "description": null
+    },
+    "pt-PT": {
+      "title": "O Amor que Aprendeu a Ficar",
+      "subtitle": "Natasha e Pierry na construção de um lar",
+      "description": null,
+      "revisado": false
+    },
+    "en-US": {
+      "title": "The Love That Learned to Stay",
+      "subtitle": "Natasha and Pierry building a home",
+      "description": null,
+      "revisado": false
+    },
+    "ko-KR": {
+      "title": "머무는 법을 배운 사랑",
+      "subtitle": "함께 가정을 일구어 가는 Natasha와 Pierry",
+      "description": null,
+      "revisado": false
+    },
+    "es-CL": {
+      "title": "El Amor que Aprendió a Quedarse",
+      "subtitle": "Natasha y Pierry construyendo un hogar",
+      "description": null,
+      "revisado": false
     }
   },
   "summary": {
-    "pt-BR": "❤️ E se o amor verdadeiro não fosse encontrar alguém perfeito, mas encontrar alguém disposto a construir uma vida ao seu lado?\n\nEm O Amor que Aprendeu a Ficar – Volume 1, acompanhe a emocionante história de Natasha e Pierry, duas pessoas com sonhos, medos e personalidades diferentes, que descobrem que amar vai muito além de dizer “eu te amo”.\n\nEntre encontros inesperados, momentos românticos, desafios familiares e decisões importantes, eles aprendem que um relacionamento duradouro é construído com respeito, diálogo, confiança, perdão e companheirismo.\n\n💞 Uma história sobre aprender a lidar com o ciúme, superar inseguranças, respeitar as diferenças e transformar o sentimento em compromisso.\n\n🏡 Porque o amor verdadeiro não é apenas aquele que chega e encanta. É aquele que aprende a cuidar, crescer e permanecer.\n\n✨ Uma leitura envolvente para quem acredita no amor, valoriza a família e deseja construir relacionamentos mais saudáveis e felizes.\n\n📖 O Amor que Aprendeu a Ficar\n\nO amor começa com um encontro. Mas é nas escolhas de todos os dias que ele aprende a ficar.\n\n❤️ Garanta seu exemplar e descubra essa linda história de amor!"
+    "pt-BR": "❤️ E se o amor verdadeiro não fosse encontrar alguém perfeito, mas encontrar alguém disposto a construir uma vida ao seu lado?\n\nEm O Amor que Aprendeu a Ficar – Volume 1, acompanhe a emocionante história de Natasha e Pierry, duas pessoas com sonhos, medos e personalidades diferentes, que descobrem que amar vai muito além de dizer “eu te amo”.\n\nEntre encontros inesperados, momentos românticos, desafios familiares e decisões importantes, eles aprendem que um relacionamento duradouro é construído com respeito, diálogo, confiança, perdão e companheirismo.\n\n💞 Uma história sobre aprender a lidar com o ciúme, superar inseguranças, respeitar as diferenças e transformar o sentimento em compromisso.\n\n🏡 Porque o amor verdadeiro não é apenas aquele que chega e encanta. É aquele que aprende a cuidar, crescer e permanecer.\n\n✨ Uma leitura envolvente para quem acredita no amor, valoriza a família e deseja construir relacionamentos mais saudáveis e felizes.\n\n📖 O Amor que Aprendeu a Ficar\n\nO amor começa com um encontro. Mas é nas escolhas de todos os dias que ele aprende a ficar.\n\n❤️ Garanta seu exemplar e descubra essa linda história de amor!",
+    "pt-PT": "❤️ E se o amor verdadeiro não fosse encontrar alguém perfeito, mas encontrar alguém disposto a construir uma vida ao seu lado?\n\nEm O Amor que Aprendeu a Ficar – Volume 1, acompanhe a emocionante história de Natasha e Pierry, duas pessoas com sonhos, medos e personalidades diferentes, que descobrem que amar vai muito além de dizer “amo-te”.\n\nEntre encontros inesperados, momentos românticos, desafios familiares e decisões importantes, aprendem que uma relação duradoura se constrói com respeito, diálogo, confiança, perdão e companheirismo.\n\n💞 Uma história sobre aprender a lidar com o ciúme, superar inseguranças, respeitar as diferenças e transformar o sentimento em compromisso.\n\n🏡 Porque o amor verdadeiro não é apenas aquele que chega e encanta. É aquele que aprende a cuidar, crescer e permanecer.\n\n✨ Uma leitura envolvente para quem acredita no amor, valoriza a família e deseja construir relações mais saudáveis e felizes.\n\n📖 O Amor que Aprendeu a Ficar\n\nO amor começa com um encontro. Mas é nas escolhas de todos os dias que ele aprende a ficar.\n\n❤️ Garanta o seu exemplar e descubra esta linda história de amor!",
+    "en-US": "❤️ What if true love wasn't about finding someone perfect, but about finding someone willing to build a life by your side?\n\nIn The Love That Learned to Stay – Volume 1, follow the moving story of Natasha and Pierry, two people with different dreams, fears and personalities who discover that loving goes far beyond saying “I love you.”\n\nThrough unexpected encounters, romantic moments, family challenges and important decisions, they learn that a lasting relationship is built with respect, dialogue, trust, forgiveness and companionship.\n\n💞 A story about learning to deal with jealousy, overcoming insecurities, respecting differences and turning feelings into commitment.\n\n🏡 Because true love isn't just the kind that arrives and enchants. It's the kind that learns to care, grow and remain.\n\n✨ An engaging read for those who believe in love, value family and want to build healthier, happier relationships.\n\n📖 The Love That Learned to Stay\n\nLove begins with an encounter. But it is in everyday choices that it learns to stay.\n\n❤️ Get your copy and discover this beautiful love story!",
+    "ko-KR": "❤️ 진정한 사랑이 완벽한 사람을 찾는 것이 아니라, 곁에서 함께 삶을 일구려는 사람을 만나는 것이라면 어떨까요?\n\n「머무는 법을 배운 사랑 – 1권」에서 서로 다른 꿈과 두려움, 성격을 지닌 두 사람, Natasha와 Pierry의 감동적인 이야기를 따라가 보세요. 두 사람은 사랑이 “사랑해”라고 말하는 것을 훨씬 넘어선다는 것을 깨닫게 됩니다.\n\n뜻밖의 만남, 로맨틱한 순간, 가족 간의 어려움, 중요한 결정 속에서 두 사람은 오래가는 관계가 존중, 대화, 신뢰, 용서, 그리고 동반자 정신으로 만들어진다는 것을 배웁니다.\n\n💞 질투를 다루는 법을 배우고, 불안을 극복하며, 차이를 존중하고, 감정을 약속으로 바꾸어 가는 이야기.\n\n🏡 진정한 사랑은 찾아와 마음을 사로잡는 사랑만이 아니기 때문입니다. 돌보고, 성장하고, 곁에 머무는 법을 배우는 사랑입니다.\n\n✨ 사랑을 믿고, 가족을 소중히 여기며, 더 건강하고 행복한 관계를 만들고 싶은 분들을 위한 몰입감 있는 이야기.\n\n📖 머무는 법을 배운 사랑\n\n사랑은 만남으로 시작됩니다. 하지만 사랑이 머무는 법을 배우는 것은 매일의 선택 속에서입니다.\n\n❤️ 지금 책을 만나 이 아름다운 사랑 이야기를 확인하세요!",
+    "es-CL": "❤️ ¿Y si el amor verdadero no fuera encontrar a alguien perfecto, sino encontrar a alguien dispuesto a construir una vida a tu lado?\n\nEn El Amor que Aprendió a Quedarse – Volumen 1, acompaña la emocionante historia de Natasha y Pierry, dos personas con sueños, miedos y personalidades diferentes, que descubren que amar va mucho más allá de decir “te amo”.\n\nEntre encuentros inesperados, momentos románticos, desafíos familiares y decisiones importantes, aprenden que una relación duradera se construye con respeto, diálogo, confianza, perdón y compañerismo.\n\n💞 Una historia sobre aprender a manejar los celos, superar inseguridades, respetar las diferencias y transformar el sentimiento en compromiso.\n\n🏡 Porque el amor verdadero no es solo el que llega y encanta. Es el que aprende a cuidar, crecer y permanecer.\n\n✨ Una lectura cautivadora para quienes creen en el amor, valoran la familia y desean construir relaciones más sanas y felices.\n\n📖 El Amor que Aprendió a Quedarse\n\nEl amor comienza con un encuentro. Pero es en las elecciones de cada día donde aprende a quedarse.\n\n❤️ ¡Asegura tu ejemplar y descubre esta hermosa historia de amor!"
+  },
+  "summary_revisado": {
+    "pt-PT": false,
+    "en-US": false,
+    "ko-KR": false,
+    "es-CL": false
   }
 }

@@ -88,24 +88,25 @@
 
     var subtitle = document.createElement("p");
     subtitle.className = "book-card__subtitle";
-    subtitle.textContent = ed.subtitle;
+    subtitle.textContent = ed.subtitle || "";
+    subtitle.hidden = !ed.subtitle;
     body.appendChild(subtitle);
 
     var desc = document.createElement("p");
     desc.className = "book-card__description";
-    desc.textContent = ed.description;
+    desc.textContent = ed.description || "";
+    desc.hidden = !ed.description;
     body.appendChild(desc);
 
     var meta_row = document.createElement("div");
     meta_row.className = "book-card__meta";
-    var langBadge = document.createElement("span");
-    langBadge.className = "badge badge-info";
-    langBadge.textContent = lang;
-    meta_row.appendChild(langBadge);
+    // Fase Livros 020 -- sem selo de idioma no card (pedido da Noemi).
     var price = document.createElement("span");
     price.className = "book-card__price";
+    // Fase Livros 020 -- preço pelo Intl (BRL oficial + aproximado na moeda
+    // do idioma, ver assets/js/price-format.js); display antigo só como reserva.
     price.textContent = meta.price
-      ? (meta.price.display[lang] || meta.price.display["pt-BR"])
+      ? ((window.CP_PRICE && window.CP_PRICE.formatar(meta, lang)) || meta.price.display[lang] || meta.price.display["pt-BR"])
       : t("books.card.price_pending", "Preço a definir");
     meta_row.appendChild(price);
     body.appendChild(meta_row);
@@ -189,6 +190,19 @@
     }
   }
 
+  // Fase Livros 020 -- o aviso "conteúdo somente em pt-BR" só aparece se
+  // algum livro exibido ainda não tiver tradução no idioma escolhido.
+  function ajustarAvisoTraducao(published) {
+    var aviso = document.getElementById("cp-partial-translation-notice");
+    var lang = currentLang();
+    if (!aviso || lang === "pt-BR") return;
+    var todos = published.every(function (item) {
+      var m = metadataCache[item.id];
+      return !!(m && m.locales && m.locales[lang]);
+    });
+    if (todos) aviso.hidden = true;
+  }
+
   function render() {
     var cfg = window.CP_BOOKS;
     if (!cfg) return;
@@ -219,6 +233,7 @@
         pending--;
         if (pending === 0) {
           montarGridAgrupado(grid, published, rendered);
+          ajustarAvisoTraducao(published);
           var hasAny = rendered.some(function (c) { return !!c; });
           if (notice) notice.hidden = !hasAny;
           if (emptyState) emptyState.hidden = hasAny;
@@ -249,4 +264,5 @@
 
   document.addEventListener("DOMContentLoaded", render);
   window.addEventListener("corpopleno:lang-changed", render);
+  window.addEventListener("corpopleno:rates-ready", render);
 })();

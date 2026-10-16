@@ -40,9 +40,10 @@
   // ora (nomes oficiais fornecidos só nesse idioma; nunca traduzidos
   // automaticamente).
   global.CP_BOOK_COLLECTIONS = [
-    { id: "hene-sem-medo", name: { "pt-BR": "Coleção Henê Sem Medo" } },
-    { id: "historias-aprendizado-familiar", name: { "pt-BR": "Coleção Histórias de Aprendizado Familiar" } },
-    { id: "corpopleno-alimentacao", name: { "pt-BR": "Coleção CorpoPleno Alimentação" } },
+    // Fase Livros 020 -- nomes nos 5 idiomas (pt-PT/en-US/ko-KR/es-CL a revisar pela Noemi).
+    { id: "hene-sem-medo", name: { "pt-BR": "Coleção Henê Sem Medo", "pt-PT": "Coleção Henê Sem Medo", "en-US": "Henê Without Fear Collection", "ko-KR": "Henê, 두려움 없이 컬렉션", "es-CL": "Colección Henê Sin Miedo" } },
+    { id: "historias-aprendizado-familiar", name: { "pt-BR": "Coleção Histórias de Aprendizado Familiar", "pt-PT": "Coleção Histórias de Aprendizagem Familiar", "en-US": "Family Learning Stories Collection", "ko-KR": "가족이 함께 배우는 이야기 컬렉션", "es-CL": "Colección Historias de Aprendizaje Familiar" } },
+    { id: "corpopleno-alimentacao", name: { "pt-BR": "Coleção CorpoPleno Alimentação", "pt-PT": "Coleção CorpoPleno Alimentação", "en-US": "CorpoPleno Nutrition Collection", "ko-KR": "CorpoPleno 식생활 컬렉션", "es-CL": "Colección CorpoPleno Alimentación" } },
   ];
 
   global.CP_BOOKS = {

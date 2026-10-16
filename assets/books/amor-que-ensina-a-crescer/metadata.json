@@ -2,7 +2,7 @@
   "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções da Fase 006.1 APROVADAS por Noemi. en-US confirmado 'The Love That Teaches You to Grow' (igual ao proposto). ko-KR: Noemi aprovou '자라는 법을 가르치는 사랑' -- uma TERCEIRA formulação, diferente das 2 opções apresentadas na 006.1 ('성장을 가르치는 사랑'/'성장을 돕는 사랑') -- decisão editorial humana, registrada literalmente como fornecida. textStatus='APPROVED' em todos os 5 idiomas. cover.text.subtitle continua null (capa real não traz subtítulo impresso). Nenhuma arte nova gerada.",
   "book_id": "amor-que-ensina-a-crescer",
   "price": {
-    "amount": 29.90,
+    "amount": 29.9,
     "currency": "BRL",
     "priceVersion": "launch-2026-10",
     "display": {
@@ -93,11 +93,46 @@
   "locales": {
     "pt-BR": {
       "title": "O Amor que Ensina a Crescer",
-      "subtitle": null,
-      "description": null
+      "subtitle": "Natasha, Pierry e as descobertas da filha Clara",
+      "description": null,
+      "subtitleRevisado": false
+    },
+    "pt-PT": {
+      "title": "O Amor que Ensina a Crescer",
+      "subtitle": "Natasha, Pierry e as descobertas da filha Clara",
+      "description": null,
+      "revisado": false
+    },
+    "en-US": {
+      "title": "The Love That Teaches You to Grow",
+      "subtitle": "Natasha, Pierry and their daughter Clara's discoveries",
+      "description": null,
+      "revisado": false
+    },
+    "ko-KR": {
+      "title": "자라는 법을 가르치는 사랑",
+      "subtitle": "Natasha, Pierry, 그리고 딸 Clara의 발견",
+      "description": null,
+      "revisado": false
+    },
+    "es-CL": {
+      "title": "El Amor que Enseña a Crecer",
+      "subtitle": "Natasha, Pierry y los descubrimientos de su hija Clara",
+      "description": null,
+      "revisado": false
     }
   },
   "summary": {
-    "pt-BR": "🌷 CRIAR UMA CRIANÇA É MUITO MAIS DO QUE ENSINAR REGRAS. É PREPARAR UM CORAÇÃO PARA A VIDA!\n\n❤️ Você já parou para pensar que as maiores lições da infância acontecem nos pequenos momentos do dia a dia?\n\nEm O Amor que Ensina a Crescer – Volume 2, a emocionante história de Natasha e Pierry continua, agora acompanhando as descobertas de sua filha Clara.\n\nUma menina curiosa, cheia de imaginação e perguntas, que começa a descobrir o mundo enquanto aprende valores que levará para toda a vida.\n\n🌻 Entre brincadeiras, desafios na escola, amizades e momentos especiais em família, Clara aprende que:\n\n✅ Respeito e educação começam dentro de casa.\n\n✅ Dizer \"não\" também é uma forma de se proteger.\n\n✅ O dinheiro tem valor, e nem todo desejo precisa virar uma compra.\n\n✅ Errar faz parte do aprendizado, e falar a verdade exige coragem.\n\n✅ Responsabilidade, paciência e organização são pequenas conquistas que fazem uma grande diferença.\n\n✅ O amor dos pais não depende de notas, acertos ou perfeição.\n\n💞 Mais do que um romance familiar, este livro é um convite para refletir sobre a educação dos filhos, o poder do exemplo e a importância de criar crianças seguras, responsáveis e confiantes.\n\nUma leitura acolhedora para pais, mães, avós, educadores e todas as pessoas que acreditam que educar com amor também significa ensinar limites, valores e autonomia.\n\n📖 O Amor que Ensina a Crescer — Volume 2\n\n🌷 Porque uma criança não precisa crescer perfeita. Precisa crescer amada, orientada e preparada para a vida.\n\n✨ Garanta seu exemplar e descubra como as pequenas lições de hoje podem construir os grandes valores de amanhã!"
+    "pt-BR": "🌷 CRIAR UMA CRIANÇA É MUITO MAIS DO QUE ENSINAR REGRAS. É PREPARAR UM CORAÇÃO PARA A VIDA!\n\n❤️ Você já parou para pensar que as maiores lições da infância acontecem nos pequenos momentos do dia a dia?\n\nEm O Amor que Ensina a Crescer – Volume 2, a emocionante história de Natasha e Pierry continua, agora acompanhando as descobertas de sua filha Clara.\n\nUma menina curiosa, cheia de imaginação e perguntas, que começa a descobrir o mundo enquanto aprende valores que levará para toda a vida.\n\n🌻 Entre brincadeiras, desafios na escola, amizades e momentos especiais em família, Clara aprende que:\n\n✅ Respeito e educação começam dentro de casa.\n\n✅ Dizer \"não\" também é uma forma de se proteger.\n\n✅ O dinheiro tem valor, e nem todo desejo precisa virar uma compra.\n\n✅ Errar faz parte do aprendizado, e falar a verdade exige coragem.\n\n✅ Responsabilidade, paciência e organização são pequenas conquistas que fazem uma grande diferença.\n\n✅ O amor dos pais não depende de notas, acertos ou perfeição.\n\n💞 Mais do que um romance familiar, este livro é um convite para refletir sobre a educação dos filhos, o poder do exemplo e a importância de criar crianças seguras, responsáveis e confiantes.\n\nUma leitura acolhedora para pais, mães, avós, educadores e todas as pessoas que acreditam que educar com amor também significa ensinar limites, valores e autonomia.\n\n📖 O Amor que Ensina a Crescer — Volume 2\n\n🌷 Porque uma criança não precisa crescer perfeita. Precisa crescer amada, orientada e preparada para a vida.\n\n✨ Garanta seu exemplar e descubra como as pequenas lições de hoje podem construir os grandes valores de amanhã!",
+    "pt-PT": "🌷 CRIAR UMA CRIANÇA É MUITO MAIS DO QUE ENSINAR REGRAS. É PREPARAR UM CORAÇÃO PARA A VIDA!\n\n❤️ Já parou para pensar que as maiores lições da infância acontecem nos pequenos momentos do dia a dia?\n\nEm O Amor que Ensina a Crescer – Volume 2, a emocionante história de Natasha e Pierry continua, agora a acompanhar as descobertas da sua filha Clara.\n\nUma menina curiosa, cheia de imaginação e de perguntas, que começa a descobrir o mundo enquanto aprende valores que levará para toda a vida.\n\n🌻 Entre brincadeiras, desafios na escola, amizades e momentos especiais em família, a Clara aprende que:\n\n✅ O respeito e a educação começam em casa.\n\n✅ Dizer \"não\" também é uma forma de se proteger.\n\n✅ O dinheiro tem valor, e nem todo o desejo precisa de se tornar uma compra.\n\n✅ Errar faz parte da aprendizagem, e dizer a verdade exige coragem.\n\n✅ Responsabilidade, paciência e organização são pequenas conquistas que fazem uma grande diferença.\n\n✅ O amor dos pais não depende de notas, acertos ou perfeição.\n\n💞 Mais do que um romance familiar, este livro é um convite a refletir sobre a educação dos filhos, o poder do exemplo e a importância de criar crianças seguras, responsáveis e confiantes.\n\nUma leitura acolhedora para pais, mães, avós, educadores e todas as pessoas que acreditam que educar com amor também significa ensinar limites, valores e autonomia.\n\n📖 O Amor que Ensina a Crescer — Volume 2\n\n🌷 Porque uma criança não precisa de crescer perfeita. Precisa de crescer amada, orientada e preparada para a vida.\n\n✨ Garanta o seu exemplar e descubra como as pequenas lições de hoje podem construir os grandes valores de amanhã!",
+    "en-US": "🌷 RAISING A CHILD IS MUCH MORE THAN TEACHING RULES. IT IS PREPARING A HEART FOR LIFE!\n\n❤️ Have you ever stopped to think that the greatest lessons of childhood happen in the small moments of everyday life?\n\nIn The Love That Teaches You to Grow – Volume 2, the moving story of Natasha and Pierry continues, now following the discoveries of their daughter Clara.\n\nA curious girl, full of imagination and questions, who begins to discover the world while learning values she will carry for life.\n\n🌻 Through games, challenges at school, friendships and special family moments, Clara learns that:\n\n✅ Respect and good manners begin at home.\n\n✅ Saying \"no\" is also a way to protect yourself.\n\n✅ Money has value, and not every wish needs to become a purchase.\n\n✅ Making mistakes is part of learning, and telling the truth takes courage.\n\n✅ Responsibility, patience and organization are small achievements that make a big difference.\n\n✅ Parents' love does not depend on grades, getting things right or perfection.\n\n💞 More than a family novel, this book is an invitation to reflect on raising children, the power of example and the importance of raising secure, responsible and confident children.\n\nA heartwarming read for fathers, mothers, grandparents, educators and everyone who believes that raising children with love also means teaching limits, values and autonomy.\n\n📖 The Love That Teaches You to Grow — Volume 2\n\n🌷 Because a child doesn't need to grow up perfect. They need to grow up loved, guided and prepared for life.\n\n✨ Get your copy and discover how today's small lessons can build tomorrow's great values!",
+    "ko-KR": "🌷 아이를 키운다는 것은 규칙을 가르치는 것 그 이상입니다. 삶을 위해 마음을 준비시키는 일입니다!\n\n❤️ 어린 시절의 가장 큰 교훈은 일상의 작은 순간에 일어난다는 사실을 생각해 보신 적 있나요?\n\n「자라는 법을 가르치는 사랑 – 2권」에서 Natasha와 Pierry의 감동적인 이야기가 이어지며, 이번에는 딸 Clara의 발견을 함께 따라갑니다.\n\n호기심 많고 상상력과 질문으로 가득한 소녀 Clara는 평생 간직할 가치를 배우며 세상을 알아 가기 시작합니다.\n\n🌻 놀이, 학교에서의 도전, 우정, 가족과의 특별한 순간 속에서 Clara는 다음을 배웁니다:\n\n✅ 존중과 예의는 가정에서 시작됩니다.\n\n✅ \"싫어요\"라고 말하는 것도 자신을 지키는 방법입니다.\n\n✅ 돈에는 가치가 있으며, 모든 바람이 구매로 이어질 필요는 없습니다.\n\n✅ 실수는 배움의 일부이며, 진실을 말하는 데에는 용기가 필요합니다.\n\n✅ 책임감, 인내, 정리하는 습관은 큰 차이를 만드는 작은 성취입니다.\n\n✅ 부모의 사랑은 성적이나 잘한 일, 완벽함에 달려 있지 않습니다.\n\n💞 가족 소설 그 이상으로, 이 책은 자녀 교육과 본보기의 힘, 그리고 안정감 있고 책임감 있으며 자신감 있는 아이로 키우는 것의 중요성을 돌아보게 하는 초대장입니다.\n\n사랑으로 교육한다는 것이 한계와 가치, 자율성을 가르치는 것임을 믿는 아빠, 엄마, 조부모, 교육자, 그리고 모든 분을 위한 따뜻한 이야기입니다.\n\n📖 자라는 법을 가르치는 사랑 — 2권\n\n🌷 아이는 완벽하게 자랄 필요가 없기 때문입니다. 사랑받고, 이끌어지고, 삶을 위해 준비되며 자라면 됩니다.\n\n✨ 지금 책을 만나 오늘의 작은 교훈이 어떻게 내일의 큰 가치를 만들 수 있는지 확인하세요!",
+    "es-CL": "🌷 CRIAR A UN NIÑO ES MUCHO MÁS QUE ENSEÑAR REGLAS. ¡ES PREPARAR UN CORAZÓN PARA LA VIDA!\n\n❤️ ¿Alguna vez te has detenido a pensar que las mayores lecciones de la infancia ocurren en los pequeños momentos del día a día?\n\nEn El Amor que Enseña a Crecer – Volumen 2, la emocionante historia de Natasha y Pierry continúa, ahora acompañando los descubrimientos de su hija Clara.\n\nUna niña curiosa, llena de imaginación y preguntas, que comienza a descubrir el mundo mientras aprende valores que llevará para toda la vida.\n\n🌻 Entre juegos, desafíos en el colegio, amistades y momentos especiales en familia, Clara aprende que:\n\n✅ El respeto y la buena educación comienzan en casa.\n\n✅ Decir \"no\" también es una forma de protegerse.\n\n✅ El dinero tiene valor, y no todo deseo tiene que convertirse en una compra.\n\n✅ Equivocarse es parte del aprendizaje, y decir la verdad requiere valentía.\n\n✅ La responsabilidad, la paciencia y la organización son pequeños logros que marcan una gran diferencia.\n\n✅ El amor de los padres no depende de notas, aciertos ni perfección.\n\n💞 Más que una novela familiar, este libro es una invitación a reflexionar sobre la crianza de los hijos, el poder del ejemplo y la importancia de criar niños seguros, responsables y con confianza en sí mismos.\n\nUna lectura acogedora para papás, mamás, abuelos, educadores y todas las personas que creen que educar con amor también significa enseñar límites, valores y autonomía.\n\n📖 El Amor que Enseña a Crecer — Volumen 2\n\n🌷 Porque un niño no necesita crecer perfecto. Necesita crecer amado, orientado y preparado para la vida.\n\n✨ ¡Asegura tu ejemplar y descubre cómo las pequeñas lecciones de hoy pueden construir los grandes valores del mañana!"
+  },
+  "summary_revisado": {
+    "pt-PT": false,
+    "en-US": false,
+    "ko-KR": false,
+    "es-CL": false
   }
 }

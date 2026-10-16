@@ -2,7 +2,7 @@
   "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções editoriais das Fases 006.1 APROVADAS por Noemi. Decisão final: título comercial em en-US é 'Henê Without Fear' ('Fearless Henê' foi proposto e EXPLICITAMENTE REJEITADO -- nunca usar). ko-KR final usa a vírgula: 'Henê, 두려움 없이'. textStatus='APPROVED' em todos os 5 idiomas (decisão humana registrada, nunca mais 'pendente'). Nenhuma arte nova gerada -- image continua null nos 4 idiomas, exatamente como nas Fases 006/006.1.",
   "book_id": "hene-sem-medo-livro-1",
   "price": {
-    "amount": 39.90,
+    "amount": 39.9,
     "currency": "BRL",
     "priceVersion": "launch-2026-10",
     "display": {
@@ -113,11 +113,46 @@
   "locales": {
     "pt-BR": {
       "title": "Henê Sem Medo — Livro 1",
-      "subtitle": null,
-      "description": null
+      "subtitle": "Guia prático para reduzir riscos",
+      "description": null,
+      "subtitleRevisado": true
+    },
+    "pt-PT": {
+      "title": "Henê Sem Medo — Livro 1",
+      "subtitle": "Guia prático para reduzir riscos",
+      "description": null,
+      "revisado": false
+    },
+    "en-US": {
+      "title": "Henê Without Fear — Book 1",
+      "subtitle": "A Practical Guide to Reducing Risks",
+      "description": null,
+      "revisado": false
+    },
+    "ko-KR": {
+      "title": "Henê, 두려움 없이 — 1권",
+      "subtitle": "위험을 줄이는 실전 가이드",
+      "description": null,
+      "revisado": false
+    },
+    "es-CL": {
+      "title": "Henê Sin Miedo — Libro 1",
+      "subtitle": "Guía práctica para reducir riesgos",
+      "description": null,
+      "revisado": false
     }
   },
   "summary": {
-    "pt-BR": "Você deseja entender melhor o henê, mas sente medo de errar, danificar os fios ou seguir orientações confusas da internet? 💜\n\nO Henê Sem Medo – Livro 1 foi criado para ajudar você a transformar dúvidas em conhecimento, organização e decisões mais conscientes sobre seus cuidados capilares.\n\n**O que você vai encontrar neste guia:**\n\n✅ Explicações simples sobre o henê e seus cuidados.\n\n✅ Como compreender o rótulo, o teste de mecha e as incompatibilidades químicas.\n\n✅ Um passo a passo com 7 etapas para decisões mais responsáveis.\n\n✅ Checklist de segurança + cronograma capilar de 60 dias, com hidratação, nutrição, reconstrução, pausas e indicações condicionais de uso do henê.\n\n🌸 Chega de depender apenas de dicas soltas!\n\nTenha um material organizado para consultar sempre que precisar.\n\n💜 Mais conhecimento. Mais organização. Menos decisões no escuro.\n\n📲 GARANTA SEU LIVRO 1 – HENÊ SEM MEDO!\n\n*Material educativo. Respeite sempre as orientações dos fabricantes, as advertências dos produtos e o teste de mecha.*"
+    "pt-BR": "Você deseja entender melhor o henê, mas sente medo de errar, danificar os fios ou seguir orientações confusas da internet? 💜\n\nO Henê Sem Medo – Livro 1 foi criado para ajudar você a transformar dúvidas em conhecimento, organização e decisões mais conscientes sobre seus cuidados capilares.\n\n**O que você vai encontrar neste guia:**\n\n✅ Explicações simples sobre o henê e seus cuidados.\n\n✅ Como compreender o rótulo, o teste de mecha e as incompatibilidades químicas.\n\n✅ Um passo a passo com 7 etapas para decisões mais responsáveis.\n\n✅ Checklist de segurança + cronograma capilar de 60 dias, com hidratação, nutrição, reconstrução, pausas e indicações condicionais de uso do henê.\n\n🌸 Chega de depender apenas de dicas soltas!\n\nTenha um material organizado para consultar sempre que precisar.\n\n💜 Mais conhecimento. Mais organização. Menos decisões no escuro.\n\n📲 GARANTA SEU LIVRO 1 – HENÊ SEM MEDO!\n\n*Material educativo. Respeite sempre as orientações dos fabricantes, as advertências dos produtos e o teste de mecha.*",
+    "pt-PT": "Quer compreender melhor o henê, mas tem medo de errar, danificar os fios ou seguir orientações confusas da internet? 💜\n\nO Henê Sem Medo – Livro 1 foi criado para o ajudar a transformar dúvidas em conhecimento, organização e decisões mais conscientes sobre os seus cuidados capilares.\n\n**O que vai encontrar neste guia:**\n\n✅ Explicações simples sobre o henê e os seus cuidados.\n\n✅ Como compreender o rótulo, o teste de mecha e as incompatibilidades químicas.\n\n✅ Um passo a passo com 7 etapas para decisões mais responsáveis.\n\n✅ Checklist de segurança + cronograma capilar de 60 dias, com hidratação, nutrição, reconstrução, pausas e indicações condicionais de uso do henê.\n\n🌸 Chega de depender apenas de dicas soltas!\n\nTenha um material organizado para consultar sempre que precisar.\n\n💜 Mais conhecimento. Mais organização. Menos decisões às escuras.\n\n📲 GARANTA O SEU LIVRO 1 – HENÊ SEM MEDO!\n\n*Material educativo. Respeite sempre as orientações dos fabricantes, as advertências dos produtos e o teste de mecha.*",
+    "en-US": "Do you want to understand henê better, but are you afraid of making mistakes, damaging your hair or following confusing advice from the internet? 💜\n\nHenê Without Fear – Book 1 was created to help you turn doubts into knowledge, organization and more conscious decisions about your hair care.\n\n**What you will find in this guide:**\n\n✅ Simple explanations about henê and how to care for it.\n\n✅ How to understand the label, the strand test and chemical incompatibilities.\n\n✅ A 7-step walkthrough for more responsible decisions.\n\n✅ Safety checklist + 60-day hair care schedule, with hydration, nourishment, repair, breaks and conditional guidance on henê use.\n\n🌸 No more relying only on scattered tips!\n\nHave organized material to consult whenever you need it.\n\n💜 More knowledge. More organization. Fewer decisions in the dark.\n\n📲 GET YOUR BOOK 1 – HENÊ WITHOUT FEAR!\n\n*Educational material. Always follow the manufacturers' instructions, the product warnings and the strand test.*",
+    "ko-KR": "Henê를 더 잘 이해하고 싶지만, 실수하거나 모발을 손상시키거나 인터넷의 혼란스러운 안내를 따르게 될까 봐 걱정되시나요? 💜\n\n「Henê, 두려움 없이 – 1권」은 모발 관리에 대한 의문을 지식과 체계, 그리고 더 신중한 결정으로 바꿀 수 있도록 돕기 위해 만들어졌습니다.\n\n**이 가이드에서 만날 수 있는 내용:**\n\n✅ Henê와 관리 방법에 대한 쉬운 설명.\n\n✅ 라벨, 스트랜드 테스트, 화학적 비호환성을 이해하는 방법.\n\n✅ 더 책임감 있는 결정을 위한 7단계 안내.\n\n✅ 안전 체크리스트 + 60일 모발 관리 일정: 수분 공급, 영양 공급, 손상 복구, 휴식 기간, 그리고 조건부 Henê 사용 안내 포함.\n\n🌸 이제 흩어진 팁에만 의존하지 마세요!\n\n필요할 때마다 참고할 수 있는 체계적인 자료를 가져 보세요.\n\n💜 더 많은 지식. 더 나은 체계. 막연한 결정은 더 적게.\n\n📲 「Henê, 두려움 없이 – 1권」을 지금 만나 보세요!\n\n*교육용 자료입니다. 항상 제조사의 안내, 제품 주의사항, 스트랜드 테스트를 지켜 주세요.*",
+    "es-CL": "¿Quieres entender mejor el henê, pero tienes miedo de equivocarte, dañar tu cabello o seguir orientaciones confusas de internet? 💜\n\nHenê Sin Miedo – Libro 1 fue creado para ayudarte a transformar tus dudas en conocimiento, organización y decisiones más conscientes sobre el cuidado de tu cabello.\n\n**Lo que encontrarás en esta guía:**\n\n✅ Explicaciones simples sobre el henê y sus cuidados.\n\n✅ Cómo entender la etiqueta, la prueba de mechón y las incompatibilidades químicas.\n\n✅ Un paso a paso de 7 etapas para decisiones más responsables.\n\n✅ Lista de verificación de seguridad + cronograma capilar de 60 días, con hidratación, nutrición, reconstrucción, pausas e indicaciones condicionales de uso del henê.\n\n🌸 ¡Basta de depender solo de consejos sueltos!\n\nTen un material organizado para consultar siempre que lo necesites.\n\n💜 Más conocimiento. Más organización. Menos decisiones a ciegas.\n\n📲 ¡ASEGURA TU LIBRO 1 – HENÊ SIN MIEDO!\n\n*Material educativo. Respeta siempre las indicaciones de los fabricantes, las advertencias de los productos y la prueba de mechón.*"
+  },
+  "summary_revisado": {
+    "pt-PT": false,
+    "en-US": false,
+    "ko-KR": false,
+    "es-CL": false
   }
 }

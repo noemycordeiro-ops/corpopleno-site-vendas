@@ -131,7 +131,8 @@
     var l = lang();
     var partes = data.areas.map(function (a) { return textFor(a, l); });
     cap.lang = l;
-    cap.textContent = (l === "pt-BR" ? "Texto da capa: " : "Texto da capa (tradução): ") + partes.join(" · ");
+    var prefixo = { "pt-BR": "Texto da capa: ", "pt-PT": "Texto da capa (tradução): ", "en-US": "Cover text (translation): ", "ko-KR": "표지 문구(번역): ", "es-CL": "Texto de la portada (traducción): " };
+    cap.textContent = (prefixo[l] || prefixo["pt-BR"]) + partes.join(" · ");
   }
 
   function attach(img) {

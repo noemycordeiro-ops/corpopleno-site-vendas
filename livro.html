@@ -48,7 +48,7 @@
 
   <main id="conteudo-principal">
     <div class="container" style="padding-top: 24px;">
-      <a class="book-detail__back" href="produtos.html#livros">← Voltar aos livros</a>
+      <a class="book-detail__back" href="produtos.html#livros" data-i18n="book.detail.back_to_books">← Voltar aos livros</a>
     </div>
 
     <div class="container" id="cp-partial-translation-notice-wrap">
@@ -93,6 +93,7 @@
                  nunca o que esta tela mostra. -->
             <div class="checkout-panel" id="cp-checkout-panel" hidden>
               <h2 class="checkout-panel__title" data-i18n="book.checkout.title">Finalizar compra</h2>
+              <p class="checkout-panel__amount" id="cp-checkout-amount"></p>
 
               <fieldset class="checkout-panel__methods">
                 <legend data-i18n="book.checkout.payment_method_label">Forma de pagamento</legend>
@@ -110,19 +111,19 @@
                    pedidos na primeira compra; depois ficam na conta). -->
               <div class="checkout-panel__buyer" id="cp-checkout-buyer" hidden>
                 <div id="cp-checkout-name-wrap">
-                  <label class="auth-field-label" for="cp-checkout-name">Nome completo</label>
+                  <label class="auth-field-label" for="cp-checkout-name" data-i18n="book.checkout.buyer_name">Nome completo</label>
                   <input class="cp-field" type="text" id="cp-checkout-name" autocomplete="name" maxlength="120" />
                 </div>
                 <div id="cp-checkout-doc-wrap">
-                  <label class="auth-field-label" for="cp-checkout-doc">CPF ou CNPJ (exigido para emitir a cobrança)</label>
+                  <label class="auth-field-label" for="cp-checkout-doc" data-i18n="book.checkout.buyer_document">CPF ou CNPJ (exigido para emitir a cobrança)</label>
                   <input class="cp-field" type="text" id="cp-checkout-doc" inputmode="numeric" autocomplete="off" maxlength="18" />
                 </div>
               </div>
 
               <div id="cp-checkout-installments-wrap" hidden>
-                <label class="auth-field-label" for="cp-checkout-installments">Parcelas no cartão</label>
+                <label class="auth-field-label" for="cp-checkout-installments" data-i18n="book.checkout.installments_label">Parcelas no cartão</label>
                 <select class="cp-field" id="cp-checkout-installments">
-                  <option value="1">1x (à vista)</option>
+                  <option value="1" data-i18n="book.checkout.installments_single">1x (à vista)</option>
                   <option value="2">2x</option>
                   <option value="3">3x</option>
                   <option value="4">4x</option>
@@ -177,7 +178,7 @@
     <section class="section" id="cp-book-detail-not-found" hidden>
       <div class="container" style="text-align: center;">
         <p class="notice notice-warning" data-i18n="book.detail.not_found">Livro não encontrado.</p>
-        <a class="btn btn-secondary" href="produtos.html#livros">← Voltar aos livros</a>
+        <a class="btn btn-secondary" href="produtos.html#livros" data-i18n="book.detail.back_to_books">← Voltar aos livros</a>
       </div>
     </section>
   </main>
@@ -227,15 +228,16 @@
     <img src="assets/img/icones-recebidos/whatsapp.png" alt="" aria-hidden="true" />
   </button>
 
-  <script src="assets/js/i18n.js?v=20261016a"></script>
+  <script src="assets/js/i18n.js?v=20261016c"></script>
   <script src="assets/js/markets.js?v=20260925c"></script>
   <script src="assets/js/funnel.js?v=20260925c"></script>
   <script src="assets/js/api-config.js?v=20261003a"></script>
   <script src="assets/js/meta-tracking.js?v=20261007a"></script>
   <script src="assets/js/main.js?v=20260925c"></script>
-  <script src="assets/js/books-data.js?v=20261015a"></script>
+  <script src="assets/js/price-format.js?v=20261016b"></script>
+  <script src="assets/js/books-data.js?v=20261016b"></script>
   <script src="assets/js/book-cover.js?v=20261015a"></script>
-  <script src="assets/js/image-lens.js?v=20261016a"></script>
-  <script src="assets/js/book-detail.js?v=20261016b"></script>
+  <script src="assets/js/image-lens.js?v=20261016b"></script>
+  <script src="assets/js/book-detail.js?v=20261016c"></script>
 </body>
 </html>

@@ -165,7 +165,7 @@
     );
 
     document.getElementById("cp-book-title").textContent = ed.title;
-    document.getElementById("cp-book-subtitle").textContent = ed.subtitle;
+    document.getElementById("cp-book-subtitle").textContent = ed.subtitle || "";
     var descEl = document.getElementById("cp-book-description");
     descEl.textContent = ed.description || "";
     descEl.hidden = !ed.description;
@@ -174,8 +174,22 @@
     document.getElementById("cp-book-pages").textContent =
       currentMeta.pageCount != null ? String(currentMeta.pageCount) : t("book.detail.pages_pending", "A definir");
     document.getElementById("cp-book-price").textContent = currentMeta.price
-      ? (currentMeta.price.display[lang] || currentMeta.price.display["pt-BR"])
+      ? ((window.CP_PRICE && window.CP_PRICE.formatar(currentMeta, lang)) || currentMeta.price.display[lang] || currentMeta.price.display["pt-BR"])
       : t("books.card.price_pending", "Preço a definir");
+
+    // Valor cobrado no checkout: sempre em R$ (BRL), nunca o convertido.
+    var cobrado = document.getElementById("cp-checkout-amount");
+    if (cobrado && currentMeta.price && window.CP_PRICE) {
+      cobrado.textContent = t("book.checkout.charged_amount", "Valor cobrado: {brl} (em reais, BRL)").replace("{brl}", window.CP_PRICE.brl(currentMeta.price.amount));
+    }
+
+    // Fase Livros 020 -- só mostra "conteúdo somente em pt-BR" quando o
+    // produto realmente não tem tradução neste idioma.
+    var aviso = document.getElementById("cp-partial-translation-notice");
+    if (aviso && lang !== "pt-BR") {
+      var temTraducao = !!(currentMeta.locales && currentMeta.locales[lang]);
+      aviso.hidden = temTraducao;
+    }
 
     document.getElementById("cp-book-detail-found").hidden = false;
     document.getElementById("cp-book-detail-not-found").hidden = true;
@@ -361,10 +375,10 @@
           var aviso = el("cp-checkout-pix-waiting");
           if (aviso) {
             aviso.textContent = "";
-            aviso.appendChild(document.createTextNode("✅ Pagamento confirmado! "));
+            aviso.appendChild(document.createTextNode(t("book.checkout.paid_confirmed", "✅ Pagamento confirmado!") + " "));
             var link = document.createElement("a");
             link.href = "meus-livros.html";
-            link.textContent = "Ir para Meus Livros";
+            link.textContent = t("book.checkout.go_to_my_books", "Ir para Meus Livros");
             aviso.appendChild(link);
           }
         })
@@ -404,7 +418,7 @@
         var h3 = cardWrap.querySelector("h3");
         var p = cardWrap.querySelector("p");
         if (h3) { h3.removeAttribute("data-i18n"); h3.textContent = t("book.checkout.pix_title", "Pague com PIX"); }
-        if (p) { p.removeAttribute("data-i18n"); p.textContent = "Abra a fatura segura para ver o QR Code e o código PIX copia e cola. Seu livro é liberado em Meus Livros assim que o pagamento for confirmado."; }
+        if (p) { p.removeAttribute("data-i18n"); p.textContent = t("book.checkout.pix_invoice_instructions", "Abra a fatura segura para ver o QR Code e o código PIX copia e cola. Seu livro é liberado em Meus Livros assim que o pagamento for confirmado."); }
       }
       if (cardWrap) cardWrap.hidden = false;
     } else {
@@ -531,4 +545,5 @@
     }
   });
   window.addEventListener("corpopleno:lang-changed", render);
+  window.addEventListener("corpopleno:rates-ready", render);
 })();
