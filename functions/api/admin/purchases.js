@@ -1,18 +1,7 @@
 /*
-  GET /api/admin/purchases -- consulta SOMENTE LEITURA de compras para o
-  Cordex (painel local da Noemi). Não altera nada.
-
-  Autenticação: header `Authorization: Bearer <ADMIN_API_TOKEN>` (Secret
-  no Cloudflare, comparado em tempo constante). Sem o Secret -> 503;
-  token errado/ausente -> 401.
-
-  Uso:
-    GET /api/admin/purchases?code=CP-XXXXXXXX     -> uma compra (404 se não existir)
-    GET /api/admin/purchases?status=PAID&limit=50&before=<ms epoch>
-                                                  -> lista, mais recentes primeiro
-
-  Nunca devolve hash/salt de senha, tokens de sessão nem a chave Asaas.
-  CPF/CNPJ sai mascarado (LGPD: mínimo necessário).
+  Consulta administrativa SOMENTE LEITURA de compras (por código CP-… ou
+  listagem). Protegida por um Secret; sem ele responde 503. Nunca devolve
+  hash/salt de senha, tokens de sessão nem chaves; CPF/CNPJ sai mascarado.
 */
 import { json, methodNotAllowed } from "../../_lib/http.js";
 import { getDb } from "../../_lib/db.js";

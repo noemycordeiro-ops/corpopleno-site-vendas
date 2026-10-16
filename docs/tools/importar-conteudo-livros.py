@@ -9,15 +9,17 @@ repositório.
 
 Uso:
   python3 docs/tools/importar-conteudo-livros.py \
-      --origem ~/CorpoPleno-IA/workspace/cordex_unificado_preparacao_20260915/unificado/private_content/books \
-      --saida /tmp/conteudo-livros-sql
+      --origem <pasta-privada-com-os-livros> \
+      --saida <pasta-temporaria-fora-do-repositorio> \
+      --banco <nome-do-banco-d1>
 
-Depois, para cada arquivo gerado (o script imprime os comandos):
-  npx wrangler d1 execute corpopleno-livros --remote --file <arquivo.sql>
+A pasta de origem tem o formato <livro>/<idioma>/pages.json. Depois,
+rode cada comando impresso, em ordem:
+  npx wrangler d1 execute <nome-do-banco-d1> --remote --file <arquivo.sql>
 
 Cada par (livro, idioma) é apagado e recarregado (o DELETE fica na
-parte01; rode as partes EM ORDEM). Rodar tudo de novo é seguro. Lê só <livro>/<idioma>/pages.json e ignora .bak, _build
-e README.
+parte01; rode as partes EM ORDEM). Rodar tudo de novo é seguro.
+Lê só <livro>/<idioma>/pages.json e ignora .bak, _build e README.
 """
 import argparse
 import json
@@ -44,7 +46,7 @@ def repo_root():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--origem", required=True, help="pasta private_content/books do Cordex")
+    ap.add_argument("--origem", required=True, help="pasta privada com <livro>/<idioma>/pages.json")
     ap.add_argument("--saida", required=True, help="pasta FORA do repositório para os .sql")
     ap.add_argument("--banco", default="corpopleno-livros", help="nome do D1 (para imprimir os comandos)")
     args = ap.parse_args()

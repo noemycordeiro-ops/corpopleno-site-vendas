@@ -39,7 +39,7 @@ const SCHEMA = [
      window_start INTEGER NOT NULL
    )`,
   // id = código de compra legível e não sequencial (CP-XXXXXXXX), usado
-  // também como externalReference no Asaas e consultado pelo Cordex.
+  // também como externalReference no Asaas e na consulta administrativa.
   `CREATE TABLE IF NOT EXISTS purchases (
      id TEXT PRIMARY KEY,
      user_id TEXT NOT NULL,

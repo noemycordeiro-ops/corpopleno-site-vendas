@@ -1,6 +1,6 @@
 /*
   GET /api/books/:bookId/content/:locale -- conteúdo PAGO do livro.
-  Contrato de assets/js/reader.js (o mesmo do Cordex):
+  Contrato de assets/js/reader.js:
     200 {ok:true, pages:[...]}
     401 NAO_AUTENTICADO | 403 ACESSO_NEGADO (sem compra ou livro inexistente)
     404 CONTEUDO_NAO_ENCONTRADO (idioma sem conteúdo carregado)
