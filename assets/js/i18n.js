@@ -181,6 +181,11 @@
       "nav.privacy": "Privacidade",
       "nav.aria_label": "Navegação principal",
       "nav_toggle.open_label": "Abrir menu",
+      "view.button_label": "Modo de tela",
+      "view.auto": "Automático",
+      "view.mobile": "Celular",
+      "view.tablet": "Tablet",
+      "view.desktop": "Computador / TV",
 
       "brand.slogan": "Inteligente, resultado real",
 
@@ -639,6 +644,11 @@
       "nav.privacy": "Privacidade",
       "nav.aria_label": "Navegação principal",
       "nav_toggle.open_label": "Abrir menu",
+      "view.button_label": "Modo de ecrã",
+      "view.auto": "Automático",
+      "view.mobile": "Telemóvel",
+      "view.tablet": "Tablet",
+      "view.desktop": "Computador / TV",
 
       "brand.slogan": "Inteligente, resultado real",
 
@@ -1097,6 +1107,11 @@
       "nav.privacy": "Privacy",
       "nav.aria_label": "Main navigation",
       "nav_toggle.open_label": "Open menu",
+      "view.button_label": "Screen mode",
+      "view.auto": "Automatic",
+      "view.mobile": "Phone",
+      "view.tablet": "Tablet",
+      "view.desktop": "Computer / TV",
 
       "brand.slogan": "Smart, real results",
 
@@ -1554,6 +1569,11 @@
       "nav.privacy": "개인정보처리방침",
       "nav.aria_label": "주 메뉴",
       "nav_toggle.open_label": "메뉴 열기",
+      "view.button_label": "화면 모드",
+      "view.auto": "자동",
+      "view.mobile": "휴대폰",
+      "view.tablet": "태블릿",
+      "view.desktop": "컴퓨터 / TV",
 
       "brand.slogan": "지능적으로, 진짜 결과로",
 
@@ -2006,6 +2026,11 @@
       "nav.privacy": "Privacidad",
       "nav.aria_label": "Navegación principal",
       "nav_toggle.open_label": "Abrir menú",
+      "view.button_label": "Modo de pantalla",
+      "view.auto": "Automático",
+      "view.mobile": "Celular",
+      "view.tablet": "Tablet",
+      "view.desktop": "Computador / TV",
 
       "brand.slogan": "Inteligente, resultado real",
 
