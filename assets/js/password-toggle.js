@@ -30,7 +30,13 @@
     btn.setAttribute("aria-controls", input.id || "");
     wrap.appendChild(btn);
 
+    function place() {
+      btn.style.top = (input.offsetTop + input.offsetHeight / 2) + "px";
+    }
+    window.addEventListener("resize", place);
+
     function render() {
+      place();
       var visible = input.type === "text";
       var l = labels();
       btn.innerHTML = visible ? EYE_OFF : EYE;
@@ -59,7 +65,16 @@
     render();
   }
 
+  function injectStyle() {
+    if (document.getElementById("cp-pw-style")) return;
+    var st = document.createElement("style");
+    st.id = "cp-pw-style";
+    st.textContent = ".cp-pw-wrap{position:relative;display:block}.cp-pw-wrap>input{width:100%;padding-right:48px!important}.cp-pw-toggle{position:absolute;right:6px;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;margin:0;border:0!important;border-radius:50%;background:transparent!important;color:#7a5ca8;cursor:pointer;box-shadow:none}.cp-pw-toggle:hover{background:rgba(122,92,168,.1)!important}.cp-pw-toggle:focus-visible{outline:2px solid #7a5ca8;outline-offset:2px}";
+    document.head.appendChild(st);
+  }
+
   function init() {
+    injectStyle();
     var inputs = document.querySelectorAll('input[type="password"]');
     for (var i = 0; i < inputs.length; i++) enhance(inputs[i]);
   }
