@@ -1552,3 +1552,10 @@ html[data-view="desktop"] body {
     max-width: 1680px;
   }
 }
+
+/* Mostrar/ocultar senha */
+.cp-pw-wrap { position: relative; display: block; }
+.cp-pw-wrap > input { width: 100%; padding-right: 48px; }
+.cp-pw-toggle { position: absolute; top: 50%; right: 6px; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #7a5ca8; cursor: pointer; }
+.cp-pw-toggle:hover { background: rgba(122, 92, 168, 0.1); }
+.cp-pw-toggle:focus-visible { outline: 2px solid #7a5ca8; outline-offset: 2px; }
