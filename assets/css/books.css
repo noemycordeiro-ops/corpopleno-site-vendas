@@ -538,6 +538,10 @@
 .reader-block--list li {
   margin-bottom: 8px;
 }
+.reader-block--checklist {
+  list-style: none;
+  padding-left: 4px;
+}
 .reader-block--cta-link a {
   font-weight: 600;
 }

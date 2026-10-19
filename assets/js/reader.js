@@ -461,6 +461,10 @@
       case "list": {
         var ul = document.createElement(block.ordered ? "ol" : "ul");
         ul.className = "reader-block reader-block--list";
+        // Checklist ("☐ ..."): a caixinha já é o marcador; esconde o ponto.
+        if ((block.items || []).length && block.items.every(function (it) { return /^[☐☑✓✔]/.test(it); })) {
+          ul.className += " reader-block--checklist";
+        }
         (block.items || []).forEach(function (item) {
           var li = document.createElement("li");
           li.textContent = item;
