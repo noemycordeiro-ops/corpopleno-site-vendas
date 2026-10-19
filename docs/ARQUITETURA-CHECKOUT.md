@@ -30,7 +30,8 @@ Asaas ──webhook──> /api/books/webhook ──> D1 (PAID + livros liberado
 | `functions/_lib/auth.js` | PBKDF2, sessões, limite de tentativas, validações, código de compra |
 | `functions/_lib/catalog.js` | preços e itens de cada produto (inclui combos) |
 | `functions/_lib/asaas.js` | cliente Asaas, escolha segura do ambiente, validação de CPF/CNPJ |
-| `functions/_lib/email.js` | envio de e-mail pelo Resend |
+| `functions/_lib/email.js` | envio de e-mail pelo Brevo (ou Resend), remetente `suporte@corpoplenoresultadoreal.com.br` |
+| `functions/_lib/reset-email.js` | texto e HTML do e-mail de redefinição de senha |
 | `functions/api/health.js` | diagnóstico (só true/false; em produção responde apenas `ok`) |
 | `functions/api/auth/*` | cadastro, login, logout, `me`, recuperação de senha |
 | `functions/api/me/books.js` | livros da cliente |
@@ -173,7 +174,7 @@ O conteúdo fica na tabela `book_pages`, uma linha por página. O R2 não está 
 - O token é de uso único, vale 60 minutos e fica no banco só como SHA-256. Um pedido novo invalida os anteriores. O limite é de 3 pedidos por e-mail e 10 por IP a cada hora.
 - A confirmação "gasta" o token antes de trocar a senha e encerra todas as sessões da conta.
 - O link usa o fragmento da URL (`#token=`), que o navegador não envia ao servidor. O script da página lê o token e o apaga da barra de endereço antes de qualquer outro script. Essas páginas não carregam o pixel da Meta.
-- **E-mail:** o envio usa o Resend. Sem `RESEND_API_KEY` e `EMAIL_FROM`, nada é enviado e a cliente não recebe o link.
+- **E-mail:** o envio usa o Brevo (`BREVO_API_KEY`) ou, como alternativa, o Resend (`RESEND_API_KEY`). Sem nenhuma das chaves, nada é enviado e a cliente não recebe o link. Remetente padrão: `CorpoPleno <suporte@corpoplenoresultadoreal.com.br>` (`EMAIL_FROM` opcional).
 
 ## 6a. Página "Conhecer o livro" (resumos oficiais)
 
@@ -214,8 +215,8 @@ Estado conferido em 2026-10-16 pelo `GET /api/health`, que mostra só true/false
 | `ASAAS_API_URL` | variável | desnecessária | desnecessária (o padrão é a Sandbox) |
 | `ASAAS_WEBHOOK_TOKEN` | Secret | **falta** | **falta** |
 | `ADMIN_API_TOKEN` | Secret | **falta** | **falta** (opcional) |
-| `RESEND_API_KEY` | Secret | **falta** | **falta** |
-| `EMAIL_FROM` | variável | **falta** | **falta** |
+| `BREVO_API_KEY` (ou `RESEND_API_KEY`) | Secret | **falta** | **falta** |
+| `EMAIL_FROM` | variável | opcional (padrão `CorpoPleno <suporte@corpoplenoresultadoreal.com.br>`) | opcional |
 | `META_PIXEL_ID` | variável (id público) | opcional | opcional |
 
 `GET /api/health` lista o que falta (apenas nomes e true/false), em Preview e em Production.
@@ -243,7 +244,7 @@ Estado conferido em 2026-10-16 pelo `GET /api/health`, que mostra só true/false
 
 No Sandbox, o mesmo vale apontando para a URL do Preview. Conferir também se o PIX (chave cadastrada), o cartão e o parcelamento até 4x estão habilitados.
 
-**Resend:** verificar o domínio do site e gerar a API key.
+**Brevo:** autenticar o domínio `corpoplenoresultadoreal.com.br` (registros DKIM/DMARC no DNS da Cloudflare, SPF unificado com o do Email Routing), cadastrar o remetente `suporte@corpoplenoresultadoreal.com.br` e gerar a chave em SMTP & API → API Keys. Gravar como Secret `BREVO_API_KEY` em Production e fazer novo deploy.
 
 ## 10. Estado atual
 

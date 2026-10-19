@@ -10,6 +10,7 @@ import { json, methodNotAllowed, readJson, sameOriginOk, clientIp } from "../../
 import { getDb, now } from "../../../_lib/db.js";
 import { normalizeEmail, isValidEmail, isRateLimited, registerAttempt, randomToken, sha256Hex } from "../../../_lib/auth.js";
 import { sendEmail, emailConfigured } from "../../../_lib/email.js";
+import { resetEmail } from "../../../_lib/reset-email.js";
 
 const TTL_MS = 60 * 60 * 1000;
 const WINDOW_MS = 60 * 60 * 1000;
@@ -43,15 +44,7 @@ export async function onRequest({ request, env }) {
     ]);
     const link = `${new URL(request.url).origin}/redefinir-senha.html#token=${token}`;
     const primeiroNome = (user.name || "").split(" ")[0] || "";
-    const result = await sendEmail(env, {
-      to: email,
-      subject: "CorpoPleno — redefinição de senha",
-      text:
-        `Olá${primeiroNome ? " " + primeiroNome : ""},\n\n` +
-        `Recebemos um pedido para redefinir a senha da sua conta CorpoPleno.\n` +
-        `Para criar uma nova senha, abra o link abaixo (válido por 60 minutos, uso único):\n\n${link}\n\n` +
-        `Se não foi você, ignore este e-mail: sua senha continua a mesma.\n`,
-    });
+    const result = await sendEmail(env, { to: email, ...resetEmail(primeiroNome, link) });
     // Nunca loga o token nem o link.
     if (!result.sent) console.error("[password-reset] e-mail não enviado:", result.reason);
   }

@@ -6,7 +6,7 @@
 import { json, methodNotAllowed } from "../_lib/http.js";
 import { getDb } from "../_lib/db.js";
 import { asaasEnvironment } from "../_lib/asaas.js";
-import { emailConfigured } from "../_lib/email.js";
+import { emailConfigured, emailProvider } from "../_lib/email.js";
 
 export async function onRequest({ request, env }) {
   if (request.method !== "GET") return methodNotAllowed();
@@ -29,8 +29,7 @@ export async function onRequest({ request, env }) {
   if (!env.ASAAS_API_KEY) faltando.push("ASAAS_API_KEY");
   if (!env.ASAAS_WEBHOOK_TOKEN) faltando.push("ASAAS_WEBHOOK_TOKEN");
   if (!env.ADMIN_API_TOKEN) faltando.push("ADMIN_API_TOKEN");
-  if (!env.RESEND_API_KEY) faltando.push("RESEND_API_KEY");
-  if (!env.EMAIL_FROM) faltando.push("EMAIL_FROM");
+  if (!emailConfigured(env)) faltando.push("BREVO_API_KEY (ou RESEND_API_KEY)");
 
   return json(200, {
     ok: true,
@@ -40,6 +39,7 @@ export async function onRequest({ request, env }) {
     webhookConfigurado: !!env.ASAAS_WEBHOOK_TOKEN,
     adminConfigurado: !!env.ADMIN_API_TOKEN,
     emailConfigurado: emailConfigured(env),
+    emailProvedor: emailProvider(env), // "brevo" | "resend" | null
     faltando,
   });
 }
