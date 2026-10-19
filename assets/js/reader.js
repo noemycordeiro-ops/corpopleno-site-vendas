@@ -416,8 +416,72 @@
       case "callout": {
         var call = document.createElement("div");
         call.className = "reader-block reader-block--callout";
-        call.textContent = block.text;
+        if (block.title) {
+          var callTitle = document.createElement("strong");
+          callTitle.className = "reader-block--callout-title";
+          callTitle.textContent = block.title;
+          call.appendChild(callTitle);
+        }
+        call.appendChild(document.createTextNode(block.text || ""));
         return call;
+      }
+      /* Tabela genérica {headers:[...], rows:[[...]]} (Henê Livro 2 e
+         futuros livros). Envolvida num contêiner com rolagem lateral para
+         nunca estourar a largura no celular. */
+      case "table": {
+        var tWrap = document.createElement("div");
+        tWrap.className = "reader-block reader-block--table";
+        var tbl = document.createElement("table");
+        if (block.headers && block.headers.length) {
+          var thead = document.createElement("thead");
+          var trH = document.createElement("tr");
+          block.headers.forEach(function (cab) {
+            var th = document.createElement("th");
+            th.scope = "col";
+            th.textContent = cab;
+            trH.appendChild(th);
+          });
+          thead.appendChild(trH);
+          tbl.appendChild(thead);
+        }
+        var tbody = document.createElement("tbody");
+        (block.rows || []).forEach(function (linha) {
+          var tr = document.createElement("tr");
+          (linha || []).forEach(function (celula) {
+            var td = document.createElement("td");
+            td.textContent = celula;
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        tbl.appendChild(tbody);
+        tWrap.appendChild(tbl);
+        return tWrap;
+      }
+      case "list": {
+        var ul = document.createElement(block.ordered ? "ol" : "ul");
+        ul.className = "reader-block reader-block--list";
+        (block.items || []).forEach(function (item) {
+          var li = document.createElement("li");
+          li.textContent = item;
+          ul.appendChild(li);
+        });
+        return ul;
+      }
+      case "cta-link": {
+        var cta = document.createElement("p");
+        cta.className = "reader-block reader-block--cta-link";
+        if (block.url && /^https:\/\//.test(block.url)) {
+          var ctaA = document.createElement("a");
+          ctaA.href = block.url;
+          ctaA.target = "_blank";
+          ctaA.rel = "noopener noreferrer";
+          ctaA.textContent = block.text;
+          cta.appendChild(ctaA);
+        } else {
+          cta.textContent = block.text;
+        }
+        return cta;
       }
       case "icon": {
         var wrap = document.createElement("div");
@@ -588,11 +652,142 @@
     }
   }
 
+  /* ---- Lupa: pesquisa no livro aberto ------------------------------------
+     Procura no texto de TODOS os tipos de bloco do idioma carregado, sem
+     rede. Ignora maiúsculas e acentos latinos (Hangul é comparado como
+     está). Clicar num resultado vai à página e destaca o termo. */
+  var FIND_TXT = {
+    pt: ["Pesquisar no livro", "Digite uma palavra", "Digite ao menos 2 letras.", "Nenhum resultado.", "{n} resultado(s)", "pág."],
+    "pt-PT": ["Pesquisar no livro", "Escreva uma palavra", "Escreva pelo menos 2 letras.", "Nenhum resultado.", "{n} resultado(s)", "pág."],
+    "en-US": ["Search this book", "Type a word", "Type at least 2 letters.", "No results.", "{n} result(s)", "p."],
+    "ko-KR": ["책에서 검색", "단어를 입력하세요", "2글자 이상 입력하세요.", "결과가 없습니다.", "결과 {n}개", "쪽"],
+    "es-CL": ["Buscar en el libro", "Escribe una palabra", "Escribe al menos 2 letras.", "Sin resultados.", "{n} resultado(s)", "pág."],
+  };
+  function findTxt(i) {
+    var l = currentLang();
+    var tab = FIND_TXT[l] || FIND_TXT[l === "pt-BR" ? "pt" : "pt"];
+    return tab[i];
+  }
+  function foldChar(c) {
+    var f = c.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    return f.length === 1 ? f : c.toLowerCase();
+  }
+  function fold(s) {
+    var out = "";
+    for (var i = 0; i < s.length; i++) out += foldChar(s[i]);
+    return out;
+  }
+  function blockTexts(b) {
+    var out = [];
+    function add(v) { if (typeof v === "string" && v) out.push(v); }
+    add(b.text); add(b.title); add(b.label); add(b.tempo); add(b.rendimento); add(b.caption);
+    (b.headers || []).forEach(add);
+    (b.rows || []).forEach(function (r) { (r || []).forEach(add); });
+    (b.items || []).forEach(function (it) { if (typeof it === "string") add(it); else if (it) { add(it.description); add(it.note); } });
+    (b.days || []).forEach(function (d) { (d.meals || []).forEach(function (m) { add(m.label); (m.items || []).forEach(function (it) { add(it.text); }); }); });
+    return out;
+  }
+  var findTerm = "";
+  function runFind(term) {
+    var list = document.getElementById("cp-reader-find-results");
+    var status = document.getElementById("cp-reader-find-status");
+    list.textContent = "";
+    var alvo = fold(term.trim());
+    if (alvo.length < 2 || !pages) {
+      status.textContent = term.trim() ? findTxt(2) : "";
+      return;
+    }
+    var total = 0;
+    pages.forEach(function (pg, idx) {
+      if (total >= 80) return;
+      var textos = [];
+      (pg.blocks || []).forEach(function (b) { textos = textos.concat(blockTexts(b)); });
+      for (var i = 0; i < textos.length; i++) {
+        var pos = fold(textos[i]).indexOf(alvo);
+        if (pos === -1) continue;
+        var ini = Math.max(0, pos - 40);
+        var trecho = (ini > 0 ? "…" : "") + textos[i].slice(ini, pos + alvo.length + 60) + "…";
+        var li = document.createElement("li");
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "reader-search-result";
+        btn.textContent = findTxt(5) + " " + (idx + 1);
+        var sn = document.createElement("span");
+        sn.className = "reader-find-snippet";
+        sn.textContent = trecho;
+        btn.appendChild(sn);
+        btn.addEventListener("click", function () {
+          findTerm = term.trim();
+          document.getElementById("cp-reader-find-panel").hidden = true;
+          document.getElementById("cp-reader-find-btn").setAttribute("aria-expanded", "false");
+          goToPage(idx);
+        });
+        li.appendChild(btn);
+        list.appendChild(li);
+        total++;
+        break; // um resultado por página basta para navegar
+      }
+    });
+    status.textContent = total ? findTxt(4).replace("{n}", total) : findTxt(3);
+  }
+  // Destaca o termo pesquisado na(s) página(s) exibida(s) e rola até o primeiro.
+  function highlightFind() {
+    if (!findTerm) return;
+    var alvo = fold(findTerm);
+    var primeiro = null;
+    ["cp-reader-page-content", "cp-reader-page-content-right"].forEach(function (id) {
+      var raiz = document.getElementById(id);
+      if (!raiz) return;
+      var walker = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
+      var nos = [];
+      while (walker.nextNode()) nos.push(walker.currentNode);
+      nos.forEach(function (no) {
+        var txt = no.nodeValue;
+        var pos = fold(txt).indexOf(alvo);
+        if (pos === -1) return;
+        var frag = document.createDocumentFragment();
+        var cursor = 0;
+        while (pos !== -1) {
+          frag.appendChild(document.createTextNode(txt.slice(cursor, pos)));
+          var mark = document.createElement("mark");
+          mark.className = "reader-find-mark";
+          mark.textContent = txt.slice(pos, pos + alvo.length);
+          frag.appendChild(mark);
+          if (!primeiro) primeiro = mark;
+          cursor = pos + alvo.length;
+          pos = fold(txt).indexOf(alvo, cursor);
+        }
+        frag.appendChild(document.createTextNode(txt.slice(cursor)));
+        no.parentNode.replaceChild(frag, no);
+      });
+    });
+    if (primeiro && primeiro.scrollIntoView) primeiro.scrollIntoView({ block: "center" });
+  }
+
+  /* Cor de destaque da página (identidade colorida CorpoPleno). Usa a
+     categoria da página quando o livro informa (Henê 2: H/N/U/R/M;
+     Receitas: RECIPE); senão percorre a paleta pelo número da página. */
+  var ACCENTS = {
+    H: ["#14b8a6", "#e6f8f6"], N: ["#f59e0b", "#fff4e0"], U: ["#3b82f6", "#eaf2ff"],
+    R: ["#8b5cf6", "#f3eeff"], M: ["#c8922e", "#fbf1df"], RECIPE: ["#22a35a", "#e9f8ef"],
+  };
+  var ACCENT_CYCLE = [
+    ["#8b5cf6", "#f3eeff"], ["#14b8a6", "#e6f8f6"], ["#3b82f6", "#eaf2ff"],
+    ["#22a35a", "#e9f8ef"], ["#e0457b", "#fdeef4"], ["#f59e0b", "#fff4e0"],
+  ];
+  function applyAccent(el, pg, idx) {
+    var meta = pg && pg.meta;
+    var cor = (meta && (ACCENTS[meta.category] || ACCENTS[meta.type])) || ACCENT_CYCLE[idx % ACCENT_CYCLE.length];
+    el.style.setProperty("--reader-accent", cor[0]);
+    el.style.setProperty("--reader-accent-soft", cor[1]);
+  }
+
   function renderPage() {
     var container = document.getElementById("cp-reader-page-content");
     container.innerHTML = "";
     var pageData = pages[pageIndex];
     if (!pageData) return;
+    applyAccent(container, pageData, pageIndex);
     var numeroPagina = typeof pageData.page === "number" ? pageData.page : pageIndex + 1;
     pageData.blocks.forEach(function (block, bi) {
       var nodo = renderBlock(block);
@@ -610,6 +805,7 @@
     var rightPageData = spreadAtivo ? pages[pageIndex + 1] : null;
     rightContainer.innerHTML = "";
     if (rightPageData) {
+      applyAccent(rightContainer, rightPageData, pageIndex + 1);
       rightPageData.blocks.forEach(function (block) {
         rightContainer.appendChild(renderBlock(block));
       });
@@ -629,6 +825,12 @@
     document.getElementById("cp-reader-next").disabled = pageIndex >= pages.length - 1;
 
     saveProgress();
+
+    // Lupa: destaca o termo só na página para onde o resultado levou.
+    if (findTerm) {
+      highlightFind();
+      findTerm = "";
+    }
 
     // Fase Livros 017 -- volta ao bloco salvo (se houver) ou ao topo.
     if (pendingBlockMarker) {
@@ -1004,6 +1206,37 @@
       if (!tocPanel.hidden && !tocPanel.contains(e.target) && !tocBtn.contains(e.target)) {
         tocPanel.hidden = true;
         tocBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Lupa: pesquisa no livro aberto.
+    var findBtn = document.getElementById("cp-reader-find-btn");
+    var findPanel = document.getElementById("cp-reader-find-panel");
+    var findInput = document.getElementById("cp-reader-find-input");
+    var findTimer = null;
+    findBtn.addEventListener("click", function () {
+      var abrir = findPanel.hidden;
+      findPanel.hidden = !abrir;
+      findBtn.setAttribute("aria-expanded", String(abrir));
+      if (abrir) {
+        document.getElementById("cp-reader-find-title").textContent = findTxt(0);
+        findInput.placeholder = findTxt(1);
+        findBtn.setAttribute("aria-label", findTxt(0));
+        findInput.focus();
+        if (findInput.value) runFind(findInput.value);
+      }
+    });
+    findInput.addEventListener("input", function () {
+      clearTimeout(findTimer);
+      findTimer = setTimeout(function () { runFind(findInput.value); }, 200);
+    });
+    findInput.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { findPanel.hidden = true; findBtn.setAttribute("aria-expanded", "false"); findBtn.focus(); }
+    });
+    document.addEventListener("click", function (e) {
+      if (!findPanel.hidden && !findPanel.contains(e.target) && !findBtn.contains(e.target)) {
+        findPanel.hidden = true;
+        findBtn.setAttribute("aria-expanded", "false");
       }
     });
 

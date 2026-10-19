@@ -7,7 +7,7 @@
   <meta name="description" content="Leitor digital CorpoPleno." />
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="assets/css/style.css?v=20260925c" />
-  <link rel="stylesheet" href="assets/css/books.css?v=20261016c" />
+  <link rel="stylesheet" href="assets/css/books.css?v=20261019a" />
 </head>
 <body data-partial-i18n="true" class="reader-body">
 
@@ -20,6 +20,10 @@
       <!-- Fase Livros 017 -- sumário e tema claro/escuro. -->
       <button type="button" class="reader-icon-btn" id="cp-reader-toc-btn" aria-label="Sumário" aria-haspopup="true" aria-expanded="false" aria-controls="cp-reader-toc-panel">
         <span aria-hidden="true">📑</span>
+      </button>
+      <!-- Lupa: pesquisa no texto do livro aberto (todos os livros). -->
+      <button type="button" class="reader-icon-btn" id="cp-reader-find-btn" aria-label="Pesquisar no livro" aria-haspopup="true" aria-expanded="false" aria-controls="cp-reader-find-panel">
+        <span aria-hidden="true">🔍</span>
       </button>
       <button type="button" class="reader-icon-btn" id="cp-reader-theme-btn" aria-label="Modo escuro" aria-pressed="false">
         <span aria-hidden="true">🌙</span>
@@ -58,6 +62,15 @@
     <h2 data-i18n="reader.recipe.favorites.title">Receitas favoritas</h2>
     <p class="reader-search-empty" id="cp-reader-favorites-empty" data-i18n="reader.recipe.favorites.empty" hidden>Nenhuma receita favoritada ainda.</p>
     <ul class="reader-search-results" id="cp-reader-favorites-results"></ul>
+  </div>
+
+  <!-- Lupa: pesquisa no conteúdo já carregado (sem chamada de rede). -->
+  <div class="reader-adjust-panel reader-toc-panel allow-select" id="cp-reader-find-panel" hidden>
+    <h2 id="cp-reader-find-title">Pesquisar no livro</h2>
+    <label class="sr-only" for="cp-reader-find-input" id="cp-reader-find-label">Digite uma palavra</label>
+    <input type="search" id="cp-reader-find-input" autocomplete="off" placeholder="Digite uma palavra" />
+    <p class="reader-search-empty" id="cp-reader-find-status" aria-live="polite"></p>
+    <ul class="reader-search-results" id="cp-reader-find-results"></ul>
   </div>
 
   <!-- Fase Livros 017 -- sumário (gerado dos títulos das páginas). -->
@@ -159,7 +172,7 @@
   <script src="assets/js/main.js?v=20260925c"></script>
   <script src="assets/js/books-data.js?v=20261016b"></script>
   <script src="assets/js/book-cover.js?v=20261015a"></script>
-  <script src="assets/js/reader.js?v=20261016b"></script>
+  <script src="assets/js/reader.js?v=20261019a"></script>
   <script src="assets/js/recipe-search-synonyms.js?v=20261005a"></script>
   <script src="assets/js/reader-recipes.js?v=20261005a"></script>
 </body>

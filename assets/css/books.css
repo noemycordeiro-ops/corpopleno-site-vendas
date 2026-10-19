@@ -504,6 +504,57 @@
   padding: 14px 18px;
   font-size: calc(0.95rem * var(--reader-font-scale));
 }
+.reader-block--callout-title {
+  display: block;
+  margin-bottom: 4px;
+}
+/* Tabela genérica: rolagem lateral própria, nunca estoura a página. */
+.reader-block--table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.reader-block--table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: calc(0.9rem * var(--reader-font-scale));
+  line-height: 1.5;
+}
+.reader-block--table th,
+.reader-block--table td {
+  border: 1px solid var(--cp-border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  min-width: 8em;
+}
+.reader-block--table th {
+  background: var(--cp-pink-light);
+  font-weight: 700;
+}
+.reader-block--list {
+  margin: 0 0 20px;
+  padding-left: 22px;
+}
+.reader-block--list li {
+  margin-bottom: 8px;
+}
+.reader-block--cta-link a {
+  font-weight: 600;
+}
+/* Destaque do termo pesquisado pela lupa. */
+.reader-find-mark {
+  background: #fde68a;
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.reader-find-snippet {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--cp-text-soft);
+  font-weight: 400;
+  margin-top: 2px;
+}
 .reader-block--icon {
   display: flex;
   align-items: center;
@@ -1080,8 +1131,20 @@
 }
 .reader-theme-dark .reader-block--nutrition-table th,
 .reader-theme-dark .reader-block--nutrition-table td,
-.reader-theme-dark .reader-block--menu-day-table td {
+.reader-theme-dark .reader-block--menu-day-table td,
+.reader-theme-dark .reader-block--table th,
+.reader-theme-dark .reader-block--table td {
   border-color: #2e333b;
+}
+.reader-theme-dark .reader-block--table th {
+  background: #2a2230;
+}
+.reader-theme-dark .reader-find-mark {
+  background: #a16207;
+  color: #fff;
+}
+.reader-theme-dark .reader-find-snippet {
+  color: #9ca3af;
 }
 
 /* =========================================================================
@@ -1132,4 +1195,121 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .cp-lens { transition: none; }
+}
+
+/* =========================================================================
+   Leitor colorido CorpoPleno (2026-10-19): a página volta a ter a
+   identidade dos livros originais -- faixa arco-íris no topo, títulos e
+   destaques na cor da seção. A cor vem de --reader-accent, definida por
+   página em reader.js (categoria da página quando existe; senão, ciclo
+   da paleta). Só aparência: nenhum texto do livro é alterado.
+   ========================================================================= */
+.reader-page {
+  --reader-accent: #8b5cf6;
+  --reader-accent-soft: #f5f0ff;
+  position: relative;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(80, 40, 120, 0.08);
+  padding-top: 26px;
+  margin-top: 12px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.reader-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, #ec4899 0 14.28%, #f59e0b 14.28% 28.57%, #facc15 28.57% 42.85%,
+    #22c55e 42.85% 57.14%, #14b8a6 57.14% 71.42%, #3b82f6 71.42% 85.71%, #8b5cf6 85.71% 100%);
+}
+.reader-page .reader-block--heading {
+  color: var(--reader-accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.reader-page .reader-block--heading:first-child {
+  font-size: calc(1.9rem * var(--reader-font-scale));
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--reader-accent-soft);
+}
+.reader-page .reader-block--heading:first-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 12px;
+  border-radius: 50%;
+  vertical-align: middle;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.6) 0 18%, var(--reader-accent) 20%);
+}
+.reader-page .reader-block--callout {
+  background: var(--reader-accent-soft);
+  border-left: 6px solid var(--reader-accent);
+  border-radius: 14px;
+}
+.reader-page .reader-block--callout-title {
+  color: var(--reader-accent);
+  font-size: 1.05em;
+}
+.reader-page .reader-block--table table,
+.reader-page .reader-block--nutrition-table table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.reader-page .reader-block--table th,
+.reader-page .reader-block--nutrition-table th {
+  background: var(--reader-accent);
+  color: #ffffff;
+  border-color: var(--reader-accent);
+}
+.reader-page .reader-block--table tbody tr:nth-child(even) td {
+  background: #faf8fc;
+}
+.reader-page .reader-block--list li::marker,
+.reader-page .reader-block--steps li::marker {
+  color: var(--reader-accent);
+  font-weight: 700;
+}
+.reader-page .reader-block--icon > span[aria-hidden="true"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 50%;
+  background: var(--reader-accent);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.reader-page .reader-block--icon-label {
+  color: var(--reader-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.reader-page .reader-block--menu-day-heading {
+  color: var(--reader-accent);
+}
+.reader-theme-dark .reader-page {
+  background: #1c1f24;
+  box-shadow: none;
+}
+.reader-theme-dark .reader-page .reader-block--callout {
+  background: #262a31;
+}
+.reader-theme-dark .reader-page .reader-block--table tbody tr:nth-child(even) td {
+  background: #22262c;
+}
+@media (max-width: 600px) {
+  .reader-page {
+    border-radius: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .reader-page .reader-block--heading:first-child {
+    font-size: calc(1.55rem * var(--reader-font-scale));
+  }
 }
