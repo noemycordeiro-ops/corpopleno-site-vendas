@@ -389,6 +389,10 @@ Todos passaram:
 
 - Commit `60c3882` (produção): e-mail Brevo "pagamento aprovado + livros liberados" (uma vez por compra), aviso de pendência à cliente + alerta ao suporte se o livro liberado não tiver conteúdo, alerta em valor divergente/produto desconhecido, checkout recusa combo com livro já comprado (409 `PARTIALLY_OWNED`, 5 idiomas). Testado localmente (SQLite + fetch capturado, 6 cenários).
 
+**Correção (autorizada por Noemi):** `amor-que-aprendeu-a-ficar` en-US e es-CL eram cópias byte a byte do pt-BR (mesmo md5; o README do livro confirma que não há tradução). Removidas do D1 de produção e do Preview (62 páginas cada). Impacto conferido antes: 0 compras, 0 acessos, 0 progresso de leitura desse livro. Reversão: `~/CorpoPleno-IA/backups_d1/reversao_amor_en_es_20261019/`. Produção ficou com 1.989 páginas.
+
+**Leitura validada no Preview** (conta de teste com acesso aos 5 livros só no D1 de Preview): Meus Livros lista os 5; cada idioma oferecido devolve todas as páginas (Henê 1: 40, Henê 2: 53, Amor Aprendeu: 31 em pt-BR/pt-PT, Amor Ensina: 29, Receitas: 439); traduções marcadas como não revisadas; livro sem acesso → 403.
+
 **Pendente (Noemi):** trocar no painel do Asaas a URL do webhook para `https://www.corpoplenoresultadoreal.com.br/api/books/webhook` (token = Secret `ASAAS_WEBHOOK_TOKEN`); depois, rotacionar esse token (foi exposto em print/histórico de terminal). DNS e túneis não foram alterados.
 
 ### Não verificado / pendente
