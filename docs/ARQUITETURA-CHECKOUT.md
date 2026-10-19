@@ -371,11 +371,31 @@ Todos passaram:
 - leitura: conteúdo idêntico ao original, inclusive Receitas com 439 páginas;
 - recuperação de senha: uso único, vencimento, sessões encerradas, 429.
 
+### Fase 10 — entrega dos livros (2026-10-19)
+
+**Incidente:** cliente pagou (CP-5GMK7X1Y, Henê Livro 1), o acesso foi registrado, mas o leitor abria vazio: `book_pages` tinha 0 linhas em produção e no Preview. Além disso, o webhook do Asaas apontava para `webhook.corpoplenoresultadoreal.com.br` (túnel cloudflared → Cordex local no notebook), não para a Pages Function; a liberação dessa compra foi feita por evento manual.
+
+**Feito:**
+- Backup do D1 de produção antes da carga (`~/CorpoPleno-IA/backups_d1/`, fora do repositório).
+- Carga com `docs/tools/importar-conteudo-livros.py` (SQL fora do repositório): 31 arquivos, 0 falhas, 2.051 páginas em produção; numeração contínua conferida por livro/idioma.
+
+| Livro | Idiomas (páginas) |
+|---|---|
+| hene-sem-medo-livro-1 | pt-BR, pt-PT, en-US, ko-KR, es-CL — 40 |
+| hene-sem-medo-livro-2 | pt-BR, pt-PT, en-US, ko-KR, es-CL — 53 |
+| amor-que-ensina-a-crescer | pt-BR, pt-PT, en-US, ko-KR, es-CL — 29 |
+| amor-que-aprendeu-a-ficar | pt-BR, pt-PT, en-US, es-CL — 31 (ko-KR fonte só tem 9/31: **não carregado**) |
+| receitas-corpopleno | pt-BR, pt-PT, en-US — 439 (ko-KR/es-CL não existem na fonte) |
+
+- Commit `60c3882` (produção): e-mail Brevo "pagamento aprovado + livros liberados" (uma vez por compra), aviso de pendência à cliente + alerta ao suporte se o livro liberado não tiver conteúdo, alerta em valor divergente/produto desconhecido, checkout recusa combo com livro já comprado (409 `PARTIALLY_OWNED`, 5 idiomas). Testado localmente (SQLite + fetch capturado, 6 cenários).
+
+**Pendente (Noemi):** trocar no painel do Asaas a URL do webhook para `https://www.corpoplenoresultadoreal.com.br/api/books/webhook` (token = Secret `ASAAS_WEBHOOK_TOKEN`); depois, rotacionar esse token (foi exposto em print/histórico de terminal). DNS e túneis não foram alterados.
+
 ### Não verificado / pendente
 
 - **Produção sem pagamento ativo:** faltam `ASAAS_API_KEY`, `ASAAS_ENVIRONMENT` e `ASAAS_WEBHOOK_TOKEN` em Production e o webhook no painel do Asaas. Nenhuma compra real foi testada.
 - Pagamento Sandbox concluído → webhook → liberação no Preview: falta `ASAAS_WEBHOOK_TOKEN` no Preview.
-- O conteúdo real dos livros ainda não está nos bancos remotos (script da seção 5 + login do wrangler). Até lá, quem comprar vê "conteúdo não encontrado".
+- ~~Conteúdo dos livros fora dos bancos remotos~~ — **resolvido em 2026-10-19** (ver Fase 10).
 - Envio real do e-mail de recuperação (Resend).
 - Revisão humana das traduções (hoje só pt-BR conta como revisado), e Receitas sem ko-KR/es-CL.
 - Textos novos só em pt-BR.
