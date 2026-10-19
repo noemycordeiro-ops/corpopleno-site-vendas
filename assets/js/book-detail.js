@@ -308,6 +308,7 @@
       CUSTOMER_DOCUMENT_INVALID: "book.checkout.error.document_invalid",
       CUSTOMER_NAME_REQUIRED: "book.checkout.error.name_required",
       ALREADY_OWNED: "book.checkout.error.already_owned",
+      PARTIALLY_OWNED: "book.checkout.error.partially_owned",
       PAYMENT_ATTEMPT_ALREADY_DISPATCHING: "book.checkout.error.already_processing",
       TERMS_NOT_ACCEPTED: "book.checkout.must_accept_terms",
     };
@@ -321,6 +322,7 @@
       "book.checkout.error.document_invalid": "CPF ou CNPJ inválido. Confira os números digitados.",
       "book.checkout.error.name_required": "Informe seu nome completo para emitir a cobrança.",
       "book.checkout.error.already_owned": "Você já tem este conteúdo. Veja em Meus Livros.",
+      "book.checkout.error.partially_owned": "Você já tem um dos livros deste combo. Para não pagar duas vezes, compre só o volume que falta.",
       "book.checkout.must_accept_terms": "É preciso aceitar os Termos de Uso e a Política de Privacidade para continuar.",
       "book.checkout.error.generic": "Não foi possível iniciar a compra agora. Tente novamente em alguns minutos.",
     };

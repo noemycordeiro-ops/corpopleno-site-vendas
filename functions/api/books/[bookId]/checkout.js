@@ -64,6 +64,9 @@ export async function onRequest({ request, env, params }) {
     .bind(user.id, ...product.items)
     .first();
   if (owned && owned.n >= product.items.length) return json(409, { ok: false, erro: "ALREADY_OWNED" });
+  // Combo com algum livro já comprado: não cobra de novo o livro que a cliente
+  // já tem -- ela compra só o volume que falta, avulso.
+  if (owned && owned.n > 0) return json(409, { ok: false, erro: "PARTIALLY_OWNED" });
 
   const cfg = asaasConfig(env);
   if (!cfg) return json(503, { ok: false, erro: "AMBIENTE_ASAAS_NAO_CONFIGURADO" });
