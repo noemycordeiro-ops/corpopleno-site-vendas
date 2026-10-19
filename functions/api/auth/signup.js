@@ -11,6 +11,8 @@
 */
 import { json, methodNotAllowed, readJson, sameOriginOk, clientIp } from "../../_lib/http.js";
 import { getDb, now } from "../../_lib/db.js";
+import { sendEmail } from "../../_lib/email.js";
+import { welcomeEmail } from "../../_lib/welcome-email.js";
 import {
   hashPassword, createSession, sessionCookie, randomId, normalizeEmail, isValidEmail,
   isRateLimited, registerAttempt, normalizeName, isValidFullName, normalizePhone, isValidPhone,
@@ -19,7 +21,7 @@ import {
 const SIGNUP_LIMIT = 10;
 const SIGNUP_WINDOW_MS = 3600 * 1000;
 
-export async function onRequest({ request, env }) {
+export async function onRequest({ request, env, waitUntil }) {
   if (request.method !== "POST") return methodNotAllowed();
   if (!sameOriginOk(request)) return json(403, { ok: false, erro: "ORIGEM_INVALIDA" });
   const db = await getDb(env);
@@ -66,5 +68,10 @@ export async function onRequest({ request, env }) {
   }
 
   const token = await createSession(db, userId);
+  // Boas-vindas em segundo plano: falha no envio nunca afeta o cadastro.
+  const boasVindas = sendEmail(env, { to: email, ...welcomeEmail(name.split(" ")[0], new URL(request.url).origin) })
+    .then((r) => { if (!r.sent) console.error("[signup] boas-vindas não enviado:", r.reason); })
+    .catch(() => {});
+  if (typeof waitUntil === "function") waitUntil(boasVindas);
   return json(201, { ok: true }, { "Set-Cookie": sessionCookie(token) });
 }
