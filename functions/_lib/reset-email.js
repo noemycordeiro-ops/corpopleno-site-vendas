@@ -20,7 +20,7 @@ export function resetEmail(primeiroNome, link) {
     `Se o link expirar, é só pedir outro na página "Esqueci minha senha".\n\n` +
     `Não foi você que pediu? Pode ignorar este e-mail com tranquilidade: sua senha continua a mesma e ninguém consegue alterá-la sem este link.\n\n` +
     `Por segurança, a CorpoPleno nunca pede sua senha por e-mail, WhatsApp ou telefone.\n\n` +
-    `Com carinho,\nEquipe CorpoPleno\nInteligente, resultado real\nsuporte@corpoplenoresultadoreal.com.br\n`;
+    `Com carinho,\nPatrícia\nEquipe CorpoPleno\nInteligente, resultado real\nsuporte@corpoplenoresultadoreal.com.br\n`;
   const l = escapeHtml(link);
   const html = `<!doctype html><html lang="pt-BR"><body style="margin:0;padding:0;background:#faf7f5;font-family:Arial,Helvetica,sans-serif;color:#2b2b3a">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf7f5;padding:24px 12px"><tr><td align="center">
@@ -38,7 +38,7 @@ export function resetEmail(primeiroNome, link) {
 <p style="margin:0 0 14px;padding:12px 14px;background:#f0fdf4;border-radius:10px;font-size:14px">Não foi você que pediu? Pode ignorar este e-mail com tranquilidade: sua senha continua a mesma e ninguém consegue alterá-la sem este link. A CorpoPleno nunca pede sua senha por e-mail, WhatsApp ou telefone.</p>
 <p style="margin:0 0 6px;font-size:13px;color:#6b7280">Se o botão não abrir, copie e cole este endereço no navegador:<br><a href="${l}" style="color:#7c3aed;word-break:break-all">${l}</a></p>
 </td></tr>
-<tr><td style="padding:8px 28px 28px;font-size:15px;line-height:1.5">Com carinho,<br><strong>Equipe CorpoPleno</strong><br><a href="mailto:suporte@corpoplenoresultadoreal.com.br" style="color:#7c3aed">suporte@corpoplenoresultadoreal.com.br</a></td></tr>
+<tr><td style="padding:8px 28px 28px;font-size:15px;line-height:1.5">Com carinho,<br><strong>Patrícia</strong><br>Equipe CorpoPleno<br><a href="mailto:suporte@corpoplenoresultadoreal.com.br" style="color:#7c3aed">suporte@corpoplenoresultadoreal.com.br</a></td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, text, html };
 }
