@@ -20,8 +20,7 @@ import { json, methodNotAllowed, readJson } from "../../_lib/http.js";
 import { getDb, now } from "../../_lib/db.js";
 import { timingSafeEqual } from "../../_lib/auth.js";
 import { getProduct } from "../../_lib/catalog.js";
-import { sendEmail } from "../../_lib/email.js";
-import { purchaseReleasedEmail, deliveryIssueEmail, deliveryIssueAlert } from "../../_lib/purchase-email.js";
+import { notifyRelease, alertSupport } from "../../_lib/delivery.js";
 
 const PAID_EVENTS = new Set(["PAYMENT_RECEIVED", "PAYMENT_CONFIRMED"]);
 const CLOSE_EVENTS = { PAYMENT_DELETED: "CANCELLED", PAYMENT_OVERDUE: "EXPIRED" };
@@ -180,41 +179,4 @@ export async function onRequest({ request, env, waitUntil }) {
     if (typeof waitUntil === "function") waitUntil(envio);
   }
   return json(200, { ok: true, paid: true, newlyPaid: changed > 0, granted: product.items });
-}
-
-/*
-  Confere se cada livro liberado tem conteúdo carregado (book_pages). Com
-  conteúdo: e-mail "pagamento aprovado + livros liberados". Sem conteúdo:
-  aviso de pendência à cliente + alerta ao suporte (entrega digital falhou).
-*/
-async function notifyRelease(db, env, purchase, product, origin) {
-  const user = await db.prepare("SELECT email, name FROM users WHERE id = ?").bind(purchase.user_id).first();
-  if (!user || !user.email) return;
-  const primeiroNome = String(user.name || "").split(" ")[0];
-  const semConteudo = [];
-  for (const bookId of product.items) {
-    const r = await db.prepare("SELECT COUNT(*) AS n FROM book_pages WHERE book_id = ?").bind(bookId).first();
-    if (!r || !r.n) semConteudo.push(bookId);
-  }
-  if (semConteudo.length) {
-    await alertSupport(env, { purchaseCode: purchase.id, productId: purchase.product_id, motivo: "LIVRO_SEM_CONTEUDO", detalhe: semConteudo.join(", ") });
-    const r = await sendEmail(env, { to: user.email, ...deliveryIssueEmail({ primeiroNome, purchaseCode: purchase.id, productTitle: product.title }) });
-    if (!r.sent) console.error("[webhook] aviso de pendência não enviado:", r.reason);
-    return;
-  }
-  const books = product.items.map((id) => ({ id, title: (getProduct(id) || {}).title || id }));
-  const r = await sendEmail(env, {
-    to: user.email,
-    ...purchaseReleasedEmail({ primeiroNome, purchaseCode: purchase.id, productTitle: product.title, books, origin }),
-  });
-  if (!r.sent) {
-    console.error("[webhook] confirmação não enviada:", r.reason);
-    await alertSupport(env, { purchaseCode: purchase.id, productId: purchase.product_id, motivo: "EMAIL_CONFIRMACAO_FALHOU", detalhe: r.reason });
-  }
-}
-
-async function alertSupport(env, dados) {
-  const a = deliveryIssueAlert(dados);
-  const r = await sendEmail(env, { to: a.to, subject: a.subject, text: a.text });
-  if (!r.sent) console.error("[webhook] alerta ao suporte não enviado:", r.reason);
 }

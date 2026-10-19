@@ -117,6 +117,12 @@ export async function getPixQrCode(cfg, paymentId) {
   return null;
 }
 
+// Consulta uma cobrança (status/valor/externalReference) -- usada pela
+// verificação direta de "Meus Livros" quando o webhook não chegou.
+export async function getPayment(cfg, paymentId) {
+  return call(cfg, "GET", `/payments/${encodeURIComponent(paymentId)}`);
+}
+
 export async function deletePayment(cfg, purchase) {
   if (purchase.asaas_installment_id) {
     return call(cfg, "DELETE", `/installments/${encodeURIComponent(purchase.asaas_installment_id)}`);
