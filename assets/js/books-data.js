@@ -150,7 +150,7 @@
         slug: "receitas-corpopleno",
         collection: "corpopleno-alimentacao",
         status: "PUBLISHED",
-        available_locales: ["pt-BR", "pt-PT", "en-US"],
+        available_locales: ["pt-BR", "pt-PT", "en-US", "ko-KR", "es-CL"],
         price_status: "SET",
         purchase_status: "AVAILABLE",
         price: 200.00,
