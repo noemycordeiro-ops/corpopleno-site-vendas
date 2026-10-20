@@ -104,6 +104,15 @@
     return typeof window.CP_API_BASE === "string" ? window.CP_API_BASE : "";
   }
 
+  /* Livro de Receitas em português: abre direto a versão inteligente
+     (questionário de restrições). A rota do servidor confere a compra.
+     O leitor de páginas continua em leitor.html?id=...&paginas=1 e nos
+     outros idiomas (a versão inteligente existe só em português). */
+  if (qs("id") === "receitas-corpopleno" && qs("paginas") !== "1" && String(currentLang()).indexOf("pt") === 0) {
+    window.location.replace(apiBase() + "/api/books/receitas-corpopleno/app");
+    return;
+  }
+
   /* ---- Acesso / entitlement -------------------------------------------
      Livro de teste interno: decisão 100% local, sem nenhuma chamada de
      rede -- comportamento inalterado desde a Fase 001/Adendo. Qualquer

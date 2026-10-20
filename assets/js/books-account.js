@@ -98,6 +98,7 @@
       dica.textContent = t("books.account.open_smart_hint", "Questionário de restrições, cardápios e filtros (versão em português)");
       body.appendChild(dica);
       readBtn.className = "btn btn-secondary";
+      readBtn.href = "leitor.html?id=" + encodeURIComponent(livro.bookId) + "&paginas=1";
     }
     body.appendChild(readBtn);
 
