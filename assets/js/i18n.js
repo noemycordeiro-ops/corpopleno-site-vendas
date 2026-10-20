@@ -84,8 +84,12 @@
       "books.account.read_now": "Ler agora",
       "books.account.hero.subtitle": "Os seus livros comprados ficam aqui. Toque em “Ler agora” para abrir.",
       "books.account.continue": "Continuar a ler (pág. {page})",
+      "books.account.open_smart": "Abrir livro inteligente 🧭",
+      "books.account.open_smart_hint": "Questionário de restrições, cardápios e filtros (versão em português)",
       "books.account.hero.subtitle": "Seus livros comprados ficam aqui. Toque em “Ler agora” para abrir.",
       "books.account.continue": "Continuar leitura (pág. {page})",
+      "books.account.open_smart": "Abrir livro inteligente 🧭",
+      "books.account.open_smart_hint": "Questionário de restrições, ementas e filtros (versão em português)",
       "books.account.error.message": "Não foi possível carregar seus livros agora. Tente novamente em alguns minutos.",
 
       "reader.nav.previous": "Página anterior",
@@ -1042,6 +1046,8 @@
       "books.account.read_now": "Read now",
       "books.account.hero.subtitle": "Your purchased books are here. Tap “Read now” to open one.",
       "books.account.continue": "Continue reading (p. {page})",
+      "books.account.open_smart": "Open the smart book 🧭",
+      "books.account.open_smart_hint": "Dietary-needs questionnaire, menus and filters (Portuguese version)",
       "books.account.error.message": "We couldn't load your books right now. Please try again in a few minutes.",
 
       "reader.nav.previous": "Previous page",
@@ -1520,6 +1526,8 @@
       "books.account.read_now": "지금 읽기",
       "books.account.hero.subtitle": "구매한 책이 여기에 있습니다. “지금 읽기”를 눌러 여세요.",
       "books.account.continue": "이어 읽기 ({page}쪽)",
+      "books.account.open_smart": "스마트 북 열기 🧭",
+      "books.account.open_smart_hint": "식이 제한 설문, 식단표, 필터 (포르투갈어 버전)",
       "books.account.error.message": "지금 도서를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.",
 
       "reader.nav.previous": "이전 페이지",
@@ -1993,6 +2001,8 @@
       "books.account.read_now": "Leer ahora",
       "books.account.hero.subtitle": "Tus libros comprados están aquí. Toca “Leer ahora” para abrirlos.",
       "books.account.continue": "Continuar lectura (pág. {page})",
+      "books.account.open_smart": "Abrir el libro inteligente 🧭",
+      "books.account.open_smart_hint": "Cuestionario de restricciones, menús y filtros (versión en portugués)",
       "books.account.error.message": "No pudimos cargar tus libros ahora. Intenta de nuevo en unos minutos.",
 
       "reader.nav.previous": "Página anterior",

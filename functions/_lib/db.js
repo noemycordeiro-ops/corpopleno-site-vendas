@@ -97,6 +97,15 @@ const SCHEMA = [
      updated_at INTEGER NOT NULL,
      PRIMARY KEY (user_id, book_id)
    )`,
+  // Versão interativa de um livro (HTML completo, gzip+base64 em partes).
+  // Servida só a quem tem acesso por functions/api/books/[bookId]/app.js.
+  `CREATE TABLE IF NOT EXISTS book_apps (
+     book_id TEXT NOT NULL,
+     locale TEXT NOT NULL,
+     chunk INTEGER NOT NULL,
+     data TEXT NOT NULL,
+     PRIMARY KEY (book_id, locale, chunk)
+   )`,
   `CREATE TABLE IF NOT EXISTS webhook_events (
      event_id TEXT PRIMARY KEY,
      event_type TEXT,
