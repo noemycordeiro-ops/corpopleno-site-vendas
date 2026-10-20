@@ -1317,3 +1317,12 @@
     font-size: calc(1.55rem * var(--reader-font-scale));
   }
 }
+
+/* Cardápios no celular: rótulos longos (ex.: "Colación nocturna opcional")
+   quebram linha em vez de espremer a coluna dos pratos. */
+@media (max-width: 600px) {
+  .reader-block--menu-meal-label {
+    white-space: normal;
+    width: 34%;
+  }
+}
