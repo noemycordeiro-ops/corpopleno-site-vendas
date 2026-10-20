@@ -170,8 +170,14 @@
     descEl.textContent = ed.description || "";
     descEl.hidden = !ed.description;
     renderSummary(currentMeta, lang);
-    document.getElementById("cp-book-language").textContent =
-      window.CP_I18N && window.CP_I18N.langName ? window.CP_I18N.langName(lang) : lang;
+    // Idiomas em que o CONTEÚDO do livro existe de verdade (books-data.js,
+    // available_locales). Nunca anunciar como "edição" um idioma que o
+    // leitor não entrega -- o aviso abaixo informa ANTES da compra.
+    var nomeIdioma = function (l) { return window.CP_I18N && window.CP_I18N.langName ? window.CP_I18N.langName(l) : l; };
+    var reais = (currentItem && currentItem.available_locales) || ["pt-BR"];
+    var temEdicao = reais.indexOf(lang) !== -1 || (lang === "pt-BR" && reais.indexOf("pt-BR") !== -1);
+    var nomesReais = reais.map(nomeIdioma).filter(function (n, i, arr) { return arr.indexOf(n) === i; });
+    document.getElementById("cp-book-language").textContent = temEdicao ? nomeIdioma(lang) : nomesReais.join(", ");
     document.getElementById("cp-book-pages").textContent =
       currentMeta.pageCount != null ? String(currentMeta.pageCount) : t("book.detail.pages_pending", "A definir");
     document.getElementById("cp-book-price").textContent = currentMeta.price
@@ -187,9 +193,16 @@
     // Fase Livros 020 -- só mostra "conteúdo somente em pt-BR" quando o
     // produto realmente não tem tradução neste idioma.
     var aviso = document.getElementById("cp-partial-translation-notice");
-    if (aviso && lang !== "pt-BR") {
-      var temTraducao = !!(currentMeta.locales && currentMeta.locales[lang]);
-      aviso.hidden = temTraducao;
+    if (aviso) {
+      var AVISO = {
+        "pt-BR": "Atenção: o conteúdo deste livro está disponível somente em {l}. A tradução para o seu idioma ainda não existe.",
+        "pt-PT": "Atenção: o conteúdo deste livro está disponível apenas em {l}. A tradução para o seu idioma ainda não existe.",
+        "en-US": "Please note: this book's content is only available in {l}. A translation into your language does not exist yet.",
+        "ko-KR": "안내: 이 책의 내용은 {l}로만 제공됩니다. 귀하의 언어로 된 번역본은 아직 없습니다.",
+        "es-CL": "Atención: el contenido de este libro solo está disponible en {l}. La traducción a tu idioma aún no existe.",
+      };
+      aviso.textContent = (AVISO[lang] || AVISO["pt-BR"]).replace("{l}", nomesReais.join(", "));
+      aviso.hidden = temEdicao;
     }
 
     document.getElementById("cp-book-detail-found").hidden = false;
