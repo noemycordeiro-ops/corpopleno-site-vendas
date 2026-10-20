@@ -933,6 +933,25 @@
           { className: "reader-book-strip__cover", alt: ed.title }
         );
         document.getElementById("cp-reader-title").textContent = ed.title;
+        // Livro de Receitas: atalho para a versão interativa (questionário).
+        if (bookId === "receitas-corpopleno") {
+          var SMART = {
+            pt: "🧭 Abrir o livro inteligente (questionário de restrições)",
+            "pt-PT": "🧭 Abrir o livro inteligente (questionário de restrições)",
+            "en-US": "🧭 Open the smart book (dietary-needs questionnaire, in Portuguese)",
+            "ko-KR": "🧭 스마트 북 열기 (식이 제한 설문, 포르투갈어)",
+            "es-CL": "🧭 Abrir el libro inteligente (cuestionario de restricciones, en portugués)",
+          };
+          var smartLink = document.getElementById("cp-reader-smart-link");
+          if (!smartLink) {
+            smartLink = document.createElement("a");
+            smartLink.id = "cp-reader-smart-link";
+            smartLink.className = "btn btn-primary reader-smart-link";
+            smartLink.href = apiBase() + "/api/books/" + encodeURIComponent(bookId) + "/app";
+            document.querySelector(".reader-book-strip").appendChild(smartLink);
+          }
+          smartLink.textContent = SMART[lang] || SMART[lang === "pt-BR" ? "pt" : "pt"];
+        }
         document.title = ed.title + " — CorpoPleno";
 
         updateTranslationBadge();

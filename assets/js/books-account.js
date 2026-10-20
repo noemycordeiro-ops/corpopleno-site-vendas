@@ -83,23 +83,23 @@
       readBtn.setAttribute("data-i18n", "books.account.read_now");
       readBtn.textContent = t("books.account.read_now", "Ler agora");
     }
-    body.appendChild(readBtn);
-
-    // Livro de Receitas: versão interativa (questionário de restrições,
-    // cardápios e filtros), servida só a quem comprou por /api/books/:id/app.
+    // Livro de Receitas: o botão PRINCIPAL abre a versão interativa
+    // (questionário de restrições, cardápios e filtros), servida só a quem
+    // comprou por /api/books/:id/app; o leitor comum vira secundário.
     if (livro.bookId === "receitas-corpopleno") {
       var smart = document.createElement("a");
-      smart.className = "btn btn-secondary";
-      smart.style.marginTop = "10px";
+      smart.className = "btn btn-primary";
       smart.href = apiBase() + "/api/books/" + encodeURIComponent(livro.bookId) + "/app";
       smart.textContent = t("books.account.open_smart", "Abrir livro inteligente 🧭");
       body.appendChild(smart);
       var dica = document.createElement("p");
       dica.className = "books-account__hint";
-      dica.style.cssText = "font-size:0.85rem;margin:6px 0 0;opacity:.8";
+      dica.style.cssText = "font-size:0.85rem;margin:6px 0 10px;opacity:.8";
       dica.textContent = t("books.account.open_smart_hint", "Questionário de restrições, cardápios e filtros (versão em português)");
       body.appendChild(dica);
+      readBtn.className = "btn btn-secondary";
     }
+    body.appendChild(readBtn);
 
     article.appendChild(body);
     return article;

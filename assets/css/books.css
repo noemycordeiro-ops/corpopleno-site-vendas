@@ -1326,3 +1326,15 @@
     width: 34%;
   }
 }
+
+/* Livro de Receitas: atalho para o livro inteligente no topo do leitor. */
+.reader-book-strip { flex-wrap: wrap; }
+.reader-smart-link {
+  margin-left: auto;
+  white-space: normal;
+  text-align: center;
+  font-size: 0.95rem;
+}
+@media (max-width: 600px) {
+  .reader-smart-link { margin: 10px 0 0; width: 100%; }
+}
