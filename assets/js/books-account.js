@@ -78,7 +78,7 @@
     // Fase Livros 017 -- com progresso salvo no servidor, o botão vira
     // "Continuar leitura (pág. N)"; o leitor reabre no ponto salvo.
     if (livro.progress && typeof livro.progress.page === "number" && livro.progress.page > 1) {
-      readBtn.textContent = "Continuar leitura (pág. " + livro.progress.page + ")";
+      readBtn.textContent = t("books.account.continue", "Continuar leitura (pág. {page})").replace("{page}", livro.progress.page);
     } else {
       readBtn.setAttribute("data-i18n", "books.account.read_now");
       readBtn.textContent = t("books.account.read_now", "Ler agora");
@@ -88,6 +88,19 @@
     article.appendChild(body);
     return article;
   }
+
+  // Último conjunto exibido: ao trocar de idioma, os cards são refeitos
+  // (título, capa e botão no novo idioma) sem nova chamada de rede.
+  var ultimos = null;
+  function redesenharNoIdioma() {
+    var grid = el("cp-books-account-grid");
+    if (!grid || !ultimos) return;
+    grid.innerHTML = "";
+    ultimos.livros.forEach(function (livro, idx) {
+      if (ultimos.metas[idx]) grid.appendChild(montarCard(livro, ultimos.metas[idx]));
+    });
+  }
+  window.addEventListener("corpopleno:lang-changed", redesenharNoIdioma);
 
   function renderizarLivros(livros) {
     var grid = el("cp-books-account-grid");
@@ -101,6 +114,7 @@
 
     var pendentes = livros.length;
     var cards = [];
+    var metas = [];
     livros.forEach(function (livro, idx) {
       fetch("assets/books/" + encodeURIComponent(livro.bookId) + "/metadata.json")
         .then(function (res) {
@@ -108,6 +122,7 @@
           return res.json();
         })
         .then(function (meta) {
+          metas[idx] = meta;
           cards[idx] = montarCard(livro, meta);
         })
         .catch(function () {
@@ -116,6 +131,7 @@
         .then(function () {
           pendentes--;
           if (pendentes === 0) {
+            ultimos = { livros: livros, metas: metas };
             cards.forEach(function (card) { if (card) grid.appendChild(card); });
             mostrarApenas("cp-books-account-list");
           }

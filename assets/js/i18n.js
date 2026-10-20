@@ -82,6 +82,10 @@
       "books.account.empty.message": "Você ainda não tem nenhum livro. Explore nosso catálogo para encontrar o seu próximo livro.",
       "books.account.empty.cta": "Ver catálogo de livros",
       "books.account.read_now": "Ler agora",
+      "books.account.hero.subtitle": "Os seus livros comprados ficam aqui. Toque em “Ler agora” para abrir.",
+      "books.account.continue": "Continuar a ler (pág. {page})",
+      "books.account.hero.subtitle": "Seus livros comprados ficam aqui. Toque em “Ler agora” para abrir.",
+      "books.account.continue": "Continuar leitura (pág. {page})",
       "books.account.error.message": "Não foi possível carregar seus livros agora. Tente novamente em alguns minutos.",
 
       "reader.nav.previous": "Página anterior",
@@ -1036,6 +1040,8 @@
       "books.account.empty.message": "You don't have any books yet. Browse our catalog to find your next book.",
       "books.account.empty.cta": "View book catalog",
       "books.account.read_now": "Read now",
+      "books.account.hero.subtitle": "Your purchased books are here. Tap “Read now” to open one.",
+      "books.account.continue": "Continue reading (p. {page})",
       "books.account.error.message": "We couldn't load your books right now. Please try again in a few minutes.",
 
       "reader.nav.previous": "Previous page",
@@ -1512,6 +1518,8 @@
       "books.account.empty.message": "아직 보유한 도서가 없습니다. 카탈로그를 둘러보고 다음 도서를 찾아보세요.",
       "books.account.empty.cta": "도서 카탈로그 보기",
       "books.account.read_now": "지금 읽기",
+      "books.account.hero.subtitle": "구매한 책이 여기에 있습니다. “지금 읽기”를 눌러 여세요.",
+      "books.account.continue": "이어 읽기 ({page}쪽)",
       "books.account.error.message": "지금 도서를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.",
 
       "reader.nav.previous": "이전 페이지",
@@ -1983,6 +1991,8 @@
       "books.account.empty.message": "Todavía no tienes ningún libro. Explora nuestro catálogo para encontrar tu próximo libro.",
       "books.account.empty.cta": "Ver catálogo de libros",
       "books.account.read_now": "Leer ahora",
+      "books.account.hero.subtitle": "Tus libros comprados están aquí. Toca “Leer ahora” para abrirlos.",
+      "books.account.continue": "Continuar lectura (pág. {page})",
       "books.account.error.message": "No pudimos cargar tus libros ahora. Intenta de nuevo en unos minutos.",
 
       "reader.nav.previous": "Página anterior",
