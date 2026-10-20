@@ -39,7 +39,7 @@ async function descompactar(base64) {
 }
 
 // Faixa discreta para voltar à biblioteca do site (o app original não tem).
-const VOLTAR = `<div style="position:sticky;top:0;z-index:9999;background:#fff;border-bottom:1px solid #f1e6f3;padding:8px 16px;font:600 14px Arial,Helvetica,sans-serif">
+const VOLTAR = `<div style="background:#fff;border-bottom:1px solid #f1e6f3;padding:8px 16px;font:600 14px Arial,Helvetica,sans-serif">
 <a href="/meus-livros.html" style="color:#7c3aed;text-decoration:none">← Meus Livros</a></div>`;
 
 export async function onRequest({ request, env, params }) {
