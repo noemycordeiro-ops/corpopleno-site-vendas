@@ -32,6 +32,7 @@
           return;
         }
         mostrarApenas("cp-account-home");
+        document.dispatchEvent(new Event("cp-account-ready"));
       })
       .catch(function () {
         mostrarApenas("cp-account-redirect");

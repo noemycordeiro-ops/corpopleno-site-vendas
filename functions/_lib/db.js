@@ -85,6 +85,16 @@ const SCHEMA = [
      used_at INTEGER
    )`,
   `CREATE INDEX IF NOT EXISTS password_resets_user ON password_resets(user_id)`,
+  // Troca de e-mail em dois passos: um pedido pendente por cliente, com o
+  // SHA-256 do código de 6 dígitos (salgado com o id da cliente).
+  `CREATE TABLE IF NOT EXISTS email_change_requests (
+     user_id TEXT PRIMARY KEY,
+     new_email TEXT NOT NULL,
+     code_hash TEXT NOT NULL,
+     attempts INTEGER NOT NULL DEFAULT 0,
+     created_at INTEGER NOT NULL,
+     expires_at INTEGER NOT NULL
+   )`,
   // Progresso de leitura por cliente + livro (último ponto lido, idioma e
   // preferências de leitura). block_marker = "p<página>-b<bloco>".
   `CREATE TABLE IF NOT EXISTS reading_progress (

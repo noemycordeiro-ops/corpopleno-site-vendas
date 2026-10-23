@@ -88,6 +88,10 @@ export async function findOrCreateCustomer(cfg, { userId, name, email, cpfCnpj }
   return created.id;
 }
 
+export async function updateCustomer(cfg, customerId, fields) {
+  return call(cfg, "PUT", `/customers/${encodeURIComponent(customerId)}`, fields);
+}
+
 export async function createPayment(cfg, p) {
   const payload = {
     customer: p.customerId,

@@ -70,6 +70,41 @@
           <p data-i18n="account.welcome">Você está conectado à sua conta CorpoPleno.</p>
           <a class="btn btn-primary btn-block" href="meus-livros.html" data-i18n="nav.books_account">Meus Livros</a>
           <button type="button" class="btn btn-secondary btn-block" id="cp-account-logout" data-i18n="account.logout">Sair</button>
+
+          <section class="cp-dados" aria-labelledby="cp-dados-titulo" style="text-align: left; margin-top: 2rem;">
+            <h2 id="cp-dados-titulo" data-i18n="account.dados.title">Meus dados</h2>
+
+            <form id="cp-dados-telefone-form" novalidate>
+              <label class="auth-field-label" for="cp-dados-telefone" data-i18n="account.dados.phone.label">Telefone (WhatsApp)</label>
+              <input class="cp-field" id="cp-dados-telefone" name="telefone" type="tel" autocomplete="tel" data-i18n-placeholder="account.dados.phone.placeholder" placeholder="(11) 90000-0000" required />
+              <div class="notice" id="cp-dados-telefone-status" role="status" hidden></div>
+              <button type="submit" class="btn btn-primary btn-block" id="cp-dados-telefone-enviar" data-i18n="account.dados.phone.submit">Salvar telefone</button>
+            </form>
+
+            <div class="cp-dados-email" style="margin-top: 1.5rem;">
+              <p><span data-i18n="account.dados.email.label">E-mail de acesso</span>: <strong id="cp-dados-email-atual">—</strong></p>
+              <button type="button" class="btn btn-secondary btn-block" id="cp-dados-email-abrir" data-i18n="account.dados.email.change">Trocar e-mail</button>
+
+              <form id="cp-dados-email-form" hidden novalidate>
+                <label class="auth-field-label" for="cp-dados-email-novo" data-i18n="account.dados.email.new_label">Novo e-mail</label>
+                <input class="cp-field" id="cp-dados-email-novo" name="novoEmail" type="email" autocomplete="email" required />
+                <label class="auth-field-label" for="cp-dados-email-senha" data-i18n="account.dados.email.password_label">Senha atual</label>
+                <input class="cp-field" id="cp-dados-email-senha" name="senha" type="password" autocomplete="current-password" maxlength="512" required />
+                <button type="submit" class="btn btn-primary btn-block" id="cp-dados-email-enviar" data-i18n="account.dados.email.submit">Enviar código</button>
+                <button type="button" class="btn btn-secondary btn-block" id="cp-dados-email-cancelar" data-i18n="account.dados.email.cancel">Cancelar</button>
+              </form>
+
+              <form id="cp-dados-codigo-form" hidden novalidate>
+                <p id="cp-dados-codigo-texto"></p>
+                <label class="auth-field-label" for="cp-dados-codigo" data-i18n="account.dados.code.label">Código de 6 dígitos</label>
+                <input class="cp-field" id="cp-dados-codigo" name="codigo" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required />
+                <button type="submit" class="btn btn-primary btn-block" id="cp-dados-codigo-enviar" data-i18n="account.dados.code.submit">Confirmar novo e-mail</button>
+                <button type="button" class="btn btn-secondary btn-block" id="cp-dados-codigo-cancelar" data-i18n="account.dados.code.cancel">Cancelar</button>
+              </form>
+
+              <div class="notice" id="cp-dados-email-status" role="status" hidden></div>
+            </div>
+          </section>
         </div>
       </div>
     </section>
@@ -119,12 +154,13 @@
     <img src="assets/img/icones-recebidos/whatsapp.png" alt="" aria-hidden="true" />
   </button>
 
-  <script src="assets/js/i18n.js?v=20261016e"></script>
+  <script src="assets/js/i18n.js?v=20261023a"></script>
   <script src="assets/js/markets.js?v=20260925c"></script>
   <script src="assets/js/funnel.js?v=20260925c"></script>
   <script src="assets/js/api-config.js?v=20261003a"></script>
   <script src="assets/js/meta-tracking.js?v=20261007a"></script>
   <script src="assets/js/main.js?v=20260925c"></script>
-  <script src="assets/js/account-home.js?v=20261003a"></script>
+  <script src="assets/js/account-home.js?v=20261023a"></script>
+  <script src="assets/js/account-data.js?v=20261023a"></script>
 </body>
 </html>
