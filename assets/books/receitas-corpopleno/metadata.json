@@ -2,23 +2,23 @@
   "_comment": "Fase CorpoPleno Livros 006.2 (2026-10-03) -- traduções da Fase 006.1 APROVADAS por Noemi exatamente como propostas (en-US 'Cookbook', não 'Recipe Book'). textStatus='APPROVED' em todos os 5 idiomas. 'receitas' aqui é genuinamente CULINÁRIO (a arte mostra comida de verdade). 'CorpoPleno' permanece intacto como marca em todos os idiomas, inclusive coreano (alfabeto latino). Nenhuma arte nova gerada.",
   "book_id": "receitas-corpopleno",
   "price": {
-    "_comment": "Preço aprovado por Noemi em 2026-10-09: R$ 200,00 à vista no PIX; no cartão, 4x de R$ 50,00 sem juros (mesmo total de R$ 200,00; parcelamento é apresentação comercial -- não há installmentCount sendo enviado a nenhuma API ainda). FONTE DE VERDADE COMERCIAL continua sendo a Oferta no Cordex (server/funil_vendas_data/ofertas.json); este campo é só para EXIBIÇÃO no site.",
-    "amount": 200.0,
+    "_comment": "Preço alterado por Noemi em 2026-10-23: R$ 100,00 à vista no PIX; no cartão, 4x de R$ 25,00 sem juros (mesmo total de R$ 100,00). Antes era R$ 200,00 (aprovado em 2026-10-09). O valor oficial é sempre BRL; nos outros idiomas o site converte pela cotação de /api/rates (assets/js/price-format.js) e o display abaixo é só fallback sem cotação. FONTE DE VERDADE COMERCIAL continua sendo a Oferta no Cordex (server/funil_vendas_data/ofertas.json); este campo é só para EXIBIÇÃO no site.",
+    "amount": 100.0,
     "currency": "BRL",
-    "priceVersion": "launch-2026-10-09",
+    "priceVersion": "launch-2026-10-23",
     "installments": {
       "card": {
         "count": 4,
-        "value": 50.0,
+        "value": 25.0,
         "interestFree": true
       }
     },
     "display": {
-      "pt-BR": "R$ 200,00 no PIX ou 4x de R$ 50,00 sem juros no cartão",
-      "pt-PT": "R$ 200,00 no PIX ou 4x de R$ 50,00 sem juros no cartão",
-      "en-US": "R$ 200.00 (BRL) via PIX or 4x R$ 50.00 interest-free by card",
-      "ko-KR": "PIX 결제 시 R$ 200.00, 카드 결제 시 무이자 4개월 할부 R$ 50.00",
-      "es-CL": "R$ 200,00 por PIX o 4 cuotas de R$ 50,00 sin interés con tarjeta"
+      "pt-BR": "R$ 100,00 no PIX ou 4x de R$ 25,00 sem juros no cartão",
+      "pt-PT": "R$ 100,00 no PIX ou 4x de R$ 25,00 sem juros no cartão",
+      "en-US": "R$ 100.00 (BRL) via PIX or 4x R$ 25.00 interest-free by card",
+      "ko-KR": "PIX 결제 시 R$ 100.00, 카드 결제 시 무이자 4개월 할부 R$ 25.00",
+      "es-CL": "R$ 100,00 por PIX o 4 cuotas de R$ 25,00 sin interés con tarjeta"
     }
   },
   "pageCount": 439,

@@ -77,7 +77,7 @@ Asaas ──webhook──> /api/books/webhook ──> D1 (PAID + livros liberado
 |---|---|---|
 | Henê Sem Medo, livros 1 e 2 | R$ 39,90 cada | o próprio livro |
 | Os 2 livros "O Amor…" | R$ 29,90 cada | o próprio livro |
-| Receitas | R$ 200,00 (até 4x no cartão) | o próprio livro |
+| Receitas | R$ 100,00 (até 4x no cartão) | o próprio livro |
 | Combo Henê | R$ 70,00 | Henê livros 1 e 2 |
 | Combo Romance | R$ 50,00 | os 2 livros "O Amor…" |
 
@@ -357,7 +357,7 @@ Checkpoint antes da fase: tag `checkpoint-pre-resumos-20261016`. Verificado no C
 - o link "Voltar aos livros";
 - **nenhuma mensagem no console**.
 
-Os preços continuam R$ 39,90 · 39,90 · 70,00 · 29,90 · 29,90 · 50,00 · 200,00. `produtos.html#livros` abre com a aba Livros selecionada.
+Os preços continuam R$ 39,90 · 39,90 · 70,00 · 29,90 · 29,90 · 50,00 · 100,00. `produtos.html#livros` abre com a aba Livros selecionada.
 
 ### Fases anteriores (testes locais com D1 local e stub do Asaas)
 

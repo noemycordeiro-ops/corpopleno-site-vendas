@@ -46,7 +46,7 @@ Cada arquivo contém:
 
 ### 4. Preço e Status
 
-- **Preço atual:** R$ 200,00 (PIX) ou 4x R$ 50,00 (cartão)
+- **Preço atual:** R$ 100,00 (PIX) ou 4x R$ 25,00 (cartão)
 - **Status:** READY (disponível para compra)
 - **Disponibilidade:** pt-BR, en-US, pt-PT (es-CL e ko-KR pendentes)
 
@@ -58,7 +58,7 @@ O livro já está mapeado em `ofertas.json`:
 ```json
 "receitas-corpopleno": {
   "productId": "receitas-corpopleno",
-  "precoAtual": 200.00,
+  "precoAtual": 100.00,
   ...
 }
 ```

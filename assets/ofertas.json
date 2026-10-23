@@ -120,7 +120,7 @@
     "nome": "Livro de Receitas CorpoPleno",
     "categoria": "Livro Digital",
     "descricaoCurta": "Receitas culinárias da Coleção CorpoPleno Alimentação",
-    "precoAtual": 200.00,
+    "precoAtual": 100.00,
     "moeda": "BRL",
     "status": "PRECO_CONFIGURADO",
     "destinoVenda": {
@@ -132,6 +132,6 @@
       "allowedPaymentMethods": ["PIX", "CREDIT_CARD"],
       "chargeType": "DETACHED"
     },
-    "atualizadoEm": "2026-10-12T00:00:00Z"
+    "atualizadoEm": "2026-10-23T00:00:00Z"
   }
 }

@@ -153,7 +153,7 @@
         available_locales: ["pt-BR", "pt-PT", "en-US", "ko-KR", "es-CL"],
         price_status: "SET",
         purchase_status: "AVAILABLE",
-        price: 200.00,
+        price: 100.00,
         asaas_product_id: "receitas-corpopleno",
         reader_available: false,
         content_status: "READY",
