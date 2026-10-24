@@ -64,34 +64,18 @@
   }
 
   /* =======================================================================
-     CONFIGURAÇÃO ÚNICA DO WHATSAPP CORPOPLENO
-     Altere APENAS o valor de "numero" abaixo se o número oficial da
-     CorpoPleno mudar (formato E.164 sem símbolos, ex.: "5511999999999").
-     Nenhum outro arquivo precisa ser tocado: o botão flutuante, o rodapé e o
-     cartão de Atendimento leem todos daqui. A mensagem inicial não fica
-     fixa em português: vem de "whatsapp.initial_message" no i18n.js,
-     seguindo sempre o idioma atual do site — nunca hardcoded aqui, para
-     nunca divergir da tradução oficial de cada idioma.
+     CONFIGURAÇÃO ÚNICA DO TELEGRAM CORPOPLENO
+     Altere APENAS o valor de "username" abaixo se o bot oficial mudar.
+     O botão flutuante, o rodapé e o cartão de Atendimento leem todos daqui.
      ======================================================================= */
-  var CP_WHATSAPP = {
-    // WhatsApp Business CorpoPleno real (não é mais um placeholder).
-    numero: "5511999356501",
-    // Formato de exibição pública — mesmo dado objetivo em todos os 5
-    // idiomas (nunca traduzido, só o rótulo "WhatsApp" ao lado é que já
-    // vem localizado por "footer.contact.whatsapp_label").
-    numeroExibicao: "+55 11 99935-6501"
+  var CP_TELEGRAM = {
+    username: "CorpoPlenoAtendimentoBot",
+    numeroExibicao: "@CorpoPlenoAtendimentoBot"
   };
 
-  function cpWhatsappMensagemInicial() {
-    return currentLangText(
-      "whatsapp.initial_message",
-      "Olá! Vim pelo site da CorpoPleno e gostaria de atendimento."
-    );
-  }
-
-  function cpWhatsappLink() {
-    if (!CP_WHATSAPP.numero) return null;
-    return "https://wa.me/" + CP_WHATSAPP.numero + "?text=" + encodeURIComponent(cpWhatsappMensagemInicial());
+  function cpTelegramLink() {
+    if (!CP_TELEGRAM.username) return null;
+    return "https://t.me/" + CP_TELEGRAM.username;
   }
 
   function setupWhatsappFloat() {
@@ -99,11 +83,7 @@
 
     if (floatBtn) {
       floatBtn.addEventListener("click", function () {
-        /* Recalculado a cada clique (nunca capturado uma vez só) para que
-           a mensagem inicial sempre acompanhe o idioma ATUAL do site,
-           mesmo que a pessoa tenha trocado de idioma depois de a página
-           carregar — nunca mistura pt-BR/pt-PT/en-US/ko-KR/es-CL. */
-        var link = cpWhatsappLink();
+        var link = cpTelegramLink();
         if (link) {
           window.open(link, "_blank", "noopener,noreferrer");
         }
@@ -111,7 +91,7 @@
     }
 
     function refreshWhatsappUI() {
-      var link = cpWhatsappLink();
+      var link = cpTelegramLink();
 
       if (floatBtn) {
         /* Sem número real configurado: o botão fica pronto no código, mas
@@ -120,12 +100,10 @@
         floatBtn.hidden = !link;
       }
 
-      /* Reflete no rodapé de todas as páginas: "WhatsApp: +55 11 99935-6501",
-         número inteiro clicável, abrindo o link real (com a mensagem
-         inicial no idioma atual) — ajuste aprovado em 2026-09-21. */
+      /* Reflete no rodapé de todas as páginas: "Telegram: @CorpoPlenoAtendimentoBot", clicável, abrindo o link real. */
       document.querySelectorAll("[data-whatsapp-status]").forEach(function (el) {
         if (!link) return;
-        var label = CP_WHATSAPP.numeroExibicao;
+        var label = CP_TELEGRAM.numeroExibicao;
         if (el.tagName === "A") {
           el.href = link;
           el.textContent = label;
@@ -151,7 +129,7 @@
   /* =======================================================================
      BLOQUEIO LEVE DE SELEÇÃO/CÓPIA (obstáculo, não segurança real)
      Restrito ao conteúdo principal (#conteudo-principal) — o rodapé e
-     qualquer elemento marcado com a classe "allow-select" (e-mail/WhatsApp
+     qualquer elemento marcado com a classe "allow-select" (e-mail/Telegram
      de contato) continuam funcionando normalmente: selecionáveis, com menu
      de botão direito e copiáveis. Não impede ver o código-fonte, desativar
      JavaScript, usar ferramentas de desenvolvedor, nem captura de tela —
@@ -236,7 +214,7 @@
         return;
       }
       var message = currentLangText("support.form.pending", "");
-      if (cpWhatsappLink()) {
+      if (cpTelegramLink()) {
         message += " " + currentLangText("support.form.pending_whatsapp", "");
       }
       status.textContent = message;

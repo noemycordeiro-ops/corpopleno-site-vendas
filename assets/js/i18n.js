@@ -248,9 +248,7 @@
       "common.price_unavailable": "Preço indisponível neste mercado.",
       "common.partial_notice":
         "Esta página ainda está totalmente disponível apenas em português. A tradução completa deste conteúdo está em preparação.",
-      "whatsapp.float_label": "Falar pelo WhatsApp com a CorpoPleno",
-      "whatsapp.initial_message":
-        "Olá! Vim pelo site da CorpoPleno e gostaria de atendimento.",
+      "whatsapp.float_label": "Falar pelo Telegram com a CorpoPleno",
       "account.pending_toast":
         "Área do cliente em preparação. O login real será conectado futuramente a um backend seguro — nenhuma autenticação existe nesta versão.",
 
@@ -263,8 +261,8 @@
       "footer.legal.title": "Legal",
       "footer.contact.title": "Contato",
       "footer.contact.email_label": "E-mail",
-      "footer.contact.whatsapp_label": "WhatsApp",
-      "footer.contact.whatsapp_link_label": "Falar pelo WhatsApp",
+      "footer.contact.whatsapp_label": "Telegram",
+      "footer.contact.whatsapp_link_label": "Falar pelo Telegram",
       "footer.contact.pending": "Canal em configuração",
 
       "legal.company_id.title": "Identificação da empresa",
@@ -436,7 +434,7 @@
       "support.form.send": "ENVIAR",
       "support.form.pending":
         "Este canal de envio direto está sendo preparado com segurança. Assim que estiver pronto, sua mensagem seguirá diretamente para o atendimento CorpoPleno.",
-      "support.form.pending_whatsapp": "Enquanto isso, você também pode falar com a gente pelo WhatsApp.",
+      "support.form.pending_whatsapp": "Enquanto isso, você também pode falar com a gente pelo Telegram.",
 
       "terms.hero.eyebrow": "Documento legal",
       "terms.hero.title": "Termos de Uso",
@@ -753,9 +751,7 @@
       "common.price_unavailable": "Preço indisponível neste mercado.",
       "common.partial_notice":
         "Esta página ainda está totalmente disponível apenas em português. A tradução completa deste conteúdo está em preparação.",
-      "whatsapp.float_label": "Falar através do WhatsApp com a CorpoPleno",
-      "whatsapp.initial_message":
-        "Olá! Vim através do site da CorpoPleno e gostaria de apoio.",
+      "whatsapp.float_label": "Falar através do Telegram com a CorpoPleno",
       "account.pending_toast":
         "A área de cliente está em preparação. O início de sessão real será ligado futuramente a um backend seguro — não existe qualquer autenticação nesta versão.",
 
@@ -768,8 +764,8 @@
       "footer.legal.title": "Legal",
       "footer.contact.title": "Contacto",
       "footer.contact.email_label": "E-mail",
-      "footer.contact.whatsapp_label": "WhatsApp",
-      "footer.contact.whatsapp_link_label": "Falar através do WhatsApp",
+      "footer.contact.whatsapp_label": "Telegram",
+      "footer.contact.whatsapp_link_label": "Falar através do Telegram",
       "footer.contact.pending": "Canal em configuração",
 
       "legal.company_id.title": "Identificação da empresa",
@@ -941,7 +937,7 @@
       "support.form.send": "ENVIAR",
       "support.form.pending":
         "Este canal de envio direto está a ser preparado com segurança. Assim que estiver pronto, a sua mensagem seguirá diretamente para o apoio ao cliente CorpoPleno.",
-      "support.form.pending_whatsapp": "Entretanto, também pode falar connosco pelo WhatsApp.",
+      "support.form.pending_whatsapp": "Entretanto, também pode falar connosco pelo Telegram.",
 
       "terms.hero.eyebrow": "Documento legal",
       "terms.hero.title": "Termos de Utilização",
@@ -1262,9 +1258,7 @@
       "common.price_unavailable": "Price unavailable in this market.",
       "common.partial_notice":
         "This page is currently fully available in Portuguese only. A complete translation is in progress.",
-      "whatsapp.float_label": "Chat with CorpoPleno on WhatsApp",
-      "whatsapp.initial_message":
-        "Hello! I came from the CorpoPleno website and would like assistance.",
+      "whatsapp.float_label": "Chat with CorpoPleno on Telegram",
       "account.pending_toast":
         "Customer area in preparation. Real login will be connected to a secure backend in the future — no authentication exists in this version.",
 
@@ -1277,8 +1271,8 @@
       "footer.legal.title": "Legal",
       "footer.contact.title": "Contact",
       "footer.contact.email_label": "Email",
-      "footer.contact.whatsapp_label": "WhatsApp",
-      "footer.contact.whatsapp_link_label": "Chat on WhatsApp",
+      "footer.contact.whatsapp_label": "Telegram",
+      "footer.contact.whatsapp_link_label": "Chat on Telegram",
       "footer.contact.pending": "Channel being set up",
 
       "legal.company_id.title": "Company identification",
@@ -1449,7 +1443,7 @@
       "support.form.send": "SEND",
       "support.form.pending":
         "This direct sending channel is being securely set up. Once it's ready, your message will go straight to CorpoPleno support.",
-      "support.form.pending_whatsapp": "In the meantime, you can also talk to us on WhatsApp.",
+      "support.form.pending_whatsapp": "In the meantime, you can also talk to us on Telegram.",
 
       "terms.hero.eyebrow": "Legal document",
       "terms.hero.title": "Terms of Use",
@@ -1770,9 +1764,7 @@
       "common.price_unavailable": "이 시장에서는 가격을 이용할 수 없습니다.",
       "common.partial_notice":
         "이 페이지는 현재 포르투갈어로만 전체 내용을 제공합니다. 전체 번역은 준비 중입니다.",
-      "whatsapp.float_label": "코르포플레노와 왓츠앱으로 상담하기",
-      "whatsapp.initial_message":
-        "안녕하세요! 코르포플레노 웹사이트를 통해 왔으며, 상담을 받고 싶습니다.",
+      "whatsapp.float_label": "코르포플레노와 텔레그램으로 상담하기",
       "account.pending_toast":
         "고객 전용 공간은 준비 중입니다. 실제 로그인은 향후 안전한 백엔드와 연결될 예정이며, 이 버전에는 인증 기능이 없습니다.",
 
@@ -1785,8 +1777,8 @@
       "footer.legal.title": "법적 정보",
       "footer.contact.title": "연락처",
       "footer.contact.email_label": "이메일",
-      "footer.contact.whatsapp_label": "왓츠앱",
-      "footer.contact.whatsapp_link_label": "왓츠앱으로 문의하기",
+      "footer.contact.whatsapp_label": "텔레그램",
+      "footer.contact.whatsapp_link_label": "텔레그램으로 문의하기",
       "footer.contact.pending": "채널 설정 중",
 
       "legal.company_id.title": "기업 식별 정보",
@@ -1953,7 +1945,7 @@
       "support.form.send": "보내기",
       "support.form.pending":
         "이 직접 전송 채널은 안전하게 준비 중입니다. 준비가 완료되면 메시지가 CorpoPleno 고객지원으로 바로 전달됩니다.",
-      "support.form.pending_whatsapp": "그동안 WhatsApp으로도 문의하실 수 있습니다.",
+      "support.form.pending_whatsapp": "그동안 텔레그램으로도 문의하실 수 있습니다.",
 
       "terms.hero.eyebrow": "법적 문서",
       "terms.hero.title": "이용약관",
@@ -2273,9 +2265,7 @@
       "common.price_unavailable": "Precio no disponible en este mercado.",
       "common.partial_notice":
         "Esta página todavía está disponible por completo solo en portugués. La traducción completa está en preparación.",
-      "whatsapp.float_label": "Hablar con CorpoPleno por WhatsApp",
-      "whatsapp.initial_message":
-        "¡Hola! Vengo del sitio de CorpoPleno y quisiera recibir atención.",
+      "whatsapp.float_label": "Hablar con CorpoPleno por Telegram",
       "account.pending_toast":
         "Área del cliente en preparación. El inicio de sesión real se conectará en el futuro a un backend seguro — no existe autenticación en esta versión.",
 
@@ -2288,8 +2278,8 @@
       "footer.legal.title": "Legal",
       "footer.contact.title": "Contacto",
       "footer.contact.email_label": "Correo electrónico",
-      "footer.contact.whatsapp_label": "WhatsApp",
-      "footer.contact.whatsapp_link_label": "Hablar por WhatsApp",
+      "footer.contact.whatsapp_label": "Telegram",
+      "footer.contact.whatsapp_link_label": "Hablar por Telegram",
       "footer.contact.pending": "Canal en configuración",
 
       "legal.company_id.title": "Identificación de la empresa",
@@ -2460,7 +2450,7 @@
       "support.form.send": "ENVIAR",
       "support.form.pending":
         "Este canal de envío directo se está preparando con seguridad. En cuanto esté listo, tu mensaje irá directamente a la atención CorpoPleno.",
-      "support.form.pending_whatsapp": "Mientras tanto, también puedes hablar con nosotros por WhatsApp.",
+      "support.form.pending_whatsapp": "Mientras tanto, también puedes hablar con nosotros por Telegram.",
 
       "terms.hero.eyebrow": "Documento legal",
       "terms.hero.title": "Términos de Uso",
