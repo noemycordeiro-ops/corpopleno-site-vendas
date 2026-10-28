@@ -431,6 +431,10 @@
 
 
 
+      "legal.terms.page_title": "Termos de Uso — CorpoPleno",
+      "legal.terms.meta_description": "Termos de Uso do site público CorpoPleno.",
+      "legal.privacy.page_title": "Política de Privacidade — CorpoPleno",
+      "legal.privacy.meta_description": "Política de Privacidade do site público CorpoPleno.",
       "legal.toc.title": "Índice",
       "legal.contact.title": "Contato",
       "legal.contact.brand_label": "Marca",
@@ -940,6 +944,10 @@
 
 
 
+      "legal.terms.page_title": "Termos de Utilização — CorpoPleno",
+      "legal.terms.meta_description": "Termos de Utilização do site público CorpoPleno.",
+      "legal.privacy.page_title": "Política de Privacidade — CorpoPleno",
+      "legal.privacy.meta_description": "Política de Privacidade do site público CorpoPleno.",
       "legal.toc.title": "Índice",
       "legal.contact.title": "Contacto",
       "legal.contact.brand_label": "Marca",
@@ -1450,6 +1458,10 @@
 
 
 
+      "legal.terms.page_title": "Terms of Use — CorpoPleno",
+      "legal.terms.meta_description": "Terms of Use of the CorpoPleno public website.",
+      "legal.privacy.page_title": "Privacy Policy — CorpoPleno",
+      "legal.privacy.meta_description": "Privacy Policy of the CorpoPleno public website.",
       "legal.toc.title": "Contents",
       "legal.contact.title": "Contact",
       "legal.contact.brand_label": "Brand",
@@ -1956,6 +1968,10 @@
 
 
 
+      "legal.terms.page_title": "이용약관 — CorpoPleno",
+      "legal.terms.meta_description": "CorpoPleno 공개 웹사이트의 이용약관입니다.",
+      "legal.privacy.page_title": "개인정보처리방침 — CorpoPleno",
+      "legal.privacy.meta_description": "CorpoPleno 공개 웹사이트의 개인정보처리방침입니다.",
       "legal.toc.title": "목차",
       "legal.contact.title": "연락처",
       "legal.contact.brand_label": "브랜드",
@@ -2466,6 +2482,10 @@
 
 
 
+      "legal.terms.page_title": "Términos de Uso — CorpoPleno",
+      "legal.terms.meta_description": "Términos de Uso del sitio público CorpoPleno.",
+      "legal.privacy.page_title": "Política de Privacidad — CorpoPleno",
+      "legal.privacy.meta_description": "Política de Privacidad del sitio público CorpoPleno.",
       "legal.toc.title": "Índice",
       "legal.contact.title": "Contacto",
       "legal.contact.brand_label": "Marca",
@@ -2638,6 +2658,12 @@
     for (var h = 0; h < htmlNodes.length; h++) {
       var hKey = htmlNodes[h].getAttribute("data-i18n-html");
       htmlNodes[h].innerHTML = t(hKey, lang);
+    }
+
+    var contentNodes = document.querySelectorAll("[data-i18n-content]");
+    for (var c = 0; c < contentNodes.length; c++) {
+      var cKey = contentNodes[c].getAttribute("data-i18n-content");
+      contentNodes[c].setAttribute("content", t(cKey, lang));
     }
 
     var placeholders = document.querySelectorAll("[data-i18n-placeholder]");
