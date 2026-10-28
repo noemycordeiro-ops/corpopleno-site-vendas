@@ -2634,6 +2634,12 @@
       nodes[i].textContent = t(key, lang);
     }
 
+    var htmlNodes = document.querySelectorAll("[data-i18n-html]");
+    for (var h = 0; h < htmlNodes.length; h++) {
+      var hKey = htmlNodes[h].getAttribute("data-i18n-html");
+      htmlNodes[h].innerHTML = t(hKey, lang);
+    }
+
     var placeholders = document.querySelectorAll("[data-i18n-placeholder]");
     for (var j = 0; j < placeholders.length; j++) {
       var pKey = placeholders[j].getAttribute("data-i18n-placeholder");
