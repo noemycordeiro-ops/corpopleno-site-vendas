@@ -1178,7 +1178,7 @@
       "footer.about.body":
         "Education, technology and care brought together for a CorpoPleno experience that is simple, accessible and responsible.",
       "footer.about.cnpj": "Brazilian company registration (CNPJ): 68.987.084/0001-32",
-      "footer.about.location": "São Paulo, SP, Brazil",
+      "footer.about.location": "São Paulo, SP, Brasil",
       "footer.links.title": "Navigation",
       "footer.legal.title": "Legal",
       "footer.contact.title": "Contact",
@@ -1590,7 +1590,7 @@
       "footer.about.body":
         "교육, 기술, 돌봄을 하나로 모아 간단하고 접근성 높은, 책임감 있는 코르포플레노 경험을 제공합니다.",
       "footer.about.cnpj": "브라질 사업자등록번호(CNPJ): 68.987.084/0001-32",
-      "footer.about.location": "브라질 상파울루, SP",
+      "footer.about.location": "São Paulo, SP, Brasil",
       "footer.links.title": "메뉴",
       "footer.legal.title": "법적 정보",
       "footer.contact.title": "연락처",
