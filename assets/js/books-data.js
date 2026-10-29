@@ -40,10 +40,9 @@
   // ora (nomes oficiais fornecidos só nesse idioma; nunca traduzidos
   // automaticamente).
   global.CP_BOOK_COLLECTIONS = [
-    // Fase Livros 020 -- nomes nos 5 idiomas (pt-PT/en-US/ko-KR/es-CL a revisar pela Noemi).
-    { id: "hene-sem-medo", name: { "pt-BR": "Coleção Henê Sem Medo", "pt-PT": "Coleção Henê Sem Medo", "en-US": "Henê Without Fear Collection", "ko-KR": "Henê, 두려움 없이 컬렉션", "es-CL": "Colección Henê Sin Miedo" } },
-    { id: "historias-aprendizado-familiar", name: { "pt-BR": "Coleção Histórias de Aprendizado Familiar", "pt-PT": "Coleção Histórias de Aprendizagem Familiar", "en-US": "Family Learning Stories Collection", "ko-KR": "가족이 함께 배우는 이야기 컬렉션", "es-CL": "Colección Historias de Aprendizaje Familiar" } },
-    { id: "corpopleno-alimentacao", name: { "pt-BR": "Coleção CorpoPleno Alimentação", "pt-PT": "Coleção CorpoPleno Alimentação", "en-US": "CorpoPleno Nutrition Collection", "ko-KR": "CorpoPleno 식생활 컬렉션", "es-CL": "Colección CorpoPleno Alimentación" } },
+    { id: "hene-sem-medo", name: { "pt-BR": "Coleção Henê Sem Medo" } },
+    { id: "historias-aprendizado-familiar", name: { "pt-BR": "Coleção Histórias de Aprendizado Familiar" } },
+    { id: "corpopleno-alimentacao", name: { "pt-BR": "Coleção CorpoPleno Alimentação" } },
   ];
 
   global.CP_BOOKS = {
@@ -85,6 +84,7 @@
         purchase_status: "AVAILABLE",
         price: 39.90,
         asaas_product_id: "hene-sem-medo-livro-1",
+        kiwify_checkout_link: "https://pay.kiwify.com.br/kiCxphA",
         reader_available: false,
         content_status: "READY",
         metadataUrl: "assets/books/hene-sem-medo-livro-1/metadata.json",
@@ -100,31 +100,23 @@
         purchase_status: "AVAILABLE",
         price: 39.90,
         asaas_product_id: "hene-sem-medo-livro-2",
+        kiwify_checkout_link: "https://pay.kiwify.com.br/dfQqpUJ",
         reader_available: false,
         content_status: "READY",
         metadataUrl: "assets/books/hene-sem-medo-livro-2/metadata.json",
       },
       {
-        // Fase CorpoPleno Livros 008 (2026-10-04) — preço de lançamento
-        // aprovado (R$ 29,90, ver metadata.json) e checkout backend
-        // preparado (POST /api/books/:bookId/checkout no Cordex, reusa
-        // prepararTentativaPagamento()/criarOuReutilizarContrato() já
-        // existentes -- nenhuma chamada real ao Asaas ainda). status
-        // continua "READY", nunca "PUBLISHED": falta ainda ligar o botão
-        // "Comprar" do site a este endpoint e autorizar a primeira
-        // cobrança Sandbox real antes de publicar. purchase_status
-        // continua "NOT_AVAILABLE" de propósito (flag do SITE, nunca
-        // ativada automaticamente só porque o backend está pronto).
         id: "amor-que-aprendeu-a-ficar",
         book_id: "amor-que-aprendeu-a-ficar",
         slug: "amor-que-aprendeu-a-ficar",
         collection: "historias-aprendizado-familiar",
         status: "PUBLISHED",
-        available_locales: ["pt-BR", "pt-PT"],
+        available_locales: ["pt-BR", "pt-PT", "en-US", "es-CL", "ko-KR"],
         price_status: "SET",
         purchase_status: "AVAILABLE",
         price: 29.90,
         asaas_product_id: "amor-que-aprendeu-a-ficar",
+        kiwify_checkout_link: "https://pay.kiwify.com.br/mg6PGKO",
         reader_available: false,
         content_status: "READY",
         metadataUrl: "assets/books/amor-que-aprendeu-a-ficar/metadata.json",
@@ -140,6 +132,7 @@
         purchase_status: "AVAILABLE",
         price: 29.90,
         asaas_product_id: "amor-que-ensina-a-crescer",
+        kiwify_checkout_link: "https://pay.kiwify.com.br/Ta1TR0E",
         reader_available: false,
         content_status: "READY",
         metadataUrl: "assets/books/amor-que-ensina-a-crescer/metadata.json",
@@ -150,11 +143,12 @@
         slug: "receitas-corpopleno",
         collection: "corpopleno-alimentacao",
         status: "PUBLISHED",
-        available_locales: ["pt-BR", "pt-PT", "en-US", "ko-KR", "es-CL"],
+        available_locales: ["pt-BR", "en-US", "pt-PT"],
         price_status: "SET",
         purchase_status: "AVAILABLE",
         price: 100.00,
         asaas_product_id: "receitas-corpopleno",
+        kiwify_checkout_link: "https://pay.kiwify.com.br/vM7IVaD",
         reader_available: false,
         content_status: "READY",
         metadataUrl: "assets/books/receitas-corpopleno/metadata.json",
@@ -172,6 +166,7 @@
         is_combo: true,
         combo_items: ["hene-sem-medo-livro-1", "hene-sem-medo-livro-2"],
         asaas_product_id: "hene-sem-medo-combo",
+        kiwify_checkout_link: "https://pay.kiwify.com.br/7IRPb9i",
         reader_available: false,
         content_status: "READY",
         metadataUrl: "assets/books/hene-sem-medo-combo/metadata.json",
@@ -182,13 +177,14 @@
         slug: "romance-combo",
         collection: "historias-aprendizado-familiar",
         status: "PUBLISHED",
-        available_locales: ["pt-BR", "pt-PT"],
+        available_locales: ["pt-BR", "en-US", "es-CL", "ko-KR", "pt-PT"],
         price_status: "SET",
         purchase_status: "AVAILABLE",
         price: 50.00,
         is_combo: true,
         combo_items: ["amor-que-aprendeu-a-ficar", "amor-que-ensina-a-crescer"],
         asaas_product_id: "romance-combo",
+        kiwify_checkout_link: "https://pay.kiwify.com.br/cMSH8YM",
         reader_available: false,
         content_status: "READY",
         metadataUrl: "assets/books/romance-combo/metadata.json",

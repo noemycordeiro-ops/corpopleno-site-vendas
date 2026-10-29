@@ -24,9 +24,7 @@
 
   function t(key, fallback) {
     if (window.CP_I18N && typeof window.CP_I18N.t === "function") {
-      var traduzido = window.CP_I18N.t(key, currentLang());
-      // i18n.js devolve a própria chave quando ela não existe -- usa o fallback.
-      return traduzido === key && fallback ? fallback : traduzido;
+      return window.CP_I18N.t(key, currentLang());
     }
     return fallback || key;
   }
@@ -37,114 +35,6 @@
 
   var currentMeta = null;
   var currentItem = null;
-
-  /* ---------------------------------------------------------------------
-     Fase Livros 016 (2026-10-16) — resumo comercial oficial do livro
-     (metadata.json, campo summary[idioma], texto literal aprovado).
-     Markdown SIMPLES convertido para DOM com createElement/textContent:
-     parágrafos (linha em branco), listas "- ", **negrito**, *itálico*.
-     Nunca usa innerHTML -- qualquer outro caractere vira texto puro.
-     Combos mostram o resumo de cada livro do combo, com subtítulo.
-     --------------------------------------------------------------------- */
-  var summaryCache = {};
-  var summaryGeneration = 0;
-
-  function appendInline(parent, text) {
-    var re = /\*\*([^*]+)\*\*|\*([^*]+)\*/g;
-    var last = 0;
-    var m;
-    while ((m = re.exec(text)) !== null) {
-      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
-      var node = document.createElement(m[1] != null ? "strong" : "em");
-      node.textContent = m[1] != null ? m[1] : m[2];
-      parent.appendChild(node);
-      last = re.lastIndex;
-    }
-    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
-  }
-
-  function renderSimpleMarkdown(md, container) {
-    var blocks = String(md || "").replace(/\r\n/g, "\n").split(/\n\s*\n/);
-    blocks.forEach(function (block) {
-      var lines = block.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
-      if (lines.length === 0) return;
-      if (lines.every(function (l) { return /^- /.test(l); })) {
-        var ul = document.createElement("ul");
-        ul.className = "book-summary__list";
-        lines.forEach(function (l) {
-          var li = document.createElement("li");
-          appendInline(li, l.slice(2));
-          ul.appendChild(li);
-        });
-        container.appendChild(ul);
-        return;
-      }
-      var p = document.createElement("p");
-      var joined = lines.join("\n");
-      if (/^\*[^*][\s\S]*[^*]\*$/.test(joined)) {
-        p.className = "book-summary__notice"; // aviso de segurança/legal em itálico
-      } else if (/^\*\*[\s\S]+\*\*$/.test(joined)) {
-        p.className = "book-summary__lead";
-      } else if (/^✅/.test(joined)) {
-        p.className = "book-summary__check";
-      }
-      lines.forEach(function (l, i) {
-        if (i > 0) p.appendChild(document.createElement("br"));
-        appendInline(p, l);
-      });
-      container.appendChild(p);
-    });
-  }
-
-  function summaryOf(meta, lang) {
-    if (!meta || !meta.summary) return null;
-    return meta.summary[lang] || meta.summary["pt-BR"] || null;
-  }
-
-  function loadMeta(bookId) {
-    if (summaryCache[bookId]) return Promise.resolve(summaryCache[bookId]);
-    return fetch("assets/books/" + encodeURIComponent(bookId) + "/metadata.json")
-      .then(function (res) {
-        if (!res.ok) throw new Error("metadata_fetch_failed");
-        return res.json();
-      })
-      .then(function (meta) { summaryCache[bookId] = meta; return meta; });
-  }
-
-  function renderSummary(meta, lang) {
-    var box = document.getElementById("cp-book-summary");
-    if (!box) return;
-    var myGen = ++summaryGeneration;
-    box.textContent = "";
-    box.hidden = true;
-
-    var own = summaryOf(meta, lang);
-    if (own) {
-      renderSimpleMarkdown(own, box);
-      box.hidden = false;
-      return;
-    }
-    var items = Array.isArray(meta.combo_items) ? meta.combo_items : [];
-    if (items.length === 0) return;
-    Promise.all(items.map(function (id) { return loadMeta(id).catch(function () { return null; }); }))
-      .then(function (metas) {
-        if (myGen !== summaryGeneration) return;
-        var rotulos = meta.combo_item_labels ? (meta.combo_item_labels[lang] || meta.combo_item_labels["pt-BR"] || []) : [];
-        metas.forEach(function (itemMeta, idx) {
-          var texto = summaryOf(itemMeta, lang);
-          if (!texto) return;
-          var section = document.createElement("section");
-          section.className = "book-summary__part";
-          var h2 = document.createElement("h2");
-          h2.className = "book-summary__part-title";
-          h2.textContent = rotulos[idx] || localeOf(itemMeta, lang).title;
-          section.appendChild(h2);
-          renderSimpleMarkdown(texto, section);
-          box.appendChild(section);
-        });
-        box.hidden = box.childNodes.length === 0;
-      });
-  }
 
   function render() {
     if (!currentMeta) return;
@@ -165,45 +55,14 @@
     );
 
     document.getElementById("cp-book-title").textContent = ed.title;
-    document.getElementById("cp-book-subtitle").textContent = ed.subtitle || "";
-    var descEl = document.getElementById("cp-book-description");
-    descEl.textContent = ed.description || "";
-    descEl.hidden = !ed.description;
-    renderSummary(currentMeta, lang);
-    // Idiomas em que o CONTEÚDO do livro existe de verdade (books-data.js,
-    // available_locales). Nunca anunciar como "edição" um idioma que o
-    // leitor não entrega -- o aviso abaixo informa ANTES da compra.
-    var nomeIdioma = function (l) { return window.CP_I18N && window.CP_I18N.langName ? window.CP_I18N.langName(l) : l; };
-    var reais = (currentItem && currentItem.available_locales) || ["pt-BR"];
-    var temEdicao = reais.indexOf(lang) !== -1 || (lang === "pt-BR" && reais.indexOf("pt-BR") !== -1);
-    var nomesReais = reais.map(nomeIdioma).filter(function (n, i, arr) { return arr.indexOf(n) === i; });
-    document.getElementById("cp-book-language").textContent = temEdicao ? nomeIdioma(lang) : nomesReais.join(", ");
+    document.getElementById("cp-book-subtitle").textContent = ed.subtitle;
+    document.getElementById("cp-book-description").textContent = ed.description;
+    document.getElementById("cp-book-language").textContent = lang;
     document.getElementById("cp-book-pages").textContent =
       currentMeta.pageCount != null ? String(currentMeta.pageCount) : t("book.detail.pages_pending", "A definir");
     document.getElementById("cp-book-price").textContent = currentMeta.price
-      ? ((window.CP_PRICE && window.CP_PRICE.formatar(currentMeta, lang)) || currentMeta.price.display[lang] || currentMeta.price.display["pt-BR"])
+      ? (currentMeta.price.display[lang] || currentMeta.price.display["pt-BR"])
       : t("books.card.price_pending", "Preço a definir");
-
-    // Valor cobrado no checkout: sempre em R$ (BRL), nunca o convertido.
-    var cobrado = document.getElementById("cp-checkout-amount");
-    if (cobrado && currentMeta.price && window.CP_PRICE) {
-      cobrado.textContent = t("book.checkout.charged_amount", "Valor cobrado: {brl} (em reais, BRL)").replace("{brl}", window.CP_PRICE.brl(currentMeta.price.amount));
-    }
-
-    // Fase Livros 020 -- só mostra "conteúdo somente em pt-BR" quando o
-    // produto realmente não tem tradução neste idioma.
-    var aviso = document.getElementById("cp-partial-translation-notice");
-    if (aviso) {
-      var AVISO = {
-        "pt-BR": "Atenção: o conteúdo deste livro está disponível somente em {l}. A tradução para o seu idioma ainda não existe.",
-        "pt-PT": "Atenção: o conteúdo deste livro está disponível apenas em {l}. A tradução para o seu idioma ainda não existe.",
-        "en-US": "Please note: this book's content is only available in {l}. A translation into your language does not exist yet.",
-        "ko-KR": "안내: 이 책의 내용은 {l}로만 제공됩니다. 귀하의 언어로 된 번역본은 아직 없습니다.",
-        "es-CL": "Atención: el contenido de este libro solo está disponible en {l}. La traducción a tu idioma aún no existe.",
-      };
-      aviso.textContent = (AVISO[lang] || AVISO["pt-BR"]).replace("{l}", nomesReais.join(", "));
-      aviso.hidden = temEdicao;
-    }
 
     document.getElementById("cp-book-detail-found").hidden = false;
     document.getElementById("cp-book-detail-not-found").hidden = true;
@@ -276,33 +135,10 @@
 
   function el(id) { return document.getElementById(id); }
 
-  // Fase Livros 015 -- devolve os dados da sessão (ou null), para saber
-  // se ainda faltam nome/CPF exigidos pelo Asaas na primeira compra.
-  var sessaoAtual = null;
   function estaLogado() {
     return fetch(apiBase() + "/api/auth/me", { credentials: "include" })
-      .then(function (res) { return res.ok ? res.json() : null; })
-      .then(function (dados) {
-        sessaoAtual = dados && dados.autenticado === true ? dados : null;
-        return !!sessaoAtual;
-      })
+      .then(function (res) { return res.ok; })
       .catch(function () { return false; });
-  }
-
-  // Parcelamento no cartão: só onde o servidor permite (Receitas, até 4x).
-  var PRODUTOS_PARCELAVEIS = { "receitas-corpopleno": true };
-  function atualizarCamposExtras() {
-    var metodoEl = document.querySelector('input[name="cp-checkout-method"]:checked');
-    var parcelas = el("cp-checkout-installments-wrap");
-    if (parcelas) {
-      parcelas.hidden = !(metodoEl && metodoEl.value === "CREDIT_CARD" && PRODUTOS_PARCELAVEIS[qs("id") || ""]);
-    }
-    var buyer = el("cp-checkout-buyer");
-    var precisaNome = !(sessaoAtual && sessaoAtual.nome);
-    var precisaDoc = !(sessaoAtual && sessaoAtual.temDocumento);
-    if (el("cp-checkout-name-wrap")) el("cp-checkout-name-wrap").hidden = !precisaNome;
-    if (el("cp-checkout-doc-wrap")) el("cp-checkout-doc-wrap").hidden = !precisaDoc;
-    if (buyer) buyer.hidden = !(precisaNome || precisaDoc);
   }
 
   // Mensagens claras para os códigos de erro reais que
@@ -314,14 +150,9 @@
       PAYMENT_METHOD_NOT_ALLOWED: "book.checkout.error.method_not_allowed",
       CHARGE_TYPE_NOT_SUPPORTED_FOR_BOOKS: "book.checkout.error.method_not_allowed",
       AMBIENTE_ASAAS_NAO_CONFIGURADO: "book.checkout.error.provider_unavailable",
-      BANCO_NAO_CONFIGURADO: "book.checkout.error.provider_unavailable",
       PAYMENT_PROVIDER_UNAVAILABLE: "book.checkout.error.provider_unavailable",
       PAYMENT_PROVIDER_REJECTED: "book.checkout.error.provider_unavailable",
-      CUSTOMER_DOCUMENT_REQUIRED: "book.checkout.error.document_required",
-      CUSTOMER_DOCUMENT_INVALID: "book.checkout.error.document_invalid",
-      CUSTOMER_NAME_REQUIRED: "book.checkout.error.name_required",
-      ALREADY_OWNED: "book.checkout.error.already_owned",
-      PARTIALLY_OWNED: "book.checkout.error.partially_owned",
+      CUSTOMER_DOCUMENT_REQUIRED: "book.checkout.error.provider_unavailable",
       PAYMENT_ATTEMPT_ALREADY_DISPATCHING: "book.checkout.error.already_processing",
       TERMS_NOT_ACCEPTED: "book.checkout.must_accept_terms",
     };
@@ -331,11 +162,6 @@
       "book.checkout.error.method_not_allowed": "Esta forma de pagamento não está disponível para este livro.",
       "book.checkout.error.provider_unavailable": "O pagamento ainda não está disponível. Tente novamente mais tarde.",
       "book.checkout.error.already_processing": "Sua compra já está sendo processada. Aguarde um instante e verifique Meus Livros.",
-      "book.checkout.error.document_required": "Informe seu CPF ou CNPJ para emitir a cobrança.",
-      "book.checkout.error.document_invalid": "CPF ou CNPJ inválido. Confira os números digitados.",
-      "book.checkout.error.name_required": "Informe seu nome completo para emitir a cobrança.",
-      "book.checkout.error.already_owned": "Você já tem este conteúdo. Veja em Meus Livros.",
-      "book.checkout.error.partially_owned": "Você já tem um dos livros deste combo. Para não pagar duas vezes, compre só o volume que falta.",
       "book.checkout.must_accept_terms": "É preciso aceitar os Termos de Uso e a Política de Privacidade para continuar.",
       "book.checkout.error.generic": "Não foi possível iniciar a compra agora. Tente novamente em alguns minutos.",
     };
@@ -369,39 +195,6 @@
     erro.hidden = false;
   }
 
-  // Fase Livros 017 -- depois de mostrar o PIX, pergunta a cada 5 s
-  // (por até 15 min) se o webhook já liberou os livros. Nunca decide nada
-  // no navegador: só lê GET /api/me/books.
-  var aguardandoTimer = null;
-  function aguardarLiberacao() {
-    if (aguardandoTimer || !currentMeta) return;
-    var alvo = Array.isArray(currentMeta.combo_items) && currentMeta.combo_items.length
-      ? currentMeta.combo_items : [qs("id") || ""];
-    var inicio = Date.now();
-    aguardandoTimer = setInterval(function () {
-      if (Date.now() - inicio > 15 * 60 * 1000) { clearInterval(aguardandoTimer); return; }
-      fetch(apiBase() + "/api/me/books", { credentials: "include" })
-        .then(function (res) { return res.ok ? res.json() : null; })
-        .then(function (d) {
-          if (!d || !Array.isArray(d.livros)) return;
-          var meus = d.livros.map(function (l) { return l.bookId; });
-          var liberado = alvo.every(function (b) { return meus.indexOf(b) !== -1; });
-          if (!liberado) return;
-          clearInterval(aguardandoTimer);
-          var aviso = el("cp-checkout-pix-waiting");
-          if (aviso) {
-            aviso.textContent = "";
-            aviso.appendChild(document.createTextNode(t("book.checkout.paid_confirmed", "✅ Pagamento confirmado!") + " "));
-            var link = document.createElement("a");
-            link.href = "meus-livros.html";
-            link.textContent = t("book.checkout.go_to_my_books", "Ir para Meus Livros");
-            aviso.appendChild(link);
-          }
-        })
-        .catch(function () { /* tenta de novo no próximo intervalo */ });
-    }, 5000);
-  }
-
   function exibirResultadoCheckout(dados) {
     ["cp-checkout-terms", "cp-checkout-confirm", "cp-checkout-cancel"].forEach(function (id) {
       var nodo = el(id);
@@ -422,20 +215,10 @@
       if (img && dados.pix.encodedImage) img.src = "data:image/png;base64," + dados.pix.encodedImage;
       if (payload) payload.value = dados.pix.payload || "";
       if (pixWrap) pixWrap.hidden = false;
-      aguardarLiberacao();
-    } else if (dados.invoiceUrl) {
-      // Fase Livros 015 -- PIX e cartão são pagos na fatura segura
-      // hospedada pelo Asaas (invoiceUrl); nenhum dado de cartão passa
-      // pelo site.
+    } else if (dados.paymentMethod === "CREDIT_CARD" && dados.invoiceUrl) {
       var cardWrap = el("cp-checkout-card");
       var link = el("cp-checkout-card-link");
       if (link) link.href = dados.invoiceUrl;
-      if (dados.paymentMethod === "PIX" && cardWrap) {
-        var h3 = cardWrap.querySelector("h3");
-        var p = cardWrap.querySelector("p");
-        if (h3) { h3.removeAttribute("data-i18n"); h3.textContent = t("book.checkout.pix_title", "Pague com PIX"); }
-        if (p) { p.removeAttribute("data-i18n"); p.textContent = t("book.checkout.pix_invoice_instructions", "Abra a fatura segura para ver o QR Code e o código PIX copia e cola. Seu livro é liberado em Meus Livros assim que o pagamento for confirmado."); }
-      }
       if (cardWrap) cardWrap.hidden = false;
     } else {
       // Sucesso no servidor, mas sem dado suficiente para exibir ainda
@@ -470,7 +253,6 @@
             return;
           }
           resetarPainelCheckout();
-          atualizarCamposExtras();
           buyBtn.hidden = true;
           if (buyStatus) buyStatus.hidden = true;
           if (checkoutPanel) checkoutPanel.hidden = false;
@@ -494,51 +276,18 @@
           exibirErroCheckout(t("book.checkout.must_accept_terms", "É preciso aceitar os Termos de Uso e a Política de Privacidade para continuar."));
           return;
         }
-        var metodoEl = document.querySelector('input[name="cp-checkout-method"]:checked');
-        var metodo = metodoEl ? metodoEl.value : "PIX";
         var bookId = qs("id") || "";
-        var payload = { paymentMethod: metodo, termsAccepted: true };
-        var nomeEl = el("cp-checkout-name");
-        var docEl = el("cp-checkout-doc");
-        var parcelasWrap = el("cp-checkout-installments-wrap");
-        if (nomeEl && nomeEl.value.trim()) payload.nomeCompleto = nomeEl.value.trim();
-        if (docEl && docEl.value.trim()) payload.cpfCnpj = docEl.value.trim();
-        if (parcelasWrap && !parcelasWrap.hidden) {
-          payload.installmentCount = Number(el("cp-checkout-installments").value) || 1;
+        var bookItem = window.CP_BOOKS && window.CP_BOOKS.items ? window.CP_BOOKS.items.find(function (b) { return b.id === bookId; }) : null;
+
+        if (!bookItem || !bookItem.kiwify_checkout_link) {
+          exibirErroCheckout(t("book.checkout.error.generic", "Não foi possível iniciar a compra agora. Tente novamente em alguns minutos."));
+          return;
         }
 
-        // Idempotência contra duplo-clique é garantida pelo SERVIDOR
-        // (referência determinística, Fase 009.2) -- desabilitar o
-        // botão aqui é só uma melhoria de UX, nunca a proteção real.
         confirmBtn.disabled = true;
-
-        fetch(apiBase() + "/api/books/" + encodeURIComponent(bookId) + "/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(payload),
-        })
-          .then(function (res) {
-            return res.json().then(function (dados) { return { status: res.status, dados: dados || {} }; });
-          })
-          .then(function (resultado) {
-            if (resultado.status !== 201 || !resultado.dados.ok) {
-              exibirErroCheckout(mensagemDeErroCheckout(resultado.dados.erro));
-              confirmBtn.disabled = false;
-              return;
-            }
-            exibirResultadoCheckout(resultado.dados);
-          })
-          .catch(function () {
-            exibirErroCheckout(t("book.checkout.error.generic", "Não foi possível iniciar a compra agora. Tente novamente em alguns minutos."));
-            confirmBtn.disabled = false;
-          });
+        window.location.href = bookItem.kiwify_checkout_link;
       });
     }
-
-    document.querySelectorAll('input[name="cp-checkout-method"]').forEach(function (radio) {
-      radio.addEventListener("change", atualizarCamposExtras);
-    });
 
     if (copyBtn) {
       copyBtn.addEventListener("click", function () {
@@ -561,5 +310,4 @@
     }
   });
   window.addEventListener("corpopleno:lang-changed", render);
-  window.addEventListener("corpopleno:rates-ready", render);
 })();
